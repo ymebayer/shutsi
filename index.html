@@ -1027,6 +1027,375 @@ html:is([data-skin="older"], [data-skin="teen"]) .word-tip { border-top-width: 1
 .how-fix .gd-pics { width: 100%; max-width: 520px; margin-inline: auto; }
 @media (max-width: 380px) { .tc-sound { grid-template-columns: 120px minmax(0, 1fr); } .tc-mouth { width: 120px; } }
 
+/* שוצי tells the steps to the little ones */
+.gd-talk { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: end; gap: 6px; }
+.gd-parrot { width: 64px; margin-bottom: -4px; }
+.gd-parrot svg { display: block; width: 100%; height: auto; }
+.gd-bubble { display: flex; flex-direction: column; gap: 4px; border-radius: 22px 22px 6px 22px; }
+.gd-bubble .gd-text { font-size: 1.12rem; }
+
+/* ---------- the tabs at the bottom: practice, games, island ---------- */
+.navbar {
+  position: fixed; inset-inline: 0; bottom: 0; z-index: 14; width: min(100%, 760px); margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px;
+  padding: 6px 10px calc(6px + env(safe-area-inset-bottom, 0px));
+  background: var(--card); border-top: 3px solid var(--ink);
+}
+.nav-btn {
+  appearance: none; cursor: pointer; position: relative; display: flex; flex-direction: column; align-items: center; gap: 1px;
+  min-height: 58px; padding: 4px 2px; border: 0; background: none; color: var(--ink-soft); font: inherit; font-weight: 700; font-size: .86rem; line-height: 1.2;
+}
+.nav-ico { width: 56px; height: 34px; border-radius: 999px; display: grid; place-items: center; transition: background-color .15s ease, transform .15s ease; }
+.nav-ico svg { width: 25px; height: 25px; }
+.nav-btn.on { color: var(--ink); }
+.nav-btn.on .nav-ico { background: var(--btn); color: var(--btn-ink); }
+.nav-dot { position: absolute; top: 3px; inset-inline-end: calc(50% - 30px); width: 13px; height: 13px; border-radius: 50%; background: var(--ts); border: 2.5px solid var(--card); }
+html[data-skin="young"] .navbar { border-radius: 24px 24px 0 0; border-inline: 3px solid var(--ink); }
+html[data-skin="young"] .nav-btn.on .nav-ico { border: 2.5px solid var(--ink); transform: rotate(-4deg); }
+html[data-skin="older"] .navbar { background: #1b1a23; border-top: 1px solid var(--line); }
+html[data-skin="older"] .nav-btn.on { color: var(--amber); }
+html[data-skin="older"] .nav-btn.on .nav-ico { background: rgba(244, 181, 68, .16); color: var(--amber); box-shadow: inset 0 0 0 1px rgba(244, 181, 68, .45); }
+html[data-skin="teen"] .navbar { border-top: 1px solid var(--line); background: rgba(255, 255, 255, .96); }
+html[data-skin="teen"] .nav-btn.on .nav-ico { background: var(--ink); color: #fff; }
+body.tabs-on .app { padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); }
+body.tabs-on .toast { bottom: calc(88px + env(safe-area-inset-bottom, 0px)); }
+body.tabs-away .navbar { display: none; }
+@media (min-width: 761px) { html[data-skin="young"] .navbar { border-radius: 24px 24px 0 0; } }
+
+/* ---------- the games page ---------- */
+.streak-chip {
+  display: inline-flex; align-items: center; gap: 3px; min-height: 46px; padding: 4px 12px 4px 10px; border-radius: 999px;
+  border: 3px solid var(--ink); background: #ffe8d6; font-weight: 800; font-size: 1.2rem; line-height: 1; font-variant-numeric: tabular-nums;
+}
+.streak-chip svg { width: 26px; height: 26px; flex: none; }
+.streak-chip small { font-size: .78rem; font-weight: 700; color: var(--ink-soft); margin-inline-start: 3px; }
+html:is([data-skin="older"], [data-skin="teen"]) .streak-chip { border: 1px solid var(--line); background: var(--panel2); font-weight: 700; font-size: 1.1rem; }
+html[data-skin="teen"] .streak-chip { background: var(--card); }
+.quests { gap: 12px; padding: 16px; }
+.q-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.q-count { font-weight: 800; color: var(--ink-soft); }
+.q-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.q-item {
+  appearance: none; cursor: pointer; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 10px 6px 8px; border: 2px dashed var(--line); border-radius: 16px; background: transparent; color: var(--ink); font: inherit; text-align: center;
+}
+.q-mark { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--panel2); color: var(--ink-soft); margin-bottom: 2px; }
+.q-mark svg { width: 22px; height: 22px; }
+.q-lab { font-size: .76rem; font-weight: 700; color: var(--ink-soft); line-height: 1.2; }
+.q-text { font-weight: 800; font-size: .92rem; line-height: 1.25; min-height: 2.5em; display: grid; place-items: center; }
+.q-bar { display: block; width: 100%; height: 7px; margin-top: auto; border-radius: 4px; background: var(--panel2); overflow: hidden; }
+.q-bar i { display: block; height: 100%; background: var(--ok); border-radius: inherit; }
+.q-prog { font-weight: 800; font-size: .8rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.q-item.done { border-style: solid; border-color: var(--ok); background: #e9f7ee; }
+.q-item.done .q-mark { background: var(--ok); color: #fff; }
+html[data-skin="young"] .q-item { border-width: 2.5px; border-color: rgba(58, 51, 48, .35); }
+html[data-skin="young"] .q-item.done { border-color: var(--ink); background: #fff8d8; }
+html[data-skin="young"] .q-item.done .q-mark { background: var(--btn); color: var(--ink); border: 2.5px solid var(--ink); transform: rotate(-8deg); }
+html[data-skin="young"] .q-item.done .q-mark svg { width: 26px; height: 26px; }
+html[data-skin="older"] .q-item.done { border-color: var(--amber); background: rgba(244, 181, 68, .1); }
+html[data-skin="older"] .q-item.done .q-mark { background: var(--amber); color: #1b1922; }
+html[data-skin="older"] .q-bar i { background: var(--amber); }
+html[data-skin="teen"] .q-item { border-style: solid; border-width: 1px; }
+html[data-skin="teen"] .q-item.done { background: #e9f6ef; }
+@media (max-width: 360px) { .q-text { font-size: .84rem; } }
+.q-chest { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding-top: 12px; border-top: 2px dashed var(--line); }
+html:is([data-skin="older"], [data-skin="teen"]) .q-chest { border-top-width: 1px; border-top-style: solid; }
+.q-chest-pic { width: 64px; }
+.q-chest-pic svg { display: block; width: 100%; height: auto; }
+.q-chest.ready .q-chest-pic { animation: chest-hop 1.8s ease-in-out infinite; }
+.q-chest.open .q-chest-pic { animation: none; filter: saturate(.85); }
+@keyframes chest-hop { 0%, 55%, 100% { transform: none; } 65% { transform: translateY(-6px) rotate(-6deg); } 75% { transform: translateY(0) rotate(4deg); } 85% { transform: rotate(-2deg); } }
+.q-chest-text { font-weight: 600; line-height: 1.35; color: var(--ink-soft); }
+.q-chest.ready .q-chest-text { color: var(--ink); font-weight: 700; }
+.game-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.game-card {
+  appearance: none; cursor: pointer; position: relative; width: 100%; height: 100%; padding: 0; overflow: hidden;
+  display: flex; flex-direction: column; text-align: right; font: inherit; color: var(--ink);
+  background: var(--card); border: 3px solid var(--ink); border-radius: var(--r); transition: transform .12s ease;
+}
+.game-card:active { transform: scale(.97); }
+.gc-art { display: block; aspect-ratio: 4 / 3; overflow: hidden; border-bottom: 3px solid var(--ink); background: #eaf6ff; }
+.gc-art > svg { display: block; width: 100%; height: 100%; }
+.game-card[data-game="bubbles"] .gc-art { background: #e6f5ff; }
+.game-card[data-game="sort"] .gc-art { background: #fff4d9; }
+.game-card[data-game="memory"] .gc-art { background: #ffe6ee; }
+.gc-body { display: flex; flex-direction: column; gap: 3px; padding: 9px 12px 12px; flex: 1; }
+.gc-name { font-family: var(--display); font-weight: 700; font-size: 1.2rem; line-height: 1.2; }
+.gc-desc { font-size: .88rem; line-height: 1.35; color: var(--ink-soft); }
+.gc-meta { display: flex; align-items: center; gap: 2px; margin-top: auto; padding-top: 4px; font-weight: 700; font-size: .9rem; color: var(--ink-soft); }
+.gc-meta svg { width: 22px; height: 22px; }
+.gc-tag { position: absolute; top: 8px; inset-inline-start: 8px; padding: 2px 10px; border-radius: 999px; font-size: .8rem; font-weight: 800; background: var(--ts); color: #fff; border: 2px solid var(--ink); }
+.gc-tag.quest { background: var(--btn); color: var(--btn-ink); }
+html[data-skin="young"] .game-card:nth-child(odd) { transform: rotate(-.8deg); }
+html[data-skin="young"] .game-grid li:nth-child(even) .game-card { transform: rotate(.9deg); }
+html[data-skin="young"] .gc-desc { display: none; }
+html:is([data-skin="older"], [data-skin="teen"]) .game-card { border: 1px solid var(--line); background: var(--panel); }
+html:is([data-skin="older"], [data-skin="teen"]) .gc-art { border-bottom: 1px solid var(--line); }
+html:is([data-skin="older"], [data-skin="teen"]) .gc-tag { border: 0; }
+html[data-skin="older"] .gc-art, html[data-skin="older"] .game-card[data-game] .gc-art { background: #191826; }
+html[data-skin="older"] .gc-name { font-weight: 400; }
+html[data-skin="older"] .gc-meta .disc { width: 22px; height: 22px; }
+html[data-skin="teen"] .game-card[data-game] .gc-art { background: #f6f7f9; }
+html[data-skin="teen"] .gc-name { font-size: 1.5rem; line-height: 1; }
+html[data-skin="teen"] .gc-meta { font-size: .85rem; }
+html[data-skin="teen"] .gc-meta b { font-family: var(--font); font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-inline-end: 6px; }
+@media (max-width: 360px) { .gc-desc { display: none; } }
+
+/* ---------- one game ---------- */
+#scr-game { min-height: calc(100dvh - 62px); gap: 14px; }
+.g-score { flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 42px; padding: 4px 14px; border-radius: 999px; font-weight: 800; font-size: 1.15rem; background: var(--panel2); border: 2px solid var(--ink); }
+.g-score svg { width: 20px; height: 20px; }
+html:is([data-skin="older"], [data-skin="teen"]) .g-score { border: 1px solid var(--line); font-weight: 700; }
+html[data-skin="teen"] .g-score { background: var(--card); font-family: var(--font); }
+.g-stage { position: relative; overflow: hidden; background: var(--card); border: 3px solid var(--ink); border-radius: var(--r); }
+.g-stage > svg { display: block; width: 100%; height: auto; }
+html:is([data-skin="older"], [data-skin="teen"]) .g-stage { border: 1px solid var(--line); }
+html[data-skin="older"] .g-stage { background: #191826; box-shadow: 0 10px 30px rgba(0, 0, 0, .35); }
+.g-say { min-height: 3.2em; display: grid; place-items: center; text-align: center; font-weight: 700; font-size: 1.12rem; line-height: 1.45; text-wrap: balance; }
+.g-say.good { color: var(--ok); }
+.g-say.warn { color: var(--warn); }
+html[data-skin="young"] .g-say { font-size: 1.22rem; }
+html[data-skin="teen"] .g-say { font-weight: 600; }
+.g-say.pop { animation: status-in .25s ease both; }
+.g-ctl { display: flex; flex-direction: column; gap: 12px; }
+.g-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.g-row > .btn { flex: 1 1 150px; }
+.g-row .btn svg { width: 22px; height: 22px; flex: none; }
+.g-go { min-height: 60px; font-size: 1.3rem; }
+.g-rules { display: flex; flex-direction: column; gap: 8px; }
+.g-rules p { font-size: 1.08rem; line-height: 1.55; }
+.g-rules .small { font-size: .9rem; }
+.g-intro { position: absolute; inset: auto 10px 10px; padding: 10px 14px; border-radius: 16px; background: var(--card); border: 3px solid var(--ink); font-weight: 700; line-height: 1.4; font-size: 1rem; }
+html:is([data-skin="older"], [data-skin="teen"]) .g-intro { border: 1px solid var(--line); }
+/* the live ש–ס strip under the train */
+.g-live { display: flex; align-items: center; gap: 8px; }
+.g-live > b { font-family: var(--display); font-size: 1.5rem; line-height: 1; width: 1.4rem; text-align: center; flex: none; }
+.g-live .tb-rail { height: 20px; }
+.g-live[data-zone="sh"] .tb-dot.on { background: var(--ok); }
+.g-live[data-zone="sh"] .tb-rail { box-shadow: 0 0 0 4px var(--glow); }
+.g-live[data-zone="s"] .tb-dot.on { background: var(--bad); }
+.g-mic { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; color: var(--ink-soft); min-height: 26px; }
+.g-mic i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--line); }
+.g-mic.on { color: var(--bad); }
+.g-mic.on i { background: var(--bad); box-shadow: 0 0 0 0 rgba(214, 61, 51, .5); animation: mic-dot 1.2s ease-out infinite; }
+@keyframes mic-dot { to { box-shadow: 0 0 0 10px rgba(214, 61, 51, 0); } }
+.g-level { flex: 1; height: 10px; border-radius: 6px; background: var(--panel2); overflow: hidden; max-width: 220px; }
+.g-level i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .06s linear; }
+
+/* the train */
+.g-scene .puff { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.g-scene.moving .puff { animation: puff 1.15s linear infinite; }
+.g-scene.moving .puff.p1 { animation-delay: .38s; }
+.g-scene.moving .puff.p2 { animation-delay: .76s; }
+@keyframes puff { 0% { opacity: .95; transform: translate(0, 0) scale(.45); } 100% { opacity: 0; transform: translate(34px, -36px) scale(1.9); } }
+.g-wheel { transform-box: fill-box; transform-origin: center; transform: rotate(var(--a, 0deg)); }
+.g-snake-in { opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; transform: translateY(16px) scale(.5); transition: opacity .18s ease, transform .3s cubic-bezier(.2, 1.6, .4, 1); }
+.g-scene.snake .g-snake-in { opacity: 1; transform: none; }
+.g-scene .tw { animation: twinkle 2.6s ease-in-out infinite; }
+@keyframes twinkle { 50% { opacity: .3; } }
+.g-scene.arrived .g-station { animation: arrive 1.2s ease-in-out 2; transform-box: fill-box; transform-origin: 50% 100%; }
+@keyframes arrive { 30% { transform: scale(1.06) rotate(-1.5deg); } 60% { transform: scale(.98); } }
+.g-metro .g-pulse { transform-box: fill-box; transform-origin: center; }
+.g-metro.moving .g-pulse { animation: m-pulse 1s ease-out infinite; }
+@keyframes m-pulse { from { transform: scale(.7); opacity: .45; } to { transform: scale(1.9); opacity: 0; } }
+.g-metro .g-line { transition: stroke-dashoffset .1s linear; }
+.g-stage.metro { padding: 14px 8px 8px; }
+.g-holds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.g-holds .stat b { font-family: var(--font); font-weight: 600; font-size: 1.7rem; }
+
+/* the bubbles */
+.g-field { display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); gap: 4px 6px; padding: 16px 12px 18px; direction: rtl; }
+html[data-skin="young"] .g-field { background: linear-gradient(#e9f6ff, #fdfdff); }
+html[data-skin="older"] .g-field { background: radial-gradient(circle at 30% 20%, rgba(255, 156, 95, .14), transparent 55%), radial-gradient(circle at 80% 90%, rgba(130, 180, 255, .12), transparent 50%); }
+.g-bub { position: relative; display: block; aspect-ratio: 1; translate: var(--jx, 0) var(--jy, 0); }
+.g-bub > svg { display: block; width: 100%; height: 100%; animation: bob 3.2s ease-in-out infinite; animation-delay: var(--d, 0s); }
+@keyframes bob { 50% { transform: translateY(-7px) rotate(3deg); } }
+.g-bub.next::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 3px dashed var(--ts); animation: spin 6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.g-bub.wob > svg { animation: wob .5s ease; }
+@keyframes wob { 20% { transform: scale(1.12, .9); } 45% { transform: scale(.92, 1.08); } 70% { transform: scale(1.04, .97); } }
+.g-bub.popped > svg { animation: pop-out .3s ease-out forwards; }
+.g-bub.popped::after { display: none; }
+@keyframes pop-out { 40% { transform: scale(1.22); opacity: .9; } 100% { transform: scale(1.5); opacity: 0; } }
+.g-bub.gone > svg { opacity: 0; animation: none; }
+.g-bub.gone::before { content: ""; position: absolute; inset: 34%; border-radius: 50%; border: 2px dashed var(--line); opacity: .7; }
+.drop { position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; margin: -4.5px; border-radius: 50%; background: #8fd1ff; animation: drop .55s ease-out forwards; }
+html[data-skin="older"] .drop { background: var(--ts); }
+html[data-skin="teen"] .drop { background: var(--ok); }
+@keyframes drop { to { transform: translate(var(--dx), var(--dy)) scale(.4); opacity: 0; } }
+.boom { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; font-family: var(--display); font-weight: 800; font-size: 1.7rem; color: var(--ts); animation: boom .7s ease-out forwards; }
+@keyframes boom { from { transform: scale(.4); opacity: 0; } 30% { transform: scale(1.15); opacity: 1; } to { transform: translateY(-22px) scale(1); opacity: 0; } }
+html[data-skin="teen"] .g-bub.gone > svg { opacity: .9; }
+html[data-skin="teen"] .g-bub.gone::before { display: none; }
+.g-tip { display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 12px; padding: 10px; border-radius: 16px; background: var(--panel2); }
+.g-tip > svg { width: 100%; height: auto; display: block; border-radius: 12px; border: 2px solid var(--ink); background: var(--card); }
+html:is([data-skin="older"], [data-skin="teen"]) .g-tip > svg { border: 1px solid var(--line); }
+.g-tip p { font-weight: 600; line-height: 1.45; }
+
+/* which sound did you hear? */
+.so-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 14px 14px 12px; min-height: 230px; }
+.so-pic { width: min(190px, 50vw); }
+.so-pic > svg { display: block; width: 100%; height: auto; }
+.so-pic .sticker { font-size: clamp(84px, 24vw, 120px); }
+.so-ear { width: 104px; height: 104px; border-radius: 50%; display: grid; place-items: center; background: var(--panel2); color: var(--ink); }
+.so-ear svg { width: 56px; height: 56px; }
+.so-word { font-family: var(--display); font-size: clamp(2rem, 10vw, 3rem); font-weight: 700; line-height: 1.15; min-height: 1.2em; text-align: center; }
+.so-word.masked { letter-spacing: .02em; }
+.so-word .gap { display: inline-block; min-width: .7em; border-bottom: 4px solid var(--ink); margin-inline: .06em; }
+.so-hear { position: absolute; top: 10px; inset-inline-end: 10px; }
+.so-hear svg { width: 22px; height: 22px; }
+.so-prog { position: absolute; top: 14px; inset-inline-start: 14px; font-weight: 800; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.so-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.so-btn {
+  appearance: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 8px 12px;
+  border: 3px solid var(--ink); border-radius: var(--r); background: var(--card); color: var(--ink); font: inherit; box-shadow: 3px 4px 0 var(--ink);
+  transition: transform .08s ease, box-shadow .08s ease;
+}
+.so-btn:active { transform: translate(2px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+.so-btn .so-ico { width: 78px; }
+.so-btn .so-ico > svg { display: block; width: 100%; height: auto; }
+.so-btn b { font-family: 'Karantina', 'Secular One', sans-serif; font-size: 3.2rem; line-height: .9; font-weight: 700; }
+.so-btn.sh b { color: var(--sh); }
+.so-btn.ts b { color: var(--ts); }
+.so-grid { display: grid; grid-template-columns: auto repeat(3, minmax(0, 1fr)); gap: 8px; align-items: stretch; }
+.so-rowlab { display: grid; place-items: center; font-family: var(--display); font-size: 2rem; font-weight: 700; line-height: 1; width: 2rem; }
+.so-pos {
+  appearance: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 64px; padding: 8px 4px;
+  border: 3px solid var(--ink); border-radius: 14px; background: var(--card); color: var(--ink); font: inherit; font-weight: 700; font-size: .85rem;
+}
+.so-pos .posmap i { width: 24px; height: 24px; }
+html:is([data-skin="older"], [data-skin="teen"]) :is(.so-btn, .so-pos) { border: 1px solid var(--line); box-shadow: none; background: var(--panel2); }
+html[data-skin="teen"] :is(.so-btn, .so-pos) { background: var(--card); }
+html[data-skin="teen"] .so-pos .posmap i { width: 30px; height: 12px; font-size: 0; border-radius: 6px; }
+:is(.so-btn, .so-pos).right { outline: 4px solid var(--ok); outline-offset: 2px; background: #e4f6ea; }
+:is(.so-btn, .so-pos).wrong { outline: 4px solid var(--bad); outline-offset: 2px; }
+html[data-skin="older"] :is(.so-btn, .so-pos).right { background: rgba(98, 214, 164, .16); }
+:is(.so-btn, .so-pos):disabled { cursor: default; }
+.so-card.yes { animation: yes .45s ease; }
+@keyframes yes { 40% { transform: scale(1.04); } }
+.so-card.no { animation: wiggle .5s ease; }
+.so-combo { color: var(--ok); }
+
+/* the talking memory */
+.me-grid { display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); gap: 8px; padding: 12px; perspective: 1000px; }
+.me-card { appearance: none; position: relative; aspect-ratio: 3 / 4; padding: 0; border: 0; background: none; cursor: pointer; transform-style: preserve-3d; transition: transform .38s cubic-bezier(.3, .9, .3, 1.05); font: inherit; color: var(--ink); }
+.me-card.up { transform: rotateY(180deg); }
+.me-face, .me-back { position: absolute; inset: 0; display: grid; place-items: center; border-radius: 14px; -webkit-backface-visibility: hidden; backface-visibility: hidden; overflow: hidden; }
+.me-face { transform: rotateY(180deg); background: var(--card); border: 2.5px solid var(--ink); }
+.me-face > svg { width: 86%; height: auto; display: block; }
+.me-face .sticker { font-size: clamp(38px, 11vw, 56px); padding: 0; }
+.me-back { border: 2.5px solid var(--ink); background-color: #ffd54a; background-image: radial-gradient(circle, rgba(255, 255, 255, .55) 0 3px, transparent 3.5px); background-size: 16px 16px; font-family: var(--display); font-weight: 800; font-size: 2rem; color: var(--ink); }
+.me-word { font-family: var(--display); font-weight: 700; font-size: clamp(.95rem, 4.6vw, 1.35rem); line-height: 1.15; text-align: center; padding: 4px; word-break: keep-all; }
+.me-card.done .me-face { border-color: var(--ok); box-shadow: 0 0 0 3px var(--glow); }
+.me-card.done.said .me-face::after { content: ""; position: absolute; top: 5px; inset-inline-end: 5px; width: 18px; height: 18px; border-radius: 50%; background: var(--btn) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4l2.3 4.8 5.2.7-3.8 3.6 1 5.2L12 15.8 7.3 18.3l1-5.2L4.5 9.5l5.2-.7z' fill='%233a3330'/%3E%3C/svg%3E") center / 14px no-repeat; }
+.me-card.miss .me-face { animation: wiggle .5s ease; }
+html[data-skin="older"] .me-back { background-color: #2d2a3a; background-image: repeating-linear-gradient(45deg, rgba(244, 181, 68, .1) 0 6px, transparent 6px 12px); color: var(--amber); border: 1px solid #4a4560; }
+html[data-skin="older"] .me-face { border: 1px solid var(--line); background: #f6f2ea; color: #1b1922; }
+html[data-skin="teen"] .me-back { background: var(--ink); color: #fff; border: 0; font-family: var(--font); font-size: 1.1rem; font-weight: 700; }
+html[data-skin="teen"] .me-face { border: 1px solid var(--line); }
+.me-say { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 16px; background: var(--panel2); }
+.me-say .me-word { font-size: 1.7rem; padding: 0; }
+.me-say p { font-weight: 700; }
+.me-say .g-mic { margin-inline-start: auto; }
+.me-say.ok { background: #dcf3e2; }
+html[data-skin="older"] .me-say.ok { background: rgba(98, 214, 164, .15); }
+.me-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.me-moves { font-weight: 700; color: var(--ink-soft); }
+
+/* the end of a game */
+.g-end { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding-top: 6px; }
+.g-end .mascot { width: 128px; }
+.g-end .mascot > svg { width: 100%; height: auto; display: block; }
+.g-end-title { font-size: 2rem; }
+.g-end .bigscore { position: relative; width: 150px; height: 150px; display: grid; place-items: center; }
+.g-end .bigscore > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.g-end .bigscore b { font-family: var(--font); font-size: 3rem; font-weight: 700; line-height: 1; position: relative; font-variant-numeric: tabular-nums; }
+.g-end .bigscore small { position: absolute; bottom: 30px; font-size: .82rem; color: var(--ink-soft); }
+.g-end-stats { list-style: none; margin: 0; padding: 0; width: min(100%, 420px); display: flex; flex-direction: column; }
+.g-end-stats li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 6px 2px; border-bottom: 2px dotted rgba(58, 51, 48, .2); }
+.g-end-stats li:last-child { border-bottom: 0; }
+.g-end-stats b { font-variant-numeric: tabular-nums; }
+.g-end-stats li.rec b { color: var(--ok); }
+html:is([data-skin="older"], [data-skin="teen"]) .g-end-stats li { border-bottom: 1px solid var(--line); }
+.g-coins { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: #fff3c2; border: 3px solid var(--ink); font-weight: 800; }
+.g-coins .coin { width: 34px; height: 34px; }
+.g-coins b { font-family: var(--display); font-size: 1.8rem; line-height: 1; color: #b97400; font-variant-numeric: tabular-nums; }
+.g-coins b.bump { animation: bump .3s ease; }
+.g-coins span { font-size: .92rem; color: var(--ink-soft); text-align: right; line-height: 1.3; }
+html[data-skin="older"] .g-coins { background: #241f16; border: 1px solid #5c4a22; }
+html[data-skin="older"] .g-coins b { color: var(--amber); font-weight: 400; }
+html[data-skin="teen"] .g-coins { background: var(--card); border: 1px solid var(--line); }
+html[data-skin="teen"] .g-coins b { font-family: var(--font); color: var(--ok); font-weight: 700; font-size: 1.5rem; }
+.g-quest { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--ok); }
+.g-quest svg { width: 22px; height: 22px; }
+.g-end .actions { width: min(100%, 420px); }
+.g-end .actions .btn { flex: 1 1 150px; }
+@media (prefers-reduced-motion: reduce) { .g-bub > svg, .g-bub.next::after, .q-chest.ready .q-chest-pic { animation: none !important; } }
+.coin-chip.bump { animation: bump .3s ease; }
+.g-stage.sort-art { display: grid; place-items: center; padding: 8px; }
+.g-stage.sort-art > svg { width: min(100%, 300px); }
+.me-grid.still { opacity: .92; }
+.me-grid.still .me-card { cursor: default; }
+/* שוצי tells the little ones what is going on; the controls sit low, in the thumb zone */
+.g-talk { display: flex; justify-content: center; }
+.g-parrot { display: none; }
+.g-parrot svg { display: block; width: 100%; height: auto; }
+html[data-skin="young"] .g-talk { display: grid; grid-template-columns: 74px minmax(0, 1fr); align-items: end; gap: 6px; }
+html[data-skin="young"] .g-talk .g-parrot { display: block; width: 74px; margin-bottom: -4px; }
+html[data-skin="young"] .g-talk .g-say { min-height: 0; display: block; text-align: right; padding: 12px 16px; background: var(--card); border: 3px solid var(--ink); border-radius: 22px 22px 6px 22px; }
+html[data-skin="young"] .g-talk .g-say.good { color: #17673a; background: #e8f7ec; }
+html[data-skin="young"] .g-talk .g-say.warn { color: #6b4300; background: #fff4dc; }
+.g-ctl { margin-top: auto; }
+.g-intro-talk { display: grid; grid-template-columns: 86px minmax(0, 1fr); align-items: end; gap: 6px; }
+.g-intro-talk .g-parrot { display: block; width: 86px; margin-bottom: -4px; }
+.g-intro-talk .bubble { border-radius: 22px 22px 6px 22px; padding: 14px 16px; gap: 8px; }
+.g-intro-talk .bubble p { font-size: 1.12rem; line-height: 1.5; }
+.g-next { font-weight: 700; color: var(--ink-soft); max-width: 26em; }
+#scr-game.intro .g-ctl { margin-top: 0; }
+/* under the train: the ש–ס meter (and for 12+ the numbers), one board with the picture */
+.g-board { display: flex; flex-direction: column; gap: 10px; padding: 12px 12px 14px; border-top: 3px solid var(--ink); background: var(--card); }
+html:is([data-skin="older"], [data-skin="teen"]) .g-board { border-top: 1px solid var(--line); }
+html[data-skin="older"] .g-board { background: #1e1c27; }
+.g-stage.metro .g-board { border-top: 0; padding-top: 4px; }
+.g-how { display: grid; grid-template-columns: 104px minmax(0, 1fr); align-items: center; gap: 12px; padding-top: 4px; }
+.g-how > svg { display: block; width: 100%; height: auto; border-radius: 12px; border: 2px solid var(--ink); background: var(--card); }
+html:is([data-skin="older"], [data-skin="teen"]) .g-how > svg { border: 1px solid var(--line); }
+.g-how p { font-size: .98rem !important; font-weight: 600; line-height: 1.45; color: var(--ink-soft); }
+/* each ש held, as a bar, against the three-star line (7+) */
+.g-hist { display: flex; flex-direction: column; gap: 6px; }
+.g-hist-cap { font-size: .88rem; font-weight: 600; color: var(--ink-soft); }
+.g-hist-cap:empty { display: none; }
+.g-bars { position: relative; display: flex; align-items: flex-end; gap: 6px; height: 96px; padding: 0 2px; border-bottom: 2px solid var(--line); }
+.g-bars b { position: relative; flex: 0 1 30px; min-width: 10px; border-radius: 6px 6px 2px 2px; background: var(--sh); opacity: .55; animation: bar-up .35s ease-out both; transform-origin: bottom; }
+.g-bars b.top { opacity: 1; background: var(--ok); }
+.g-bars b span { position: absolute; bottom: calc(100% + 2px); inset-inline: -10px; text-align: center; font-size: .7rem; font-weight: 700; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+@keyframes bar-up { from { transform: scaleY(0); } }
+.g-goal { position: absolute; inset-inline: 0; border-top: 2px dashed var(--ok); pointer-events: none; }
+.g-goal span { position: absolute; inset-inline-end: 0; top: -20px; display: inline-flex; }
+.g-goal svg { width: 14px; height: 14px; }
+.g-tip.two { grid-template-columns: minmax(0, 1fr); }
+.g-tip.two .gd-pics { margin-inline: auto; width: 100%; }
+/* a dot for every צ tried: green popped a bubble, amber did not */
+.g-tries { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; min-height: 12px; }
+.g-tries i { width: 12px; height: 12px; border-radius: 50%; animation: pop .35s ease both; }
+.g-tries i.ok { background: var(--ok); }
+.g-tries i.miss { background: var(--warn); }
+html[data-skin="young"] .g-tries i { border: 2px solid var(--ink); width: 14px; height: 14px; }
+html[data-skin="older"] .g-say { font-size: 1.25rem; }
+.g-sep { width: 1px; height: 18px; background: var(--line); margin-inline: 4px; }
+html[data-skin="teen"] .so-pos .posmap i { width: 22px; }
+.me-word { font-size: clamp(1.05rem, 5.2vw, 1.5rem); }
+html[data-skin="older"] .me-face .L-sh { color: #2867d4; }
+html[data-skin="older"] .me-face .L-ts { color: #e0521f; }
+.me-moves { text-align: center; font-weight: 700; color: var(--ink-soft); min-height: 1.4em; }
+html[data-skin="teen"] .g-bub > svg { animation: none; }
+html[data-skin="teen"] .g-field { gap: 10px; padding: 18px 16px; }
+html[data-skin="teen"] .me-word { font-size: clamp(1.45rem, 7vw, 2.1rem); line-height: 1; }
+.me-mark { position: relative; width: 26px; height: 26px; }
+.me-mark::before, .me-mark::after { content: ""; position: absolute; width: 17px; height: 20px; border-radius: 5px; }
+.me-mark::before { right: 0; top: 0; background: #2a62f4; transform: rotate(6deg); }
+.me-mark::after { left: 0; bottom: 0; background: #ec5a17; transform: rotate(-7deg); }
+
 </style>
 </head>
 <body>
@@ -1072,6 +1441,7 @@ html:is([data-skin="older"], [data-skin="teen"]) .word-tip { border-top-width: 1
     <section class="intro-block" aria-labelledby="inWhat">
       <h2 class="h3" id="inWhat">מה יש בפנים</h2>
       <p>שבע תחנות: ש׳ וצ׳ בתחילת המילה, באמצע ובסוף, ותחנה מסכמת שבה שני הצלילים יחד. לכל תחנה יש מאגר של יותר מ-200 מילים, מותאמות לגיל. על כל סיבוב מקבלים מטבעות שוצי, ובונים איתם אי שלם, פריט אחרי פריט, ואחריו יער.</p>
+      <p>בלשונית "משחקים" יש ארבעה משחקים קצרים: רכבת שנוסעת רק עם ש׳ ארוכה ונקייה, בועות שמתפוצצות מצ׳ חדה, משחק שמיעה (איזה צליל יש במילה ואיפה) וזיכרון שבו אומרים כל מילה בקול. בכל יום יש שלוש משימות ותיבת מטבעות.</p>
     </section>
     <section class="intro-block" aria-labelledby="inWho">
       <h2 class="h3" id="inWho">למי זה מתאים</h2>
@@ -1434,6 +1804,12 @@ html:is([data-skin="older"], [data-skin="teen"]) .word-tip { border-top-width: 1
     </div>
 
     <div class="panel">
+      <h2>משחקים ומשימות</h2>
+      <p class="small">בלשונית "משחקים" יש ארבעה משחקים קצרים. ברכבת ובבועות האפליקציה מקשיבה לצליל לבד: ש׳ ארוכה ונקייה, צ׳ קצרה וחדה. במשחק השמיעה מזהים איזה צליל יש במילה ואיפה הוא, ובזיכרון אומרים כל מילה בקול, והמילים האלה נרשמות גם ביומן. בכל יום יש שלוש משימות ותיבה של 10 מטבעות. המשחקים נותנים עד 30 מטבעות ביום, כדי שהתרגול יישאר הדרך העיקרית לבנות את האי.</p>
+      <p class="small" id="paGames"></p>
+    </div>
+
+    <div class="panel">
       <h2>רמת הבדיקה</h2>
       <div class="seg" id="paSens">
         <label><input type="radio" name="paS" value="auto"><span>אוטומטי לפי גיל</span></label>
@@ -1453,7 +1829,7 @@ html:is([data-skin="older"], [data-skin="teen"]) .word-tip { border-top-width: 1
 
     <div class="panel" id="paVoicePanel">
       <h2>קול</h2>
-      <label class="switch"><input type="checkbox" id="paSpeak"> <span>קריינות בקול נשי: המילה, "איזה יופי" אחרי הצלחה, ו"ככה אומרים" עם המילה הנכונה אחרי טעות</span></label>
+      <label class="switch"><input type="checkbox" id="paSpeak"> <span>קריינות בקול נשי: המילה, "איזה יופי" אחרי הצלחה, ואחרי טעות המילה שוב בהגייה נכונה</span></label>
       <label class="switch"><input type="checkbox" id="paAutoWord"> <span>להשמיע כל מילה חדשה ברגע שהיא מופיעה</span></label>
       <div class="row">
         <label class="lbl" for="paVoiceSel" style="margin:0">הקול</label>
@@ -1515,6 +1891,50 @@ html:is([data-skin="older"], [data-skin="teen"]) .word-tip { border-top-width: 1
     </div>
   </section>
 
+  <!-- games: a tab next to the practice -->
+  <section class="screen games" id="scr-games" hidden aria-labelledby="gaTitle">
+    <header class="top">
+      <div class="who">
+        <div class="mini mascot" id="gaParrot"></div>
+        <div>
+          <p class="h2" id="gaTitle">משחקים</p>
+          <p class="sub" id="gaSub"></p>
+        </div>
+      </div>
+      <div class="top-side">
+        <span class="streak-chip" id="gaStreak" hidden></span>
+        <button class="coin-chip" id="gaCoins" type="button"></button>
+      </div>
+    </header>
+    <section class="panel quests taped" id="gaQuests" aria-labelledby="gaQTitle">
+      <div class="q-head">
+        <h2 class="h3" id="gaQTitle">משימות היום</h2>
+        <span class="q-count num" id="gaQCount"></span>
+      </div>
+      <ol class="q-list" id="gaQList"></ol>
+      <div class="q-chest" id="gaChestRow">
+        <span class="q-chest-pic" id="gaChestPic" aria-hidden="true"></span>
+        <p class="q-chest-text" id="gaChestText"></p>
+        <button class="btn primary small" id="gaChest" type="button" hidden></button>
+      </div>
+    </section>
+    <ul class="game-grid" id="gaGrid"></ul>
+    <p class="copyright">© 2026 מרסלו אפליקציות</p>
+  </section>
+
+  <!-- one game -->
+  <section class="screen game" id="scr-game" hidden aria-labelledby="gmTitle">
+    <header class="bar">
+      <button class="icon-btn" id="gmBack" type="button" aria-label="חזרה למשחקים"></button>
+      <div class="bar-title"><p class="h2" id="gmTitle"></p></div>
+      <div class="g-score num" id="gmScore" hidden aria-live="off"></div>
+    </header>
+    <div class="g-stage" id="gmStage"></div>
+    <div class="g-talk" id="gmTalk" hidden><div class="g-parrot" id="gmParrot" aria-hidden="true"></div><p class="g-say" id="gmSay" aria-live="polite"></p></div>
+    <div class="g-ctl" id="gmCtl"></div>
+    <div class="g-end" id="gmEnd" hidden aria-live="polite"></div>
+  </section>
+
   <!-- an adult records the words -->
   <section class="screen parents" id="scr-models" hidden aria-labelledby="moTitle">
     <header class="bar">
@@ -1522,7 +1942,7 @@ html:is([data-skin="older"], [data-skin="teen"]) .word-tip { border-top-width: 1
       <div class="bar-title"><p class="h2" id="moTitle">המילים בקול שלכם</p></div>
     </header>
     <div class="panel">
-      <p>מבוגר שאומר ש׳ וצ׳ נכון מקליט כאן את המילים. מעכשיו האפליקציה תשמיע את ההקלטה שלו: כשמילה מופיעה, ואחרי טעות ("ככה אומרים").</p>
+      <p>מבוגר שאומר ש׳ וצ׳ נכון מקליט כאן את המילים. מעכשיו האפליקציה תשמיע את ההקלטה שלו: כשמילה מופיעה, ואחרי טעות.</p>
       <p class="small">לוחצים "הקלטה" ואומרים את המילה פעם אחת, ברור ובקצב רגיל. ההקלטה נעצרת לבד. ההקלטות נשמרות רק בדפדפן הזה ולא נשלחות לשום מקום.</p>
       <p class="small num" id="moCount"></p>
     </div>
@@ -1530,6 +1950,13 @@ html:is([data-skin="older"], [data-skin="teen"]) .word-tip { border-top-width: 1
     <div class="row"><button class="btn small ghost" id="moClear" type="button">מחיקת כל ההקלטות</button></div>
   </section>
 </main>
+
+<!-- the tabs at the bottom of the home screens: the practice, the games, the island -->
+<nav class="navbar" id="tabbar" hidden aria-label="אזורים">
+  <button class="nav-btn" type="button" data-tab="practice"><span class="nav-ico" id="nvPractice"></span><span class="nav-lbl">תרגול</span></button>
+  <button class="nav-btn" type="button" data-tab="games"><span class="nav-ico" id="nvGames"></span><span class="nav-lbl" id="nvGamesLbl">משחקים</span><i class="nav-dot" id="nvGamesDot" hidden></i></button>
+  <button class="nav-btn" type="button" data-tab="island"><span class="nav-ico" id="nvIsland"></span><span class="nav-lbl" id="nvIslandLbl">האי</span><i class="nav-dot" id="nvIslandDot" hidden></i></button>
+</nav>
 
 <canvas class="fx" id="fx" hidden aria-hidden="true"></canvas>
 <div class="toast" id="toast" hidden role="alert"></div>
@@ -3661,45 +4088,68 @@ const PICS = (function () {
 if (typeof module !== 'undefined') module.exports = PICS;
 
 ;
-/* How ש and צ are made, in pictures: the mouth from the side (a see-through view, the face looking left),
-   the lips and teeth from the front, and the tongue from above. Flat and friendly like the other pictures, with
-   the same soft light and ink outline. The part a step is about glows; arrows show how the tongue moves and
-   where the air goes. */
+/* How ש and צ are made, in pictures a child can enjoy: the mouth from the side (a peek inside, as if the cheek were
+   see-through; the face looks left), a whole smiling face from the front, and the tongue from above. The tongue is a
+   little character with eyes that look where it is going. Each picture sits on its own soft background with a dark
+   outline, so it reads the same in every look of the app. The part a step is about glows; arrows show how the
+   tongue moves; the air is a blue breeze for ש and an orange spark for צ. */
 const GUIDE = (function () {
   'use strict';
+  const INK = '#3a3330';
   const C = {
-    skin: '#f9cfa6', cavity: '#6e2734', gum: '#f39aa3', tongue: '#ec6977', tongueD: '#c94b5c', lip: '#e5585a',
-    tooth: '#fffdf8', sh: '#2f86f0', ts: '#ff7a2f', glow: '#ffd54a', hair: '#8a5530', ok: '#2b9a52', no: '#d63d33'
+    sky: '#e6f4ff', sun: '#fff3d4', skin: '#fbd3ae', hair: '#8a5530', cheek: '#ff97ab',
+    mouth: '#ffd3dc', roof: '#f6a4b4', tongue: '#ff7189', lip: '#ef5568', tooth: '#ffffff', inside: '#a43a52',
+    sh: '#2f86f0', ts: '#ff7a1a', glow: '#ffd23f', cloud: '#cfe8ff', ok: '#2b9a52', no: '#e0463c'
   };
+  const opts = { kid: true };   // the app says whether the words are for little ones ("הגבעה") or older ones ("הבליטה")
   const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
   const mix = (a, b, t) => '#' + hex(a).map((v, i) => Math.round(v + (hex(b)[i] - v) * t).toString(16).padStart(2, '0')).join('');
   function defs() {
-    return Object.keys(C).map(k => `<linearGradient id="gd-${k}" x1=".18" y1="0" x2=".78" y2="1"><stop offset="0" stop-color="${mix(C[k], '#ffffff', 0.3)}"/><stop offset=".55" stop-color="${C[k]}"/><stop offset="1" stop-color="${mix(C[k], '#3a2418', 0.18)}"/></linearGradient>`).join('') +
+    return Object.keys(C).map(k => `<linearGradient id="gd-${k}" x1=".18" y1="0" x2=".78" y2="1"><stop offset="0" stop-color="${mix(C[k], '#ffffff', 0.3)}"/><stop offset=".55" stop-color="${C[k]}"/><stop offset="1" stop-color="${mix(C[k], '#3a2418', 0.14)}"/></linearGradient>`).join('') +
       '<radialGradient id="gd-halo"><stop offset="0" stop-color="#ffe066" stop-opacity=".95"/><stop offset=".6" stop-color="#ffe066" stop-opacity=".45"/><stop offset="1" stop-color="#ffe066" stop-opacity="0"/></radialGradient>' +
-      `<marker id="gd-ah-sh" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="${C.sh}"/></marker>` +
-      `<marker id="gd-ah-ts" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="${C.ts}"/></marker>` +
-      `<marker id="gd-ah-glow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3.4" markerHeight="3.4" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="${C.glow}"/></marker>` +
-      '<marker id="gd-ah-ink" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--pic-ink)"/></marker>';
+      ['sh', 'ts', 'glow'].map(k => `<marker id="gd-ah-${k}" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3.4" markerHeight="3.4" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="${C[k]}" stroke="${INK}" stroke-width=".8"/></marker>`).join('');
   }
-  // a filled shape with the ink outline (or none)
+  const key = col => Object.keys(C).find(k => C[k] === col);
+  // a filled shape with the ink outline (o.nl: none), o.flat: no light
   const fill = (d, col, o) => {
     o = o || {};
-    const f = o.flat ? col : `url(#gd-${Object.keys(C).find(k => C[k] === col) || 'skin'})`;
+    const f = o.flat || !key(col) ? col : `url(#gd-${key(col)})`;
     return `<path d="${d}" fill="${f}"${o.op != null ? ` opacity="${o.op}"` : ''}/>` +
-      (o.nl ? '' : `<path d="${d}" fill="none" style="stroke:var(--pic-ink)" stroke-width="${o.w || 2.6}" stroke-linejoin="round" stroke-linecap="round"/>`);
+      (o.nl ? '' : `<path d="${d}" fill="none" stroke="${INK}" stroke-width="${o.w || 2.6}" stroke-linejoin="round" stroke-linecap="round"/>`);
   };
-  const line = (d, w, extra) => `<path d="${d}" fill="none" style="stroke:var(--pic-ink)" stroke-width="${w || 2.4}" stroke-linecap="round" stroke-linejoin="round"${extra || ''}/>`;
+  const line = (d, w, extra) => `<path d="${d}" fill="none" stroke="${INK}" stroke-width="${w || 2.4}" stroke-linecap="round" stroke-linejoin="round"${extra || ''}/>`;
   const stroke = (d, col, w, extra) => `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"${extra || ''}/>`;
+  const dot = (x, y, r, col, extra) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${col}"${extra || ''}/>`;
   const label = (x, y, text, o) => {
     o = o || {};
-    return `<text x="${x}" y="${y}" text-anchor="${o.anchor || 'middle'}" font-size="${o.size || 11}" font-weight="700" style="fill:${o.col || 'var(--pic-ink)'};font-family:var(--font)" paint-order="stroke" stroke="${o.halo || 'var(--card)'}" stroke-width="3.2" stroke-linejoin="round">${text}</text>`;
+    return `<text x="${x}" y="${y}" text-anchor="middle" font-size="${o.size || 13}" font-weight="800" fill="${o.col || INK}" style="font-family:var(--font)" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">${text}</text>`;
   };
   const halo = (cx, cy, r) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#gd-halo)"/>`;
-  const ring = (cx, cy, rx, ry) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry || rx}" fill="none" stroke="${C.glow}" stroke-width="3" stroke-dasharray="5 4"/>`;
+  // a little four-pointed twinkle
+  const twinkle = (x, y, r, col) => `<path d="M ${x} ${y - r} Q ${x + r * 0.22} ${y - r * 0.22} ${x + r} ${y} Q ${x + r * 0.22} ${y + r * 0.22} ${x} ${y + r} Q ${x - r * 0.22} ${y + r * 0.22} ${x - r} ${y} Q ${x - r * 0.22} ${y - r * 0.22} ${x} ${y - r} Z" fill="${col || C.glow}" stroke="${INK}" stroke-width="1.2" stroke-linejoin="round"/>`;
+  // a spotlight on the part a step is about: a dashed ring with a twinkle
+  const ring = (cx, cy, rx, ry) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry || rx}" fill="none" stroke="${C.glow}" stroke-width="3.4" stroke-dasharray="6 5" stroke-linecap="round"/>` +
+    twinkle(cx + rx * 0.72, cy - (ry || rx) * 0.72, 6.5);
+  const star5 = (x, y, r, col) => {
+    let d = '';
+    for (let i = 0; i < 10; i++) {
+      const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * 0.45 : r;
+      d += (i ? ' L ' : 'M ') + (x + rr * Math.cos(a)).toFixed(1) + ' ' + (y + rr * Math.sin(a)).toFixed(1);
+    }
+    return `<path d="${d} Z" fill="${col}" stroke="${INK}" stroke-width="1.2" stroke-linejoin="round"/>`;
+  };
+  const frame = (w, h, bg) => `<rect x="0" y="0" width="${w}" height="${h}" fill="url(#gd-${bg})"/>`;
+  // the tongue's face: two eyes that look towards the tip, a smile, rosy cheeks
+  function tongueFace(x, y, look, s) {
+    s = s || 1;
+    const e = (ex) => `<ellipse cx="${ex}" cy="${y}" rx="${6.4 * s}" ry="${7.6 * s}" fill="#fff" stroke="${INK}" stroke-width="1.8"/>` +
+      dot(ex + look[0] * s, y + look[1] * s, 3.6 * s, INK) + dot(ex + look[0] * s - 1.1 * s, y + look[1] * s - 1.4 * s, 1.2 * s, '#fff');
+    return e(x - 12 * s) + e(x + 12 * s) +
+      dot(x - 24 * s, y + 13 * s, 4.6 * s, C.cheek, ' opacity=".7"') + dot(x + 24 * s, y + 13 * s, 4.6 * s, C.cheek, ' opacity=".7"') +
+      line(`M ${x - 8 * s} ${y + 14 * s} Q ${x} ${y + 21 * s} ${x + 8 * s} ${y + 14 * s}`, 2.2);
+  }
 
   // ---------------------------------------------------------------- the mouth from the side
-  // A close-up of the front of the mouth, as if the cheek were see-through; the face looks left. A small head in
-  // the corner shows where we are looking.
   // pose: sh (ש), s (ס, to compare), tsClose (צ: the tongue tip presses and stops the air), tsOpen (צ: it lets go)
   // hl: lips | teeth | tip | air | touch | release | none
   const POSE = {
@@ -3708,148 +4158,150 @@ const GUIDE = (function () {
     tsClose: { lips: 'spread', jaw: 3, tongue: 'close', air: 'hold' },
     tsOpen: { lips: 'spread', jaw: 4, tongue: 's', air: 'ts' }
   };
-  // the roof of the mouth, front to back: the gum behind the top teeth, the bump (alveolar ridge), then up the hard palate
+  // the roof of the mouth, front to back: the gum behind the top teeth, the little hill (alveolar ridge), the palate
   const ROOF = 'M 88 60 C 94 62, 100 60, 104 56 C 110 50, 120 42, 136 36 C 158 28, 196 24, 240 24';
   // the front of the tongue, tip first; it runs on out of the picture to the right
   const TONGUE = {
-    // ש: the tip goes up and a little back, behind the bump, and touches nothing; there is room under it
+    // ש: the tip goes up and a little back, behind the hill, and touches nothing; there is room under it
     sh: 'M 108 82 C 108 72, 114 64, 124 60 C 138 55, 160 52, 190 52 C 210 52, 228 54, 240 56 L 240 200 L 150 200 C 132 186, 122 166, 118 146 C 114 126, 110 104, 108 82 Z',
     // ס: the tip is forward, close behind the top teeth
     s: 'M 92 74 C 92 66, 98 62, 106 62 C 124 62, 150 62, 180 60 C 204 59, 226 60, 240 62 L 240 200 L 140 200 C 120 186, 104 170, 96 150 C 90 134, 90 112, 90 96 C 90 88, 91 80, 92 74 Z',
-    // צ: the tip and the front of the tongue press on the bump; the air stops behind them
+    // צ: the tip and the front of the tongue press on the hill; the air stops behind them
     close: 'M 90 70 C 90 64, 92 61, 96 61 C 99 61, 101 59, 104 56 C 108 51, 113 47, 118 44 C 126 46, 140 54, 160 57 C 190 60, 220 60, 240 62 L 240 200 L 140 200 C 120 186, 104 170, 96 150 C 90 134, 89 112, 89 96 C 89 86, 89 78, 90 70 Z'
   };
+  const SHINE = { sh: 'M 128 66 C 146 60, 170 58, 196 58', s: 'M 112 68 C 134 67, 160 66, 190 65', close: 'M 128 56 C 144 60, 168 63, 196 64' };
   const TIP = { sh: [110, 74], s: [94, 68], close: [100, 60] };
   function side(poseName, hl, opt) {
     opt = opt || {};
     const p = POSE[poseName] || POSE.sh, j = p.jaw;
     const U = p.lips === 'round' ? 26 : 48, W = p.lips === 'round' ? 28 : 50;   // how far forward the lips reach
-    let s = '';
-    // the face: under the nose, the lips, the chin
-    s += fill(`M 54 0 C 46 4, 34 8, 28 13 C 22 18, 24 25, 32 27 C 40 29, 54 28, 60 29 C 64 30, 66 31, 66 33 C 64 38, ${U + 16} 42, ${U + 10} 50 ` +
+    let s = frame(240, 200, 'sky');
+    // the face: a round nose, the lips, the chin, a rosy cheek
+    s += fill(`M 66 0 C 60 2, 48 3, 42 9 C 36 15, 37 23, 45 25 C 52 27, 60 27, 64 30 C 66 31, 66 32, 66 33 C 64 38, ${U + 16} 42, ${U + 10} 50 ` +
       `C ${U + 2} 54, ${U - 4} 70, ${U} 84 C ${U + 3} 92, ${U + 10} 97, ${U + 18} 99 L ${W + 18} ${106 + j} ` +
       `C ${W + 10} ${106 + j}, ${W + 2} ${112 + j}, ${W} ${124 + j} C ${W} ${136 + j}, ${W + 8} ${144 + j}, ${W + 20} ${147 + j} ` +
       `C 58 ${154 + j}, 50 ${168 + j}, 54 ${184 + j} C 57 ${194 + j}, 64 200, 74 200 L 240 200 L 240 0 Z`, C.skin);
-    s += line('M 40 21 C 44 24, 50 24, 54 20', 2.2);   // the nostril
-    // inside the mouth (dark), with the opening between the lips
+    s += line('M 47 18 C 50 21, 55 21, 58 18', 2.2);                         // the nostril
+    s += `<ellipse cx="208" cy="11" rx="20" ry="9" fill="${C.cheek}" opacity=".5"/>`;
+    // inside the mouth: soft pink, with the opening between the lips
     s += fill(`${ROOF} L 240 200 L 150 200 C 124 186, 102 172, 92 ${156 + j} C 88 ${148 + j}, 86 ${140 + j}, 85 ${132 + j} L 80 ${106 + j} ` +
-      `L ${W + 18} ${107 + j} L ${U + 18} 99 L 78 99 C 79 86, 82 72, 88 60 Z`, C.cavity, { nl: 1, flat: 1 });
-    s += stroke(ROOF, C.gum, 7);
+      `L ${W + 18} ${107 + j} L ${U + 18} 99 L 78 99 C 79 86, 82 72, 88 60 Z`, C.mouth, { nl: 1 });
+    s += stroke(ROOF, C.roof, 8);
     s += line(ROOF, 2.2);
-    // the floor of the mouth behind the bottom teeth
-    s += stroke(`M 88 ${150 + j} C 98 ${170 + j}, 120 186, 150 200`, C.gum, 6);
-    // the tongue and its middle line
+    s += stroke(`M 88 ${150 + j} C 98 ${170 + j}, 120 186, 150 200`, C.roof, 6);
+    // the tongue, shiny, with its face
     s += fill(TONGUE[p.tongue], C.tongue, { w: 2.6 });
-    s += stroke(p.tongue === 'sh' ? 'M 140 72 C 170 70, 204 70, 240 72' : 'M 128 76 C 160 75, 204 74, 240 76', C.tongueD, 2.2, ' opacity=".45"');
-    // gums and the two front teeth, top and bottom
-    s += fill('M 68 50 C 72 46, 82 47, 90 52 C 95 55, 94 61, 88 62 C 84 60, 80 59, 76 60 C 72 60, 68 58, 67 55 C 66 53, 67 51, 68 50 Z', C.gum, { w: 2 });
-    s += fill(`M 64 ${150 + j} C 66 ${146 + j}, 72 ${144 + j}, 76 ${145 + j} C 80 ${144 + j}, 86 ${145 + j}, 90 ${150 + j} C 92 ${156 + j}, 90 ${162 + j}, 84 ${163 + j} L 68 ${163 + j} C 64 ${160 + j}, 63 ${155 + j}, 64 ${150 + j} Z`, C.gum, { w: 2 });
+    s += stroke(SHINE[p.tongue], '#ffffff', 4, ' opacity=".45"');
+    s += tongueFace(194, 108, [-2.4, 0.6]);
+    // gums and the two front teeth
+    s += fill('M 68 50 C 72 46, 82 47, 90 52 C 95 55, 94 61, 88 62 C 84 60, 80 59, 76 60 C 72 60, 68 58, 67 55 C 66 53, 67 51, 68 50 Z', C.roof, { w: 2 });
+    s += fill(`M 64 ${150 + j} C 66 ${146 + j}, 72 ${144 + j}, 76 ${145 + j} C 80 ${144 + j}, 86 ${145 + j}, 90 ${150 + j} C 92 ${156 + j}, 90 ${162 + j}, 84 ${163 + j} L 68 ${163 + j} C 64 ${160 + j}, 63 ${155 + j}, 64 ${150 + j} Z`, C.roof, { w: 2 });
     s += fill('M 72 52 C 70 66, 68 84, 69 100 C 72 102, 77 102, 80 100 C 82 88, 86 72, 90 58 Z', C.tooth, { w: 2.2 });
     s += fill(`M 68 ${152 + j} C 68 ${136 + j}, 69 ${120 + j}, 71 ${106 + j} C 74 ${104 + j}, 78 ${104 + j}, 81 ${106 + j} C 83 ${120 + j}, 85 ${136 + j}, 88 ${152 + j} Z`, C.tooth, { w: 2.2 });
-    s += `<path d="M 74 60 C 73 70, 72 82, 72 92" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".9"/>`;
-    // the lips
+    s += stroke('M 75 60 C 74 70, 73 82, 73 92', '#d6e9ff', 2.4);
+    // the lips, glossy
     s += fill(`M ${U + 10} 50 C ${U + 2} 54, ${U - 4} 70, ${U} 84 C ${U + 3} 92, ${U + 10} 97, ${U + 18} 99 L 70 99 C 68 84, 67 66, 65 53 C 60 49, ${U + 16} 47, ${U + 10} 50 Z`, C.lip, { w: 2.4 });
     s += fill(`M ${W + 18} ${106 + j} C ${W + 10} ${106 + j}, ${W + 2} ${112 + j}, ${W} ${124 + j} C ${W} ${136 + j}, ${W + 8} ${144 + j}, ${W + 20} ${147 + j} L 66 ${150 + j} L 70 ${106 + j} Z`, C.lip, { w: 2.4 });
-    s += `<path d="M ${U + 4} 64 C ${U + 2} 70, ${U + 2} 76, ${U + 4} 82" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".45"/>`;
-    s += highlight(poseName, p, hl, j, U, W);
-    s += airOf(p, hl, j);
-    if (opt.labels !== false) s += labels(poseName, p, hl, j, U, W);
-    if (opt.inset !== false) s += inset();
+    s += stroke(`M ${U + 5} 63 C ${U + 3} 69, ${U + 3} 75, ${U + 5} 81`, '#ffffff', 3.4, ' opacity=".6"');
+    s += stroke(`M ${W + 6} ${118 + j} C ${W + 5} ${122 + j}, ${W + 5} ${127 + j}, ${W + 6} ${131 + j}`, '#ffffff', 3, ' opacity=".5"');
+    s += highlight(poseName, p, hl, j, U);
+    s += airOf(p, hl);
+    if (opt.labels !== false) s += labels(poseName, p, hl, j, U);
     return `<svg viewBox="0 0 240 200" aria-hidden="true" focusable="false" class="gd-side">${s}</svg>`;
   }
-  // the small head in the corner, with a ring where the close-up is
-  function inset() {
-    return `<g transform="translate(184 128)"><circle cx="24" cy="24" r="25" style="fill:var(--card)" opacity=".92"/><circle cx="24" cy="24" r="25" fill="none" style="stroke:var(--pic-ink)" stroke-width="1.6"/>` +
-      `<path d="M 40 6 C 30 4, 18 8, 14 16 C 12 20, 10 22, 8 25 C 7 27, 10 28, 11 29 C 10 31, 12 32, 12 34 C 12 37, 14 38, 18 38 C 18 42, 22 44, 28 44 L 36 44 C 40 36, 44 28, 44 20 C 44 14, 42 10, 40 6 Z" fill="${C.skin}" style="stroke:var(--pic-ink)" stroke-width="1.4" stroke-linejoin="round"/>` +
-      `<path d="M 40 6 C 32 4, 22 6, 18 12 C 26 12, 36 12, 44 18 C 44 12, 42 9, 40 6 Z" fill="${C.hair}"/><circle cx="22" cy="20" r="1.4" style="fill:var(--pic-ink)"/>` +
-      `<circle cx="13" cy="31" r="6" fill="none" stroke="${C.glow}" stroke-width="2.4"/></g>`;
-  }
 
-  function highlight(poseName, p, hl, j, U, W) {
+  function highlight(poseName, p, hl, j, U) {
     let s = '';
     if (hl === 'lips') s += ring(U + 22, 102 + j / 2, p.lips === 'round' ? 30 : 22, 50);
-    if (hl === 'teeth') s += ring(75, 102 + j / 2, 13, 22);
+    if (hl === 'teeth') s += ring(75, 102 + j / 2, 14, 22);
     if (hl === 'tip' || hl === 'touch') {
       const t = TIP[p.tongue];
-      s = halo(t[0], t[1], 22) + s;
+      s = halo(t[0], t[1], 24) + s;
       if (hl === 'tip' && poseName === 'sh') {
         // where the tip is for ס (dashed), and where it goes for ש: up and a little back
-        s += `<path d="M 92 74 C 92 66, 98 62, 106 62" fill="none" stroke="#fff" stroke-width="2.4" stroke-dasharray="3 4" stroke-linecap="round" opacity=".9"/>`;
-        s += `<path d="M 94 82 C 98 92, 108 92, 110 84" fill="none" stroke="${C.glow}" stroke-width="3.2" stroke-linecap="round" marker-end="url(#gd-ah-glow)"/>`;
+        s += `<path d="M 92 74 C 92 66, 98 62, 106 62" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="3 5" stroke-linecap="round"/>`;
+        s += stroke('M 94 82 C 98 93, 108 93, 110 85', C.glow, 4, ' marker-end="url(#gd-ah-glow)"');
       }
     }
     if (hl === 'touch' && p.tongue === 'close') {
-      s += `<path d="M 92 62 C 98 62, 102 58, 106 54 C 110 50, 114 47, 118 44" fill="none" stroke="${C.glow}" stroke-width="6" stroke-linecap="round"/>`;
-      // the air waits behind the tongue
-      s += [0, 1, 2].map(i => `<path d="M ${136 + i * 13} ${44 - i * 2} q 7 -5 0 -11" fill="none" stroke="${C.ts}" stroke-width="3" stroke-linecap="round" opacity="${0.95 - i * 0.22}"/>`).join('');
+      s += stroke('M 92 62 C 98 62, 102 58, 106 54 C 110 50, 114 47, 118 44', C.glow, 7);
+      s += twinkle(112, 40, 7);
     }
+    // צ, touching: the air waits behind the tongue, in little bubbles
+    if (p.air === 'hold') s += [[136, 46, 4.5], [151, 41, 6], [169, 38, 7.5]].map(([x, y, r], i) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="${C.ts}" stroke-width="2.4" opacity="${0.95 - i * 0.12}"/>`).join('');
     return s;
   }
 
-  function airOf(p, hl, j) {
+  function airOf(p, hl) {
     if (!p.air || p.air === 'hold') return '';
     if (hl && hl !== 'air' && hl !== 'release' && hl !== 'none') return '';
+    const puff = (x, y, r) => `<g><circle cx="${x}" cy="${y}" r="${r}" fill="${C.cloud}" stroke="${INK}" stroke-width="1.4"/><circle cx="${x + r * 0.9}" cy="${y + r * 0.3}" r="${r * 0.8}" fill="${C.cloud}" stroke="${INK}" stroke-width="1.4"/><circle cx="${x + 0.2 * r}" cy="${y + 0.5 * r}" r="${r * 0.75}" fill="${C.cloud}"/></g>`;
     if (p.air === 'sh') {
-      // from the throat (right) over the tongue, down in front of its tip, out between the teeth and the round lips
-      const d = 'M 238 40 C 200 38, 160 42, 136 46 C 120 50, 108 56, 102 66 C 96 76, 92 88, 84 98 C 76 104, 56 104, 14 103';
-      return stroke(d, '#ffffff', 9, ' opacity=".5"') + stroke(d, C.sh, 4.6, ' marker-end="url(#gd-ah-sh)"') +
-        stroke('M 10 84 q -5 4 0 8 t 0 8 t 0 8 t 0 8 t 0 8', C.sh, 2.6, ' opacity=".75"') + stroke('M 3 80 q -5 5 0 10 t 0 10 t 0 10 t 0 10', C.sh, 2.4, ' opacity=".45"');
+      // a soft breeze: from the throat (right) over the tongue, down in front of its tip, out between the teeth and the round lips
+      const d = 'M 238 40 C 200 38, 160 42, 136 46 C 120 50, 108 56, 102 66 C 96 76, 92 88, 84 98 C 76 104, 56 104, 16 103';
+      return stroke(d, '#ffffff', 11, ' opacity=".75"') + stroke(d, C.sh, 5, ' marker-end="url(#gd-ah-sh)"') +
+        puff(12, 80, 7) + puff(9, 118, 6) + stroke('M 18 92 q -4 4 0 8 t 0 8', C.sh, 2.4, ' opacity=".7"');
     }
     if (p.air === 's') {
       const d = 'M 238 44 C 200 42, 160 46, 132 50 C 116 52, 106 56, 100 62 C 94 68, 88 84, 82 98 C 74 104, 56 104, 30 104';
-      return stroke(d, '#ffffff', 6, ' opacity=".4"') + stroke(d, C.sh, 3, ' stroke-dasharray="1 6" marker-end="url(#gd-ah-sh)"');
+      return stroke(d, '#ffffff', 7, ' opacity=".6"') + stroke(d, C.sh, 3, ' stroke-dasharray="1 6" marker-end="url(#gd-ah-sh)"');
     }
-    // צ lets go: a short, sharp puff out between the teeth
-    const d = 'M 112 54 C 104 62, 92 80, 84 98 C 74 104, 54 104, 26 104';
-    return stroke(d, '#ffffff', 9, ' opacity=".5"') + stroke(d, C.ts, 4.6, ' marker-end="url(#gd-ah-ts)"') +
-      stroke('M 16 88 l -9 -7 M 14 104 l -11 0 M 16 120 l -9 7', C.ts, 3);
+    // צ lets go: a short, sharp spark out between the teeth
+    const d = 'M 112 54 C 104 62, 92 80, 84 98 C 74 104, 54 104, 28 104';
+    return stroke(d, '#ffffff', 11, ' opacity=".75"') + stroke(d, C.ts, 5, ' marker-end="url(#gd-ah-ts)"') +
+      star5(12, 86, 7, C.glow) + star5(8, 122, 5.5, C.ts) + stroke('M 20 98 l -8 -3 M 20 110 l -8 3', C.ts, 3);
   }
 
-  function labels(poseName, p, hl, j, U, W) {
+  function labels(poseName, p, hl, j, U) {
     const L = [];
-    const lead = (d, col) => `<path d="${d}" fill="none" stroke="${col || 'var(--pic-ink)'}" stroke-width="1.7" stroke-linecap="round"/>`;
-    if (hl === 'lips') L.push(label(26, 178, 'שפתיים', { size: 13 }), lead(`M 30 168 L ${U + 8} ${132 + j}`));
-    if (hl === 'teeth') L.push(label(30, 178, 'שיניים', { size: 13 }), lead(`M 34 168 L 72 ${112 + j}`));
+    const lead = d => `<path d="${d}" fill="none" stroke="${INK}" stroke-width="1.8" stroke-linecap="round"/>`;
+    const hill = opts.kid ? 'הגבעה' : 'הבליטה';
+    if (hl === 'lips') L.push(label(26, 182, 'שפתיים', { size: 14 }), lead(`M 30 170 L ${U + 8} ${132 + j}`));
+    if (hl === 'teeth') L.push(label(30, 182, 'שיניים', { size: 14 }), lead(`M 34 170 L 72 ${112 + j}`));
     if (hl === 'tip' || hl === 'touch') {
       const t = TIP[p.tongue];
-      L.push(label(160, 118, 'קצה הלשון', { size: 13, col: '#fff', halo: C.tongueD }), lead(`M 140 112 L ${t[0] + 8} ${t[1] + 8}`, '#fff'));
+      L.push(label(150, 160, 'קצה הלשון', { size: 14 }), lead(`M 132 150 L ${t[0] + 8} ${t[1] + 10}`));
     }
-    if (hl === 'touch' || (hl === 'tip' && poseName === 'sh')) L.push(label(140, 14, 'הבליטה', { size: 13 }), lead('M 128 18 L 106 50'));
-    if (hl === 'air' && p.air) L.push(label(176, 58, 'אוויר', { size: 13, col: '#fff', halo: C.cavity }));
+    if (hl === 'touch' || (hl === 'tip' && poseName === 'sh')) L.push(label(146, 15, hill, { size: 14 }), lead('M 132 19 L 108 48'));
+    if (hl === 'air' && p.air) L.push(label(170, 76, 'אוויר', { size: 14, col: C.sh }));
     return L.join('');
   }
 
-  // ---------------------------------------------------------------- the lips and teeth from the front
+  // ---------------------------------------------------------------- a whole smiling face, from the front
   // pose: round (ש: lips round and forward, teeth close), smile (צ / ס: a small smile, teeth together)
   function front(poseName, hl) {
-    let s = '';
-    s += fill('M 0 0 L 200 0 L 200 150 L 0 150 Z', C.skin, { nl: 1 });
-    s += line('M 84 22 C 90 30, 110 30, 116 22', 2.4);                    // under the nose
-    s += `<circle cx="34" cy="76" r="13" fill="#ff9fc6" opacity=".45"/><circle cx="166" cy="76" r="13" fill="#ff9fc6" opacity=".45"/>`;
-    s += line('M 70 136 C 84 144, 116 144, 130 136', 2.2);                // chin
-    if (poseName === 'round') {
-      // pushed forward into a round "o": the lips fold out; the teeth almost touch inside
-      s += fill('M 100 44 C 128 44, 140 64, 138 82 C 136 104, 120 116, 100 116 C 80 116, 64 104, 62 82 C 60 64, 72 44, 100 44 Z', C.lip, { w: 2.8 });
-      s += fill('M 100 64 C 114 64, 120 72, 120 80 C 120 90, 112 96, 100 96 C 88 96, 80 90, 80 80 C 80 72, 86 64, 100 64 Z', C.cavity, { w: 2.2, flat: 1 });
-      s += fill('M 86 70 C 92 67, 108 67, 114 70 L 113 78 L 87 78 Z', C.tooth, { w: 1.8 });
-      s += fill('M 88 83 L 112 83 L 113 90 C 106 93, 94 93, 87 90 Z', C.tooth, { w: 1.8 });
-      s += line('M 94 70 L 94 78 M 100 69 L 100 78 M 106 70 L 106 78', 1.2);
-      // "forward" lines at the sides
-      s += line('M 54 66 C 50 72, 50 90, 54 96 M 146 66 C 150 72, 150 90, 146 96', 2, ' opacity=".7"');
-      s += line('M 46 72 C 43 78, 43 86, 46 92 M 154 72 C 157 78, 157 86, 154 92', 2, ' opacity=".45"');
-      s += `<path d="M 100 46 C 112 48, 122 54, 128 62" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".5"/>`;
+    const round = poseName === 'round';
+    let s = frame(200, 170, 'sun');
+    s += `<circle cx="100" cy="74" r="66" fill="${C.hair}"/>`;                                  // hair at the back
+    s += fill('M 30 98 C 22 98, 20 112, 30 116 C 34 118, 38 116, 38 112 Z', C.skin, { w: 2.2 });  // ears
+    s += fill('M 170 98 C 178 98, 180 112, 170 116 C 166 118, 162 116, 162 112 Z', C.skin, { w: 2.2 });
+    s += fill('M 100 26 C 140 26, 166 56, 166 98 C 166 138, 138 164, 100 164 C 62 164, 34 138, 34 98 C 34 56, 60 26, 100 26 Z', C.skin, { w: 2.6 });
+    s += fill('M 36 88 C 37 52, 64 28, 100 28 C 138 28, 163 52, 164 88 C 158 76, 148 68, 136 66 C 122 64, 110 68, 100 76 C 92 63, 78 57, 62 62 C 50 66, 42 75, 36 88 Z', C.hair, { w: 2.4 });   // a side-swept fringe
+    s += line('M 98 29 C 92 20, 100 12, 108 18', 2.6);   // a little curl
+    s += line('M 70 82 Q 78 77 86 81', 2.6) + line('M 114 81 Q 122 77 130 82', 2.6);              // brows
+    s += `<ellipse cx="78" cy="96" rx="6" ry="7.6" fill="${INK}"/><circle cx="80" cy="93.4" r="2" fill="#fff"/>`;
+    s += `<ellipse cx="122" cy="96" rx="6" ry="7.6" fill="${INK}"/><circle cx="124" cy="93.4" r="2" fill="#fff"/>`;
+    s += line('M 96 112 Q 100 116 104 112', 2.2);                                                  // nose
+    s += dot(62, 120, 10, C.cheek, ' opacity=".55"') + dot(138, 120, 10, C.cheek, ' opacity=".55"');
+    const my = 138;
+    if (round) {
+      // pushed forward into a round "o": the teeth almost touch inside
+      s += fill(`M 100 ${my - 17} C 114 ${my - 17}, 122 ${my - 8}, 122 ${my} C 122 ${my + 10}, 113 ${my + 17}, 100 ${my + 17} C 87 ${my + 17}, 78 ${my + 10}, 78 ${my} C 78 ${my - 8}, 86 ${my - 17}, 100 ${my - 17} Z`, C.lip, { w: 2.6 });
+      s += fill(`M 100 ${my - 8} C 107 ${my - 8}, 110 ${my - 4}, 110 ${my} C 110 ${my + 5}, 106 ${my + 8}, 100 ${my + 8} C 94 ${my + 8}, 90 ${my + 5}, 90 ${my} C 90 ${my - 4}, 93 ${my - 8}, 100 ${my - 8} Z`, C.inside, { w: 2, flat: 1 });
+      s += `<rect x="92.5" y="${my - 6}" width="15" height="4.6" rx="1.6" fill="#fff"/><rect x="93" y="${my + 1.6}" width="14" height="4" rx="1.6" fill="#fff"/>`;
+      s += stroke(`M 88 ${my - 12} C 92 ${my - 15}, 98 ${my - 16}, 104 ${my - 15}`, '#ffffff', 2.6, ' opacity=".65"');
+      s += line(`M 70 ${my - 8} C 66 ${my - 3}, 66 ${my + 3}, 70 ${my + 8} M 130 ${my - 8} C 134 ${my - 3}, 134 ${my + 3}, 130 ${my + 8}`, 2, ' opacity=".7"');
+      if (hl === 'lips') s += `<path d="M 138 118 c -2 -5 -9 -4 -8 1 c 1 3 5 5 8 8 c 3 -3 7 -5 8 -8 c 1 -5 -6 -6 -8 -1 z" fill="${C.lip}" stroke="${INK}" stroke-width="1.4"/>`;   // a little kiss heart
     } else {
       // a small smile: the corners go back, the teeth show and meet
-      s += fill('M 52 78 C 70 62, 86 66, 100 66 C 114 66, 130 62, 148 78 C 132 100, 116 104, 100 104 C 84 104, 68 100, 52 78 Z', C.lip, { w: 2.8 });
-      s += fill('M 60 80 C 76 74, 90 75, 100 75 C 110 75, 124 74, 140 80 C 126 92, 112 95, 100 95 C 88 95, 74 92, 60 80 Z', C.cavity, { w: 2.2, flat: 1 });
-      s += fill('M 66 79 C 80 75, 120 75, 134 79 L 132 85 L 68 85 Z', C.tooth, { w: 1.8 });
-      s += fill('M 69 86 L 131 86 C 122 92, 78 92, 69 86 Z', C.tooth, { w: 1.8 });
-      s += line('M 84 77 L 84 85 M 92 76 L 92 85 M 100 76 L 100 85 M 108 76 L 108 85 M 116 77 L 116 85', 1.2);
-      s += line('M 48 74 C 46 78, 46 82, 48 86 M 152 74 C 154 78, 154 82, 152 86', 2, ' opacity=".6"');
+      s += fill(`M 72 ${my - 4} C 84 ${my - 12}, 92 ${my - 10}, 100 ${my - 10} C 108 ${my - 10}, 116 ${my - 12}, 128 ${my - 4} C 120 ${my + 12}, 110 ${my + 15}, 100 ${my + 15} C 90 ${my + 15}, 80 ${my + 12}, 72 ${my - 4} Z`, C.lip, { w: 2.6 });
+      s += fill(`M 78 ${my - 3} C 88 ${my - 7}, 94 ${my - 6}, 100 ${my - 6} C 106 ${my - 6}, 112 ${my - 7}, 122 ${my - 3} C 114 ${my + 7}, 106 ${my + 9}, 100 ${my + 9} C 94 ${my + 9}, 86 ${my + 7}, 78 ${my - 3} Z`, C.inside, { w: 2, flat: 1 });
+      s += `<path d="M 81 ${my - 3.4} C 90 ${my - 6}, 110 ${my - 6}, 119 ${my - 3.4} L 118 ${my + 1} L 82 ${my + 1} Z" fill="#fff"/><path d="M 83 ${my + 2} L 117 ${my + 2} C 110 ${my + 6.5}, 90 ${my + 6.5}, 83 ${my + 2} Z" fill="#fff"/>`;
+      s += line(`M 66 ${my - 7} l -5 -3 M 134 ${my - 7} l 5 -3`, 2, ' opacity=".7"');
     }
-    if (hl === 'lips') s += ring(100, poseName === 'round' ? 80 : 84, poseName === 'round' ? 48 : 58, poseName === 'round' ? 44 : 30);
-    if (hl === 'teeth') s += ring(100, poseName === 'round' ? 80 : 84, poseName === 'round' ? 24 : 40, poseName === 'round' ? 18 : 14);
-    return `<svg viewBox="0 0 200 150" aria-hidden="true" focusable="false" class="gd-front">${s}</svg>`;
+    if (hl === 'lips') s += ring(100, my, round ? 30 : 36, round ? 27 : 22);
+    if (hl === 'teeth') s += ring(100, my, round ? 16 : 26, round ? 14 : 13);
+    return `<svg viewBox="0 0 200 170" aria-hidden="true" focusable="false" class="gd-front">${s}</svg>`;
   }
 
   // ---------------------------------------------------------------- the tongue from above
@@ -3857,16 +4309,14 @@ const GUIDE = (function () {
   // teeth glows, and the arrow is the air in the middle. pose: sh (wide channel), s (narrow), close (all round)
   function top(poseName, hl, opt) {
     opt = opt || {};
-    let s = '';
-    s += fill('M 0 0 L 200 0 L 200 170 L 0 170 Z', C.cavity, { nl: 1, flat: 1 });
-    // the tongue seen from above (tip at the top)
+    let s = frame(200, 170, 'mouth');
     s += fill('M 100 22 C 128 22, 152 40, 158 72 C 164 104, 160 140, 152 170 L 48 170 C 40 140, 36 104, 42 72 C 48 40, 72 22, 100 22 Z', C.tongue, { w: 2.6 });
-    // the teeth along the top of the mouth, front to back
-    // horseshoe of teeth (drawn as rounded blocks)
+    s += stroke('M 70 46 C 80 36, 92 32, 104 32', '#ffffff', 4, ' opacity=".45"');
+    // the teeth along the top of the mouth, front to back (a horseshoe)
     const arch = [[92, 14], [108, 14], [78, 20], [122, 20], [66, 30], [134, 30], [56, 44], [144, 44], [48, 62], [152, 62], [42, 84], [158, 84], [38, 108], [162, 108], [36, 134], [164, 134]];
     arch.forEach(([x, y], i) => {
       const w = i < 4 ? 14 : i < 8 ? 15 : 18, h = i < 4 ? 11 : i < 8 ? 13 : 20;
-      s += `<rect x="${x - w / 2}" y="${y - h / 2}" width="${w}" height="${h}" rx="${w / 3}" fill="url(#gd-tooth)"/><rect x="${x - w / 2}" y="${y - h / 2}" width="${w}" height="${h}" rx="${w / 3}" fill="none" style="stroke:var(--pic-ink)" stroke-width="1.8"/>`;
+      s += `<rect x="${x - w / 2}" y="${y - h / 2}" width="${w}" height="${h}" rx="${w / 3}" fill="#fff" stroke="${INK}" stroke-width="1.8"/>`;
     });
     // where the tongue touches the teeth
     const touch = poseName === 'close'
@@ -3874,25 +4324,221 @@ const GUIDE = (function () {
       : poseName === 's'
         ? 'M 42 132 C 40 104, 44 72, 58 46 M 158 132 C 160 104, 156 72, 142 46'
         : 'M 40 134 C 38 112, 40 92, 46 72 M 160 134 C 162 112, 160 92, 154 72';
-    s += stroke(touch, C.glow, 9, ' opacity=".85"');
+    s += stroke(touch, C.glow, 10, ' opacity=".9"');
+    s += poseName === 'close' ? twinkle(100, 22, 7) : twinkle(30, 100, 6.5) + twinkle(170, 100, 6.5);
     // the air in the middle
     if (poseName !== 'close') {
       const wide = poseName === 'sh';
-      s += stroke(`M 100 160 L 100 ${wide ? 34 : 28}`, '#ffffff', wide ? 22 : 10, ' opacity=".35"');
-      s += stroke(`M 100 158 L 100 ${wide ? 40 : 34}`, C.sh, wide ? 5 : 3, ' marker-end="url(#gd-ah-sh)"');
-      if (wide) s += stroke('M 88 150 L 88 64 M 112 150 L 112 64', C.sh, 2, ' opacity=".55" stroke-dasharray="2 5"');
+      s += stroke(`M 100 118 L 100 ${wide ? 38 : 32}`, '#ffffff', wide ? 22 : 11, ' opacity=".55"');
+      s += stroke(`M 100 116 L 100 ${wide ? 44 : 38}`, C.sh, wide ? 5.5 : 3.4, ' marker-end="url(#gd-ah-sh)"');
     }
+    s += tongueFace(100, 140, [0, -2.6], 0.82);
     if (opt.labels !== false) {
-      s += label(poseName === 'close' ? 100 : 44, poseName === 'close' ? 60 : 154, poseName === 'close' ? 'נוגע מסביב' : 'נוגע כאן', { size: 12.5, halo: C.cavity, col: '#fff' });
-      if (poseName !== 'close') s += label(124, 100, 'אוויר', { size: 12.5, halo: C.cavity, col: '#fff' });
+      s += label(poseName === 'close' ? 100 : 46, poseName === 'close' ? 62 : 158, poseName === 'close' ? 'נוגעת מסביב' : 'נוגעת כאן', { size: 13 });
+      if (poseName !== 'close') s += label(126, 92, 'אוויר', { size: 13, col: C.sh });
     }
     return `<svg viewBox="0 0 200 170" aria-hidden="true" focusable="false" class="gd-top">${s}</svg>`;
   }
 
-  return { side, front, top, defs, POSE };
+  return { side, front, top, defs, POSE, opts };
 })();
 
 if (typeof module !== 'undefined') module.exports = GUIDE;
+
+;
+/* Pictures for the games: the ש train (a day train for the little ones, a night train for 7–11, a metro line
+   for 12+), the צ bubbles (soap bubbles / glowing rings / targets), the cards on the games page and the tab icons.
+   The soft fills come from the gradients of PICS.defs(); outlines follow the look (--pic-ink). Everything that
+   moves is reached by class, never by id, because the same picture can be on two screens at once. */
+const GART = (function () {
+  const INK = 'style="stroke:var(--pic-ink)"';
+  const g = k => `url(#pg-${k})`;
+  // a filled shape with an ink outline; a shape with a fill only; an ink line
+  const S = (shape, fill, w) => `<${shape} fill="${fill}" ${INK} stroke-width="${w || 3}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const F = (shape, fill, op) => `<${shape} fill="${fill}"${op != null ? ` opacity="${op}"` : ''}/>`;
+  const L = (shape, w, col, op) => `<${shape} fill="none" ${col ? `stroke="${col}"` : INK} stroke-width="${w || 3}" stroke-linecap="round" stroke-linejoin="round"${op != null ? ` opacity="${op}"` : ''}/>`;
+  const sparkle = (x, y, r, fill) => `<path class="tw" d="M${x} ${y - r} L${x + r * .28} ${y - r * .28} L${x + r} ${y} L${x + r * .28} ${y + r * .28} L${x} ${y + r} L${x - r * .28} ${y + r * .28} L${x - r} ${y} L${x - r * .28} ${y - r * .28} Z" fill="${fill}"/>`;
+  // a PICS picture placed inside another picture
+  const pic = (key, x, y, w, h) => (PICS.get(key) || '').replace('<svg ', `<svg x="${x}" y="${y}" width="${w}" height="${h || w}" `);
+
+  // ---------------------------------------------------------------- the ש train (young: day, older: night)
+  // The train faces left (it travels from right to left, the way Hebrew reads) and is drawn with its front at x=0;
+  // the game moves .g-train along the rails and turns the wheels with the CSS variable --a.
+  function train(o) {
+    const night = o.night;
+    let s = '';
+    // cargo first, so the wagon's walls hide its bottom
+    s += `<g class="g-cargo">${pic(o.cargo || 'cocoa', 100, 94, 46)}</g>`;
+    if (night) s += F('path d="M6 140 L-70 124 L-70 166 Z"', '#fff3a8', 0.22);    // the headlight in the dark
+    s += S('path d="M2 178 L13 160 L18 160 L18 178 Z"', g('dgrey'), 2.6);         // cowcatcher
+    s += S('rect x="10" y="134" width="46" height="30" rx="13"', g('blue'), 3);    // boiler
+    s += L('path d="M25 135 L25 163 M40 135 L40 163"', 2.2);
+    s += S('path d="M16 110 L32 110 L29 119 L28 134 L20 134 L19 119 Z"', g('black'), 2.6);   // chimney
+    s += S('path d="M41 134 C41 124 53 124 53 134 Z"', g('gold'), 2.4);          // dome
+    s += S('circle cx="12" cy="143" r="4.6"', night ? '#fff3a8' : g('yellow'), 2.2);   // lamp
+    s += S('rect x="54" y="106" width="36" height="58" rx="6"', g('red'), 3);     // cab
+    s += S('rect x="58" y="114" width="26" height="22" rx="5"', night ? '#ffe9a0' : '#d8f2ff', 2.4);   // window
+    // שוצי drives: a small parrot head looking ahead (left)
+    s += S('path d="M67 121 C66 117 67 114 69 112 C69 115 70 116 71 117 C72 114 74 113 76 113 C75 115 74 117 73 119 Z"', g('red'), 1.6);
+    s += S('circle cx="72" cy="127" r="7.2"', g('green'), 2);
+    s += S('path d="M65.5 124.5 C61 125 60 128 62.5 131 C64 129.5 65.5 129 66.5 128.5 Z"', g('orange'), 1.6);
+    s += F('circle cx="69" cy="125.4" r="1.8"', '#3a3330') + F('circle cx="69.6" cy="124.8" r=".6"', '#fff');
+    s += S('rect x="50" y="100" width="44" height="9" rx="4.5"', g('navy'), 2.6);   // roof
+    s += S('rect x="8" y="162" width="86" height="8" rx="3"', g('navy'), 2.6);      // chassis
+    s += L('path d="M90 166 L100 166"', 3);                                          // coupling
+    s += S('rect x="98" y="134" width="56" height="30" rx="5"', g('yellow'), 3);   // wagon
+    s += L('path d="M100 149 L152 149"', 1.6, null, 0.35);
+    s += S('rect x="96" y="162" width="60" height="7" rx="3"', g('navy'), 2.4);
+    // wheels: spokes show the turning
+    const wheel = (cx, cy, r) => `<g class="g-wheel">${S(`circle cx="${cx}" cy="${cy}" r="${r}"`, g('dgrey'), 2.6)}` +
+      L(`path d="M${cx - r + 2.5} ${cy} L${cx + r - 2.5} ${cy} M${cx} ${cy - r + 2.5} L${cx} ${cy + r - 2.5}"`, 1.8) + F(`circle cx="${cx}" cy="${cy}" r="2.4"`, '#3a3330') + '</g>';
+    s += wheel(26, 172, 8) + wheel(46, 172, 8) + wheel(76, 169, 11) + wheel(110, 172, 8) + wheel(142, 172, 8);
+    // steam: three puffs that rise and fade while the train moves
+    s += `<g class="g-steam">${[0, 1, 2].map(i => S(`circle class="puff p${i}" cx="24" cy="102" r="7"`, night ? '#d9def5' : '#ffffff', 2)).join('')}</g>`;
+    return `<g class="g-train" transform="translate(${o.x != null ? o.x : 250} 0)">${s}</g>`;
+  }
+  function station(o) {
+    const night = o.night;
+    let s = '';
+    s += S('rect x="-6" y="166" width="118" height="12" rx="3"', g('stone'), 2.6);   // platform
+    s += S('rect x="8" y="104" width="64" height="62"', g('cream'), 3);               // building
+    s += S('path d="M0 108 L40 78 L80 108 Z"', g('red'), 3);                          // roof
+    s += S('circle cx="40" cy="96" r="7"', '#fffdf8', 2.2) + L('path d="M40 96 L40 91.5 M40 96 L43.5 97.5"', 1.6);   // the station clock
+    s += S('rect x="13" y="111" width="54" height="17" rx="4"', '#fffdf8', 2.4);      // the name
+    s += `<text class="g-dest" x="40" y="124.2" text-anchor="middle" font-size="12.5" font-weight="800" fill="#3a3330" style="font-family:var(--display)">${o.dest || ''}</text>`;
+    const win = night ? '#ffd54a' : '#a6dcfb';
+    s += S('rect x="14" y="135" width="13" height="13" rx="2.5"', win, 2.2) + S('rect x="53" y="135" width="13" height="13" rx="2.5"', win, 2.2);
+    s += S('rect x="33" y="134" width="14" height="32" rx="6"', g('brown'), 2.4);
+    if (night) s += F('rect x="14" y="135" width="13" height="13" rx="2.5"', '#fff6c2', 0.5) + F('circle cx="20" cy="141" r="16"', 'url(#pg-glow)', 0.6) + F('circle cx="60" cy="141" r="16"', 'url(#pg-glow)', 0.6);
+    return `<g class="g-station">${s}</g>`;
+  }
+  function trainScene(o) {
+    o = o || {};
+    const night = !!o.night, W = 420, H = 220, top = 46;   // more sky above, so the picture is not too flat on a phone
+    let s = `<svg class="g-scene${night ? ' night' : ''}" viewBox="0 ${-top} ${W} ${H + top}"${o.fit ? ' preserveAspectRatio="xMinYMax slice"' : ''} aria-hidden="true" focusable="false">`;
+    s += `<rect y="${-top}" width="${W}" height="${H + top}" fill="${g(night ? 'nightv' : 'skyv')}"/>`;
+    if (night) {
+      s += F('circle cx="352" cy="44" r="34"', 'url(#pg-glow)', 0.45);
+      s += F('path d="M346 22 A22 22 0 1 0 370 58 A18 18 0 1 1 346 22 Z"', '#fff3c4');
+      [[40, 30, 4], [96, 54, 3], [150, 22, 4.5], [212, 46, 3], [262, 18, 3.6], [300, 70, 2.6], [404, 92, 3], [20, 86, 2.6], [190, 84, 2.4], [70, -14, 3.4], [236, -24, 3], [390, -6, 2.6], [128, -30, 2.4]]
+        .forEach(([x, y, r], i) => { s += sparkle(x, y, r, '#fff6c8').replace('class="tw"', `class="tw" style="animation-delay:${(i * 0.37).toFixed(2)}s"`); });
+    } else {
+      s += S('circle cx="356" cy="44" r="20"', g('yellow'), 2.6);
+      s += L('path d="M356 12 L356 4 M356 76 L356 84 M324 44 L316 44 M388 44 L396 44 M333 21 L327 15 M379 21 L385 15 M333 67 L327 73 M379 67 L385 73"', 2.6);
+      const cloud = (x, y, k) => S(`path d="M${x} ${y} c${-14 * k} 0 ${-16 * k} ${-16 * k} ${-2 * k} ${-17 * k} c${2 * k} ${-12 * k} ${20 * k} ${-14 * k} ${25 * k} ${-4 * k} c${6 * k} ${-6 * k} ${19 * k} ${-3 * k} ${18 * k} ${7 * k} c${12 * k} ${1 * k} ${12 * k} ${14 * k} ${0} ${14 * k} Z"`, '#ffffff', 2.4);
+      s += cloud(62, 52, 1.05) + cloud(214, 40, 0.85) + cloud(150, -4, 0.7);
+    }
+    // hills, meadow, the track bed
+    s += night
+      ? F('path d="M0 150 C46 114 92 116 138 140 C172 120 214 106 262 134 C306 112 366 112 420 140 L420 220 L0 220 Z"', '#28346a')
+      : S('path d="M0 150 C46 114 92 116 138 140 C172 120 214 106 262 134 C306 112 366 112 420 140 L420 220 L-4 224 Z"', g('mint'), 2.4);
+    s += night ? F('rect x="0" y="166" width="420" height="54"', '#1d2449') : F('rect x="0" y="166" width="420" height="54"', g('meadowv'));
+    s += night ? '' : L('path d="M0 166 L420 166"', 2.4);
+    s += F('rect x="0" y="177" width="420" height="12"', night ? '#3b4374' : '#dcc9a0');
+    for (let x = 3; x < W; x += 15) s += F(`rect x="${x}" y="179.5" width="9" height="6.5" rx="1.6"`, night ? '#59506a' : '#a9773f');
+    s += night ? L('path d="M0 179.5 L420 179.5"', 3.2, '#c9cdea') : L('path d="M0 179.5 L420 179.5"', 3.4);
+    // a few flowers in the meadow (day) / fireflies (night)
+    if (night) [[150, 198], [262, 206], [338, 196], [96, 210]].forEach(([x, y], i) => { s += F(`circle class="tw" cx="${x}" cy="${y}" r="2.2"`, '#e8ff9a').replace('class="tw"', `class="tw" style="animation-delay:${(i * 0.5).toFixed(1)}s"`); });
+    else [[150, 200, 'pink'], [252, 206, 'yellow'], [336, 198, 'coral'], [110, 210, 'lilac']].forEach(([x, y, c]) => { s += S(`circle cx="${x}" cy="${y}" r="3.6"`, g(c), 1.6); });
+    s += station(o);
+    // the snake that stops the train when a ש comes out as a ס
+    s += `<g class="g-snake" transform="translate(${o.snakeX || 200} 0)"><g class="g-snake-in">${pic('snake', -30, 128, 52)}` +
+      `<g class="g-hiss">${S('rect x="-16" y="100" width="46" height="22" rx="11"', '#fffdf8', 2.2)}<text x="7" y="116" text-anchor="middle" font-size="13" font-weight="800" fill="#2f8f55" style="font-family:var(--display)">סססס</text></g></g></g>`;
+    s += train(o);
+    return s + '</svg>';
+  }
+
+  // ---------------------------------------------------------------- 12+: the same trip as a metro line
+  function metroScene(o) {
+    o = o || {};
+    const stops = o.stops || ['', '', '', '', ''], n = stops.length, x0 = 334, x1 = 26;
+    const X = i => x0 - (x0 - x1) * i / (n - 1);
+    let s = `<svg class="g-metro" viewBox="0 0 360 132" aria-hidden="true" focusable="false">`;
+    s += `<path d="M${x0} 58 L${x1} 58" stroke="#e1e4ea" stroke-width="12" stroke-linecap="round" fill="none"/>`;
+    s += `<path class="g-line" d="M${x0} 58 L${x1} 58" pathLength="1" style="stroke:var(--sh)" stroke-width="12" stroke-linecap="round" fill="none" stroke-dasharray="1 1" stroke-dashoffset="1"/>`;
+    stops.forEach((name, i) => {
+      s += `<circle class="g-stop" data-i="${i}" cx="${X(i)}" cy="58" r="${i === n - 1 ? 9 : 6.5}" fill="#fff" stroke="#14171f" stroke-width="3"/>`;
+      s += `<text x="${X(i)}" y="${i % 2 ? 98 : 30}" text-anchor="middle" font-size="${i === n - 1 ? 15 : 12.5}" font-weight="${i === n - 1 ? 700 : 600}" fill="${i === n - 1 ? '#14171f' : '#596070'}" style="font-family:var(--font)">${name}</text>`;
+    });
+    s += `<g class="g-marker" transform="translate(${x0} 0)"><circle class="g-pulse" cx="0" cy="58" r="15" style="fill:var(--sh)" opacity=".18"/><circle cx="0" cy="58" r="10" style="fill:var(--sh)" stroke="#fff" stroke-width="3.5"/></g>`;
+    return s + '</svg>';
+  }
+
+  function metroMini() {
+    const X = [172, 128, 84, 34];
+    return `<svg viewBox="0 0 200 150" aria-hidden="true" focusable="false"><path d="M172 78 L34 78" stroke="#e1e4ea" stroke-width="16" stroke-linecap="round" fill="none"/>` +
+      `<path d="M172 78 L100 78" style="stroke:var(--sh)" stroke-width="16" stroke-linecap="round" fill="none"/>` +
+      X.map((x, i) => `<circle cx="${x}" cy="78" r="${i === 3 ? 11 : 8}" style="fill:${x >= 100 ? 'var(--sh)' : '#fff'}" stroke="#14171f" stroke-width="3.5"/>`).join('') +
+      `<circle cx="100" cy="78" r="20" style="fill:var(--sh)" opacity=".18"/><circle cx="100" cy="78" r="12" style="fill:var(--sh)" stroke="#fff" stroke-width="4"/>` +
+      `<text x="34" y="122" text-anchor="middle" font-size="30" font-weight="700" style="fill:var(--sh);font-family:var(--font)">ש</text></svg>`;
+  }
+
+  // ---------------------------------------------------------------- the צ bubbles
+  // young: a soap bubble; older: a glowing ring; teen: a target with its number
+  function bubble(kind, label) {
+    if (kind === 'teen') {
+      return `<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="45" fill="#fff" stroke="#14171f" stroke-width="2.5"/>` +
+        `<circle cx="50" cy="50" r="31" fill="none" stroke="#d8dce3" stroke-width="2"/><circle cx="50" cy="50" r="18" style="fill:var(--ts)" opacity=".14"/>` +
+        `<text x="50" y="61" text-anchor="middle" font-size="31" font-weight="700" fill="#14171f" style="font-family:var(--font)">${label}</text></svg>`;
+    }
+    const glow = kind === 'older';
+    return `<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">` +
+      (glow ? '<circle cx="50" cy="50" r="47" fill="none" style="stroke:var(--ts)" stroke-width="5" opacity=".28"/>' : '') +
+      `<circle cx="50" cy="50" r="43" fill="url(#ga-bub)"/>` +
+      `<circle cx="50" cy="50" r="39" fill="none" stroke="url(#ga-rim)" stroke-width="5" opacity="${glow ? 0.9 : 0.7}"/>` +
+      `<circle cx="50" cy="50" r="43" fill="none" ${glow ? 'style="stroke:var(--ts)"' : INK} stroke-width="${glow ? 2.6 : 2.8}"/>` +
+      `<ellipse cx="33" cy="30" rx="12" ry="6.5" transform="rotate(-38 33 30)" fill="#fff" opacity=".85"/><circle cx="24" cy="45" r="3.2" fill="#fff" opacity=".8"/>` +
+      `<text x="50" y="66" text-anchor="middle" font-size="40" font-weight="800" style="fill:var(--ts);font-family:var(--display)">צ</text></svg>`;
+  }
+
+  // ---------------------------------------------------------------- the cards on the games page
+  function cardArt(id, skin) {
+    const night = skin === 'older';
+    if (id === 'train') {
+      if (skin === 'teen') return metroMini();
+      return trainScene({ night, dest: night ? 'שקט' : 'שמש', cargo: night ? 'owl' : 'cocoa', x: 168, snakeX: -400, fit: true });
+    }
+    if (id === 'bubbles') {
+      const k = skin === 'teen' ? 'teen' : skin === 'older' ? 'older' : 'young';
+      const b = (x, y, w, i) => bubble(k, i).replace('<svg ', `<svg x="${x}" y="${y}" width="${w}" height="${w}" `);
+      return `<svg viewBox="0 0 200 150" aria-hidden="true" focusable="false">${b(16, 52, 76, 1)}${b(96, 18, 64, 2)}${b(122, 82, 58, 3)}` +
+        (k !== 'teen' ? [[104, 104], [70, 22], [178, 34]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="none" ${k === 'older' ? 'style="stroke:var(--ts)"' : INK} stroke-width="2" opacity=".7"/>`).join('') : '') + '</svg>';
+    }
+    if (id === 'sort') {
+      const tile = (x, y, r, col, ch) => `<g transform="rotate(${r} ${x + 34} ${y + 37})"><rect x="${x}" y="${y}" width="68" height="74" rx="16" style="fill:${col}"/>` +
+        `<text x="${x + 34}" y="${y + 56}" text-anchor="middle" font-size="50" font-weight="700" fill="#fff" style="font-family:'Karantina','Secular One',sans-serif">${ch}</text></g>`;
+      const ear = skin === 'young' ? pic('shh', 74, 2, 52) : `<g transform="translate(78 8)"><path d="M10 16 a14 14 0 0 1 28 0 c0 9 -9 11 -9 20 a8 8 0 0 1 -15 3" fill="none" style="stroke:var(--pic-ink)" stroke-width="4" stroke-linecap="round"/><path d="M18 16 a6 6 0 0 1 12 0" fill="none" style="stroke:var(--pic-ink)" stroke-width="4" stroke-linecap="round"/></g>`;
+      return `<svg viewBox="0 0 200 150" aria-hidden="true" focusable="false">${ear}${tile(22, 62, 6, 'var(--sh)', 'ש')}${tile(110, 62, -6, 'var(--ts)', 'צ')}</svg>`;
+    }
+    // memory: three cards, the front one face up
+    const back = skin === 'young' ? g('yellow') : skin === 'older' ? '#2d2a3a' : '#14171f';
+    const card = (x, y, r, inner) => `<g transform="rotate(${r} ${x + 34} ${y + 46})"><rect x="${x}" y="${y}" width="68" height="92" rx="12" fill="${inner ? '#fffdf8' : back}" ${INK} stroke-width="${skin === 'young' ? 3 : 1.5}"/>${inner || `<text x="${x + 34}" y="${y + 60}" text-anchor="middle" font-size="34" font-weight="800" fill="${skin === 'young' ? '#3a3330' : skin === 'older' ? '#f4b544' : '#fff'}" style="font-family:var(--display)">?</text>`}</g>`;
+    return `<svg viewBox="0 0 200 150" aria-hidden="true" focusable="false">${card(22, 40, -12)}${card(110, 40, 12)}${card(66, 30, 0, pic('turtle', 70, 48, 60))}</svg>`;
+  }
+
+  // ---------------------------------------------------------------- small icons
+  const ico = (d, extra) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra || ''}>${d}</svg>`;
+  const ICONS = {
+    practice: ico('<rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/>'),
+    games: ico('<path d="M7.5 7.5h9a5 5 0 0 1 4.9 6l-.8 3.6a2.4 2.4 0 0 1-4 1.2L14 15.5h-4l-2.6 2.8a2.4 2.4 0 0 1-4-1.2l-.8-3.6a5 5 0 0 1 4.9-6z"/><path d="M8 10.5v3.4M6.3 12.2h3.4"/><circle cx="15.6" cy="11" r="1.1" fill="currentColor" stroke="none"/><circle cx="17.6" cy="13.4" r="1.1" fill="currentColor" stroke="none"/>'),
+    island: ico('<path d="M3 20.5c2.5-1.6 5.4-2.4 9-2.4s6.5.8 9 2.4"/><path d="M12.6 18.2c.4-3.6.2-6.8-1-9.6"/><path d="M11.6 8.6C9.8 6.4 6.8 6 4.4 7.4c2.3-.2 4.4.6 5.6 2"/><path d="M11.6 8.6c1-2.6 3.8-4 6.6-3.2-2.2.4-3.8 1.6-4.6 3.2"/><path d="M11.6 8.6c2.4-.6 5.2.6 6.2 3-1.8-1.2-3.8-1.6-5.4-1.2"/>'),
+    forest: ico('<path d="M12 3l5.5 8h-3l4 6H5.5l4-6h-3z"/><path d="M12 17v4"/>'),
+    flame: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.6 2.5c.6 3.4-1.6 4.9-3 6.8-1.2 1.6-2.6 3.3-2.6 5.9a5 5 0 0 0 10 .2c0-2.2-1-3.9-2-5 .2 1.6-.4 2.8-1.4 3.2.6-3.8-.4-8.6-1-11.1z" fill="#ff8a3d" stroke="#c4421c" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 21.2a3 3 0 0 1-3-3c0-1.8 1.4-2.8 2.2-4.2.4 1.4 1.4 1.9 2.2 2.2.8.6 1.6 1.4 1.6 2.4a3 3 0 0 1-3 2.6z" fill="#ffd54a"/></svg>',
+    ear: ico('<path d="M7 10a5 5 0 0 1 10 0c0 3-3 4-3 7a3 3 0 0 1-5.5 1.5"/><path d="M10 10a2 2 0 0 1 4 0"/>'),
+    timer: ico('<circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5M9.5 2.5h5M18.5 6.5l1.5-1.5"/>'),
+    pause: ico('<path d="M9 6v12M15 6v12"/>', 'stroke-width="3"'),
+    play: ico('<path d="M8 5.5v13l10-6.5z" fill="currentColor"/>')
+  };
+
+  // gradients the bubbles need, added to the page once (with PICS.defs and GUIDE.defs)
+  function defs() {
+    return '<radialGradient id="ga-bub" cx=".42" cy=".38" r=".62"><stop offset="0" stop-color="#ffffff" stop-opacity=".05"/><stop offset=".7" stop-color="#dff4ff" stop-opacity=".35"/><stop offset="1" stop-color="#bfe6ff" stop-opacity=".75"/></radialGradient>' +
+      '<linearGradient id="ga-rim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff9fc6"/><stop offset=".35" stop-color="#ffe27a"/><stop offset=".65" stop-color="#8fe3c0"/><stop offset="1" stop-color="#8fb8ff"/></linearGradient>';
+  }
+
+  return { trainScene, metroScene, bubble, cardArt, ICONS, defs };
+})();
+if (typeof module !== 'undefined') module.exports = GART;
 
 ;
 (function () {
@@ -3905,7 +4551,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
   const pick = a => a[Math.floor(Math.random() * a.length)];
   const reduceMotion = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
   // the soft light of every picture comes from one set of gradients for the whole page
-  (function () { const d = document.querySelector('svg defs'); if (d && PICS.defs) d.insertAdjacentHTML('beforeend', PICS.defs() + GUIDE.defs()); })();
+  (function () { const d = document.querySelector('svg defs'); if (d && PICS.defs) d.insertAdjacentHTML('beforeend', PICS.defs() + GUIDE.defs() + GART.defs()); })();
 
   // ---------------------------------------------------------------- icons
   const sv = (d, extra) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra || ''}>${d}</svg>`;
@@ -3977,7 +4623,11 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     adapt: { dB: 0, dRise: 0 },
     disagree: 0,
     stats: { bestStreak: 0, totalOk: 0 },
-    log: []
+    log: [],
+    games: {},                                     // per game: plays, best stars, personal bests
+    daily: { day: -1, rounds: 0, ok: 0, played: {}, claimed: false, coins: 0 },   // today's missions and the coins the games gave today
+    streak: { day: -1, n: 0, best: 0 },            // days in a row with a round or a game
+    gamesSeen: false
   };
   function loadState() {
     let s = null;
@@ -4075,10 +4725,10 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
       steps: ['בתמונות', 'הצליל לבד', 'המילה לאט'],
       // the one thing to remember while making the sound on its own
       cueSound: {
-        sh: ['שפתיים עגולות קדימה, לשון קצת אחורה, ונושפים ארוך.', 'שפתיים עגולות, קצה לשון מעט לאחור, אוויר ארוך ורך.', 'שפתיים מעוגלות, קצה לשון מעט לאחור, זרם ארוך.'],
-        ts: ['קצה הלשון נוגע למעלה, ומשחררים מהר: צ!', 'נגיעה בבליטה ושחרור מהיר: קצר וחד.', 'סגירה על הבליטה ושחרור מהיר.']
+        sh: ['שפתיים של נשיקה, לשון טיפה אחורה, ונושפים ארוך: שששש.', 'שפתיים עגולות, קצה הלשון קצת אחורה, ואוויר ארוך ורך.', 'שפתיים מעוגלות, קצה לשון מעט לאחור, זרם ארוך.'],
+        ts: ['הלשון נוגעת בגבעה, ומשחררים מהר: צ!', 'הלשון נוגעת בבליטה, ומשחררים מהר: קצר וחד.', 'סגירה על הבליטה ושחרור מהיר.']
       },
-      fixT: ['ככה שמים את הלשון', 'ככה עושים את זה', 'מה לשנות'],
+      fixT: { sh: ['הסוד של הש׳', 'איך עושים ש׳', 'מה לשנות בש׳'], ts: ['הסוד של הצ׳', 'איך עושים צ׳', 'מה לשנות בצ׳'] },
       fixGo: ['{בוא|בואי|בואו} נלמד בתמונות', 'לשיעור בתמונות', 'לתרגול המודרך'],
       offerT: ['מילה קשה!', 'מילה קשה', 'מילה מאתגרת'],
       offerM: ['המילה הזאת קשה, וזה בסדר. {בוא|בואי|בואו} נלמד אותה לאט, צעד אחרי צעד.',
@@ -4088,10 +4738,27 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
       barCap: ['כשהנקודה בצד של ש׳, זה הצליל!', 'הנקודה זזה עם השריקה. המטרה: הצד של ש׳.', 'הנקודה מראה איפה השריקה נוחתת. המטרה: אזור ש׳.'],
       // what the voice says (the same for everyone, so no gendered forms)
       say1: {
-        sh: { intro: 'עכשיו רק הצליל, בלי המילה. ככה:', almost: 'עוד קצת שפתיים עגולות. ככה:', sh_as_s: 'שפתיים עגולות קדימה, כמו נשיקה. ככה:', sh_short: 'ארוך יותר. ככה:', missing: 'עוד פעם, קרוב לטלפון. ככה:' },
-        ts: { intro: 'עכשיו רק הצליל, בלי המילה. קצר וחד. ככה:', almost: 'קצר וחד יותר. ככה:', ts_as_s: 'קצר וחד יותר. ככה:', ts_as_t: 'עם קצת אוויר בסוף. ככה:', ts_as_sh: 'חיוך קטן, והלשון למעלה. ככה:', missing: 'עוד פעם, קרוב לטלפון. ככה:' }
+        sh: { intro: 'ועכשיו רק הצליל, בלי המילה. {תקשיב|תקשיבי|תקשיבו}:', almost: 'כמעט! עוד קצת שפתיים עגולות. {תקשיב|תקשיבי|תקשיבו} שוב:',
+          sh_as_s: 'יצא קצת כמו נחש. שפתיים עגולות קדימה, והלשון טיפה אחורה. {תקשיב|תקשיבי|תקשיבו}:', sh_short: 'יותר ארוך, כמו כשמשקיטים תינוק. {תקשיב|תקשיבי|תקשיבו}:',
+          missing: 'לא שמעתי. עוד פעם, קרוב לטלפון. {תקשיב|תקשיבי|תקשיבו}:' },
+        ts: { intro: 'ועכשיו רק הצליל, בלי המילה. קצר וחד, {תקשיב|תקשיבי|תקשיבו}:', almost: 'כמעט! עוד יותר קצר וחד. {תקשיב|תקשיבי|תקשיבו}:',
+          ts_as_s: 'יצא ארוך מדי. קודם הלשון נוגעת למעלה, ואז משחררים מהר. {תקשיב|תקשיבי|תקשיבו}:', ts_as_t: 'יצא בלי שריקה. אחרי הנגיעה משחררים גם קצת אוויר. {תקשיב|תקשיבי|תקשיבו}:',
+          ts_as_sh: 'יצא רך מדי. מחייכים, והלשון למעלה מאחורי השיניים. {תקשיב|תקשיבי|תקשיבו}:', missing: 'לא שמעתי. עוד פעם, קרוב לטלפון. {תקשיב|תקשיבי|תקשיבו}:' }
       },
-      say2: { intro: 'עכשיו המילה, לאט:', again: 'עוד פעם, לאט:' },
+      say2: { intro: 'ועכשיו כל המילה, לאט לאט:', again: 'עוד פעם, לאט לאט. {תקשיב|תקשיבי|תקשיבו}:' },
+      // what the voice says before it says the word again, after a miss: a few ways, so it never sounds like a machine
+      lead: {
+        miss: [['כמעט! {בוא|בואי|בואו} נקשיב עוד פעם:', 'קרוב מאוד! {תקשיב|תקשיבי|תקשיבו} טוב:', 'עוד קצת! {בוא|בואי|בואו} נשמע את זה ביחד:'],
+          ['כמעט! {תקשיב|תקשיבי|תקשיבו} שוב:', 'קרוב! {בוא|בואי|בואו} נשמע את זה עוד פעם:', 'עוד קצת! {שים|שימי|שימו} לב לשריקה:'],
+          ['כמעט. {תקשיב|תקשיבי|תקשיבו} שוב:', 'קרוב. {שים|שימי|שימו} לב לצליל:', 'בכיוון. עוד פעם, לאט:']],
+        closer: [['יותר טוב! עוד קצת, {תקשיב|תקשיבי|תקשיבו}:', 'מתקרבים! {בוא|בואי|בואו} נקשיב שוב:'],
+          ['יותר טוב! עוד קצת, {תקשיב|תקשיבי|תקשיבו}:', 'מתקרבים! עוד האזנה אחת:'],
+          ['שיפור. {תקשיב|תקשיבי|תקשיבו} שוב:', 'יותר טוב. עוד פעם, לאט:']],
+        moveOn: [['ניסיון יפה! {תקשיב|תקשיבי|תקשיבו} עוד פעם אחת, ואז ממשיכים:', 'עבודה יפה! עוד האזנה אחת, וממשיכים:'],
+          ['ניסיון יפה. עוד האזנה אחת, וממשיכים:', 'כל הכבוד על הניסיון. פעם אחרונה, ואז הלאה:'],
+          ['ממשיכים הלאה. האזנה אחרונה:', 'בסדר, ממשיכים. פעם אחרונה:']],
+        fix: '{תקשיב|תקשיבי|תקשיבו}:'
+      },
       // what the card shows after each try at the sound alone
       cue1: {
         sh: {
@@ -4130,18 +4797,24 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
 
   // ---------------------------------------------------------------- screens
   let current = 'scr-welcome';
+  // the home screens sit side by side under the tabs at the bottom
+  const TABS = { 'scr-map': 'practice', 'scr-games': 'games', 'scr-island': 'island' };
   function show(id) {
     if (current === 'scr-meter' && id !== 'scr-meter') meterStop();
-    const micScreens = ['scr-practice', 'scr-meter', 'scr-parents', 'scr-models'];
+    if (current === 'scr-game' && id !== 'scr-game') gameStop();
+    const micScreens = ['scr-practice', 'scr-meter', 'scr-parents', 'scr-models', 'scr-game'];
     if (micScreens.includes(current) && !micScreens.includes(id)) Mic.close();
     if (id !== 'scr-practice') hush();
-    if (id !== 'scr-practice' && id !== 'scr-result' && id !== 'scr-meter') { cancelAnimationFrame(FX.raf); $('#fx').hidden = true; }
+    if (!['scr-practice', 'scr-result', 'scr-meter', 'scr-game', 'scr-games'].includes(id)) { cancelAnimationFrame(FX.raf); $('#fx').hidden = true; }
     current = id;
     $$('.screen').forEach(s => { s.hidden = s.id !== id; });
+    document.body.classList.remove('tabs-away');
+    renderTabbar(TABS[id]);
     window.scrollTo(0, 0);
   }
   function applySkin() {
     document.documentElement.dataset.skin = skin();
+    GUIDE.opts.kid = young();   // the pictures call the alveolar ridge "הגבעה" for little ones, "הבליטה" for older ones
     document.documentElement.lang = 'he';
     document.documentElement.dir = 'rtl';
   }
@@ -4350,17 +5023,18 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
         star: [[880, 0], [1175, 0.14]],
         streak: [[784, 0], [988, 0.07], [1175, 0.14], [1568, 0.21], [1976, 0.3]],
         no: [[392, 0], [330, 0.14]],
-        coin: [[1319, 0], [1976, 0.06]]
+        coin: [[1319, 0], [1976, 0.06]],
+        pop: [[560, 0], [1180, 0.035]]
       }[kind] || [[440, 0]];
       const t0 = ctx.currentTime + 0.02;
       seq.forEach(([f, dt]) => {
         const o = ctx.createOscillator(), g = ctx.createGain();
-        o.type = kind === 'no' ? 'sine' : 'triangle';
+        o.type = kind === 'no' || kind === 'pop' ? 'sine' : 'triangle';
         o.frequency.value = f;
         const st = t0 + dt;
         g.gain.setValueAtTime(0, st);
-        g.gain.linearRampToValueAtTime(kind === 'no' ? 0.14 : 0.15, st + 0.015);
-        g.gain.exponentialRampToValueAtTime(0.001, st + (kind === 'win' || kind === 'streak' ? 0.5 : kind === 'coin' ? 0.22 : 0.32));
+        g.gain.linearRampToValueAtTime(kind === 'no' ? 0.14 : kind === 'pop' ? 0.2 : 0.15, st + 0.012);
+        g.gain.exponentialRampToValueAtTime(0.001, st + (kind === 'win' || kind === 'streak' ? 0.5 : kind === 'coin' ? 0.22 : kind === 'pop' ? 0.11 : 0.32));
         o.connect(g); g.connect(ctx.destination);
         o.start(st); o.stop(st + 0.55);
       });
@@ -4757,7 +5431,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
   const stripN = s => String(s || '').replace(/[\u0591-\u05C7]/g, '');
   const sayText = w => w.say || (w.n && stripN(w.n) === w.w ? w.n : w.w);
 
-  // say a word the right way, optionally after a short spoken lead-in ("ככה אומרים:")
+  // say a word the right way, optionally after a short spoken lead-in
   async function sayWord(w, lead, slow) {
     if (!w || !S.settings.speak) return false;
     hush();
@@ -5085,7 +5759,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
   }
   function showWord(first) {
     const w = Pr.words[Pr.idx];
-    Pr.tries = 0; Pr.take = null; Pr.lastRes = null; Pr.overridden = null; Pr.prevQ = null; Pr.teach = null; Pr.deaf = 0;
+    Pr.tries = 0; Pr.take = null; Pr.lastRes = null; Pr.overridden = null; Pr.prevQ = null; Pr.teach = null; Pr.deaf = 0; Pr.fixSaid = false;
     stopPlayback();
     liveStop();
     $('#teach').hidden = true; $('#wordCard').hidden = false;
@@ -5203,7 +5877,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
   $('#tcGo').addEventListener('click', () => { const t = Pr.teach; if (t && t.step === STEP.SOUND && !Pr.busy) teachStep(STEP.WORD); });
   $('#tcNext').addEventListener('click', guideNext);
   $('#tcPrev').addEventListener('click', () => { const t = Pr.teach; if (t) guideShow(t.pic - 1); });
-  $('#tcSay').addEventListener('click', () => { const t = Pr.teach; if (t && t.step === STEP.PICS) { flowHold(); hush(); TTS.say(HOW[t.L][t.pic].say).then(() => { if (HOW[t.L][t.pic].sound && Pr.teach === t) playSound(t.L); }); } });
+  $('#tcSay').addEventListener('click', () => { const t = Pr.teach; if (t && t.step === STEP.PICS) { flowHold(); hush(); TTS.say(G(HOW[t.L][t.pic].say)).then(() => { if (HOW[t.L][t.pic].sound && Pr.teach === t) playSound(t.L); }); } });
   $('#btnGuide').addEventListener('click', lessonNow);
   $('#tcSkip').addEventListener('click', () => { flowClear(); if (TakeCtl.current) TakeCtl.current.cancel(); hush(); nextWord(); });
   $$('#fbAdult [data-ov]').forEach(b => b.addEventListener('click', () => adultOverride(b.dataset.ov === '1')));
@@ -5275,6 +5949,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     noteWord(w.w, allOk);
     if (allOk) {
       r.ok = true;
+      daily().ok++;
       if (Pr.tries === 1) r.first = true;
       Pr.streak++;
       Pr.bestStreak = Math.max(Pr.bestStreak, Pr.streak);
@@ -5334,14 +6009,14 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     const w = Pr.words[Pr.idx];
     // from the second miss in a row: pictures of what to change come with the feedback and stay on the word card
     const fix = ((wordStat(w.w) || [])[4] || 0) >= 2 && teachOn() ? fixFor(bad.letter, bad.verdict) : null;
-    present({ kind: bad.verdict === 'almost' ? 'almost' : 'bad', title: ti(txt.t), msg, kicker, notes, res, moveOn, score, fix });
+    present({ kind: bad.verdict === 'almost' ? 'almost' : 'bad', title: ti(txt.t), msg, kicker, notes, res, moveOn, score, fix, fixL: bad.letter });
     if (fix) wordTip(fix);
     sfx('no');
     // then say the word the right way (with the pictures, the voice first says what they show)
-    const lead = fix ? (moveOn ? 'כל הכבוד על הניסיון. ' : '') + fix.say + ' ככה אומרים:'
-      : G(moveOn ? ti(['כל הכבוד על הניסיון. {תקשיב|תקשיבי|תקשיבו}, ככה אומרים:', 'כל הכבוד על הניסיון. ככה אומרים:', 'ככה אומרים:'])
-        : kicker ? ti(['יותר טוב! {תקשיב|תקשיבי|תקשיבו}, ככה אומרים:', 'יותר טוב! ככה אומרים:', 'יותר טוב. ככה אומרים:'])
-          : ti(['כמעט! {תקשיב|תקשיבי|תקשיבו}, ככה אומרים:', 'כמעט! ככה אומרים:', 'כמעט. ככה אומרים:']));
+    const LD = T.teach.lead;
+    // the tip is said once; on the last try the voice just says the word once more before moving on
+    const lead = G(moveOn ? pick(ti(LD.moveOn)) : fix && !Pr.fixSaid ? fix.say + ' ' + LD.fix : pick(ti(kicker ? LD.closer : LD.miss)));
+    if (fix) Pr.fixSaid = true;
     hush();
     const after = () => { if (current === 'scr-practice' && Pr.words[Pr.idx] === w && !Pr.busy) { if (moveOn) flowNext(1700); else flowListen(w, ti([500, 900, 1300])); } };
     if (canSayWord(w)) setTimeout(() => { if (current === 'scr-practice' && !Pr.busy && Pr.words[Pr.idx] === w) sayWord(w, TTS.can() ? lead : null, true).then(after); }, 550);
@@ -5378,7 +6053,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     const canModel = canSayWord(cw), hasMine = !!(Pr.take && Pr.take.x.length);
     $('#fbCompare').hidden = !(err && (canModel || hasMine));
     $('#btnModel').hidden = !canModel;
-    $('#btnModel').innerHTML = ICON.speaker + `<span>${ti(['ככה אומרים', 'הגייה נכונה', 'הגייה נכונה'])}</span>`;
+    $('#btnModel').innerHTML = ICON.speaker + `<span>${ti(['לשמוע את המילה', 'לשמוע שוב', 'לשמוע שוב'])}</span>`;
     $('#btnMine').hidden = !hasMine;
     $('#btnMine').innerHTML = ICON.replay + `<span>${ti(['ככה זה יצא לי', 'ההקלטה שלי', 'ההקלטה שלך'])}</span>`;
     const hint = $('#fbNoModel');
@@ -5387,7 +6062,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     const fx = $('#fbFix');
     fx.hidden = !o.fix;
     if (o.fix) {
-      $('#fbFixTitle').textContent = ti(T.teach.fixT);
+      $('#fbFixTitle').textContent = ti(T.teach.fixT[o.fixL || 'sh']);
       $('#fbFixPics').innerHTML = picsHtml(o.fix.pics(), 'small');
       $('#fbFixText').textContent = G(ti(o.fix.text));
       $('#btnGuide').textContent = G(ti(T.teach.fixGo));
@@ -5537,88 +6212,89 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
   // ---------------------------------------------------------------- how a sound is made, in pictures
   // Each step: what it is about, its pictures ([svg, mark, caption]), what the card says (young / 7–11 / 12+) and
   // what the voice says (the same for everyone, so no gendered forms and no letter names).
-  const NOL = { labels: false, inset: false };
+  const NOL = { labels: false };
+  const SIDE_NOTE = ['בתמונה השנייה רואים את הפה מהצד, כאילו הלחי שקופה.', 'בתמונה השנייה: הפה מהצד, כאילו הלחי שקופה.', 'בתמונה השנייה: מבט מהצד, כאילו הלחי שקופה.'];
   const HOW = {
     sh: [
-      { name: 'השפתיים', pics: () => [[GUIDE.front('round', 'lips')], [GUIDE.side('sh', 'lips', { inset: false })]],
-        text: ['שפתיים עגולות וקדימה, כמו נשיקה לדג.', 'השפתיים מתעגלות ובולטות קדימה, כמו בנשיקה.', 'שפתיים מעוגלות ובולטות קדימה.'],
-        say: 'שפתיים עגולות וקדימה, כמו נשיקה.' },
-      { name: 'השיניים', pics: () => [[GUIDE.front('round', 'teeth')], [GUIDE.side('sh', 'teeth', { inset: false })]],
-        text: ['השיניים קרובות זו לזו, כמעט נוגעות.', 'השיניים קרובות, כמעט סגורות.', 'השיניים קרובות, כמעט במגע.'],
-        say: 'השיניים קרובות, כמעט נוגעות.' },
-      { name: 'קצה הלשון', pics: () => [[GUIDE.side('sh', 'tip')]],
-        text: ['קצה הלשון עולה למעלה וזז קצת אחורה, אל מאחורי הבליטה. הוא לא נוגע בכלום.',
-          'קצה הלשון עולה ונסוג מעט לאחור, אל מאחורי הבליטה שמאחורי השיניים העליונות. הוא לא נוגע בכלום.',
-          'קצה הלשון מורם ונסוג מעט לאחור, אל מאחורי הבליטה שמאחורי השיניים (רכס המכתשית), בלי מגע.'],
-        note: ['', 'הקו המקווקו: איפה הלשון בס׳. בש׳ היא קצת יותר אחורה.', 'הקו המקווקו: מיקום הקצה בס׳. בש׳ הוא נסוג מעט לאחור.'],
-        say: 'קצה הלשון עולה למעלה וזז קצת אחורה. הוא לא נוגע בכלום.' },
-      { name: 'צדי הלשון', pics: () => [[GUIDE.top('sh')]],
-        text: ['הצדדים של הלשון נוגעים בשיניים של הצד, למעלה. באמצע נשאר מקום לאוויר.',
-          'צדי הלשון נוגעים בשיניים העליונות האחוריות, ובאמצע נשארת תעלה רחבה לאוויר.',
+      { name: ['שפתיים של נשיקה', 'שפתיים קדימה', 'שפתיים'], pics: () => [[GUIDE.front('round', 'lips')], [GUIDE.side('sh', 'lips')]],
+        text: ['שפתיים עגולות וקדימה, כמו נשיקה לדג. מוּאָה!', 'מעגלים את השפתיים ומוציאים אותן קדימה, כמו רגע לפני נשיקה.', 'שפתיים מעוגלות ובולטות קדימה. זה מה שנותן לש׳ את הצליל העמוק שלה.'],
+        note: SIDE_NOTE, say: 'קודם השפתיים: עגולות וקדימה, כמו נשיקה לדג.' },
+      { name: ['שיניים קרובות', 'שיניים קרובות', 'שיניים'], pics: () => [[GUIDE.front('round', 'teeth')], [GUIDE.side('sh', 'teeth')]],
+        text: ['השיניים כמעט נוגעות זו בזו, כמו דלת שנשארה פתוחה רק טיפה.', 'מקרבים את השיניים, כמעט עד שהן נוגעות. נשאר רק רווח קטן לאוויר.', 'שיניים כמעט סגורות, עם רווח קטן לאוויר.'],
+        say: 'השיניים כמעט נוגעות, כמו דלת שנשארה פתוחה רק טיפה.' },
+      { name: ['הלשון מטפסת', 'קצה הלשון', 'קצה הלשון'], pics: () => [[GUIDE.side('sh', 'tip')]],
+        text: ['קצה הלשון עולה למעלה וזז טיפה אחורה, אל מאחורי הגבעה הקטנה. הוא לא נוגע בכלום, רק מרחף.',
+          'קצה הלשון עולה וזז קצת אחורה, אל מאחורי הבליטה שמאחורי השיניים העליונות. הוא לא נוגע בכלום, רק מרחף.',
+          'קצה הלשון עולה ונסוג מעט לאחור, אל מאחורי הבליטה שמאחורי השיניים (רכס המכתשית), בלי מגע.'],
+        note: ['', 'הקו המקווקו מראה איפה הלשון בס׳. בש׳ היא קצת יותר אחורה.', 'הקו המקווקו: מיקום הקצה בס׳. בש׳ הוא נסוג מעט לאחור.'],
+        say: 'עכשיו הלשון מטפסת: הקצה שלה עולה למעלה, וזז טיפה אחורה. הוא לא נוגע בכלום, רק מרחף.' },
+      { name: ['שביל לאוויר', 'צדי הלשון', 'צדי הלשון'], pics: () => [[GUIDE.top('sh')]],
+        text: ['הצדדים של הלשון נשענים על השיניים של הצד, ובאמצע נשאר שביל לאוויר.',
+          'צדי הלשון נשענים על השיניים העליונות שבצד, ובאמצע נשאר שביל רחב לאוויר.',
           'צדי הלשון צמודים לשיניים העליונות האחוריות, ובמרכז נשארת תעלה רחבה.'],
         note: ['ככה זה נראה מלמעלה: השיניים מסביב, והלשון באמצע.', 'מבט מלמעלה: השיניים העליונות מסביב, והלשון בפנים.', 'מבט מלמעלה על הלשון והשיניים העליונות.'],
-        say: 'הצדדים של הלשון נוגעים בשיניים של הצד. באמצע עובר האוויר.' },
-      { name: 'האוויר', pics: () => [[GUIDE.side('sh', 'air')]],
-        text: ['נושפים אוויר רך וארוך באמצע הלשון, החוצה בין השיניים: שששש!',
-          'האוויר עובר באמצע הלשון, פוגש את השיניים ויוצא דרך השפתיים העגולות: שריקה רכה ונמוכה.',
+        say: 'הצדדים של הלשון נשענים על השיניים של הצד, ובאמצע נשאר שביל לאוויר.' },
+      { name: ['שששש, תינוק ישן', 'נושפים', 'זרם האוויר'], pics: () => [[GUIDE.side('sh', 'air')]],
+        text: ['ועכשיו נושפים אוויר רך וארוך, כמו כשמשקיטים תינוק: שששש...',
+          'נושפים אוויר רך וארוך באמצע הלשון. הוא פוגש את השיניים ויוצא בין השפתיים העגולות: שששש.',
           'זרם אוויר רחב במרכז הלשון, אל השיניים ודרך השפתיים: שריקה נמוכה ורחבה.'],
-        say: 'ועכשיו נושפים אוויר רך וארוך. ככה:', sound: true }
+        say: 'ועכשיו נושפים אוויר רך וארוך, כמו כשמשקיטים תינוק. {תקשיב|תקשיבי|תקשיבו}:', sound: true }
     ],
     ts: [
-      { name: 'חיוך קטן', pics: () => [[GUIDE.front('smile', 'teeth')], [GUIDE.side('tsOpen', 'lips', { inset: false })]],
-        text: ['חיוך קטן, והשיניים קרובות זו לזו.', 'חיוך קל, והשיניים קרובות.', 'שפתיים בחיוך קל, שיניים קרובות.'],
-        say: 'חיוך קטן, והשיניים קרובות.' },
-      { name: 'הלשון נוגעת', pics: () => [[GUIDE.side('tsClose', 'touch')], [GUIDE.top('close')]],
-        text: ['קצה הלשון נצמד לבליטה שמאחורי השיניים למעלה, כמו בט׳. האוויר נעצר לרגע.',
-          'קצה הלשון נצמד לבליטה שמאחורי השיניים העליונות, כמו בט׳, וצדי הלשון נוגעים בשיניים. האוויר נעצר.',
-          'סגירה: קצה הלשון על הבליטה שמאחורי השיניים (רכס המכתשית), והצדדים אוטמים. האוויר נעצר לרגע.'],
-        say: 'קצה הלשון נצמד למעלה, מאחורי השיניים, והאוויר נעצר.' },
-      { name: 'משחררים', pics: () => [[GUIDE.side('tsOpen', 'release')]],
-        text: ['עכשיו קצה הלשון יורד קצת, מהר, והאוויר יוצא בשריקה קצרה: טסס.',
-          'קצה הלשון משתחרר מהר, רק מעט, והאוויר יוצא בשריקה קצרה בין השיניים.',
+      { name: ['חיוך קטן', 'חיוך קטן', 'שפתיים'], pics: () => [[GUIDE.front('smile', 'teeth')], [GUIDE.side('tsOpen', 'lips')]],
+        text: ['חיוך קטן, והשיניים קרובות זו לזו.', 'חיוך קטן, והשיניים קרובות.', 'שפתיים בחיוך קל, שיניים קרובות.'],
+        note: SIDE_NOTE, say: 'קודם מחייכים חיוך קטן, והשיניים קרובות.' },
+      { name: ['הלשון נוגעת בגבעה', 'הלשון נוגעת', 'סגירה'], pics: () => [[GUIDE.side('tsClose', 'touch')], [GUIDE.top('close')]],
+        text: ['קצה הלשון נצמד לגבעה הקטנה שמאחורי השיניים, כמו כשאומרים ט׳. האוויר מחכה מאחוריו.',
+          'קצה הלשון נצמד לבליטה שמאחורי השיניים העליונות, כמו בט׳, וצדי הלשון נשענים על השיניים. האוויר נעצר ומחכה.',
+          'קצה הלשון על הבליטה שמאחורי השיניים (רכס המכתשית), והצדדים אוטמים. האוויר נעצר לרגע.'],
+        say: 'עכשיו קצה הלשון נצמד למעלה, מאחורי השיניים, והאוויר מחכה מאחוריו.' },
+      { name: ['משחררים!', 'משחררים', 'שחרור'], pics: () => [[GUIDE.side('tsOpen', 'release')]],
+        text: ['ועכשיו הלשון קופצת טיפה למטה, והאוויר בורח החוצה בשריקה קטנה: טסס!',
+          'קצה הלשון משתחרר מהר, רק קצת, והאוויר יוצא בשריקה קצרה בין השיניים.',
           'שחרור מהיר ומועט של הקצה: שריקה קצרה וחדה בין השיניים.'],
-        say: 'עכשיו משחררים מהר, והאוויר יוצא בשריקה קצרה.' },
-      { name: 'ביחד ומהר', pics: () => [[GUIDE.side('tsClose', 'touch', NOL), '1'], [GUIDE.side('tsOpen', 'release', NOL), '2']],
-        text: ['נוגעים ומשחררים בבת אחת, קצר וחד: צ! צ! צ!', 'נוגעים ומשחררים בתנועה אחת: ט ומיד ס, קצר וחד.', 'סגירה ושחרור בתנועה אחת, קצרה וחדה.'],
-        say: 'נוגעים ומשחררים בבת אחת, קצר וחד. ככה:', sound: true }
+        say: 'ועכשיו הלשון קופצת טיפה למטה, והאוויר בורח החוצה בשריקה קטנה.' },
+      { name: ['ציוץ של ציפור', 'ביחד ומהר', 'ביחד'], pics: () => [[GUIDE.side('tsClose', 'touch', NOL), '1'], [GUIDE.side('tsOpen', 'release', NOL), '2']],
+        text: ['נוגעים ומשחררים בבת אחת, קצר וחד, כמו ציוץ של ציפור: צ! צ! צ!', 'נוגעים ומשחררים בתנועה אחת: ט׳ ומיד ס׳, קצר וחד.', 'סגירה ושחרור בתנועה אחת, קצרה וחדה.'],
+        say: 'נוגעים ומשחררים בבת אחת, קצר וחד, כמו ציוץ של ציפור. {תקשיב|תקשיבי|תקשיבו}:', sound: true }
     ]
   };
   // after a few misses: the picture that shows what to change, for the mistake that was heard
   const FIX = {
     sh: {
-      sh_as_s: { pics: () => [[GUIDE.side('s', 'none', NOL), 'no', 'ס'], [GUIDE.side('sh', 'none', NOL), 'yes', 'ש']],
-        text: ['בס׳ הלשון קדימה והשפתיים בחיוך. בש׳ הלשון קצת אחורה, והשפתיים עגולות קדימה.',
-          'ס׳: קצה הלשון ממש מאחורי השיניים והשפתיים בחיוך. ש׳: הקצה קצת אחורה והשפתיים עגולות קדימה.',
+      sh_as_s: { pics: () => [[GUIDE.side('s', 'none', NOL), 'no', 'ס׳'], [GUIDE.side('sh', 'none', NOL), 'yes', 'ש׳']],
+        text: ['בס׳ הלשון קדימה והשפתיים מחייכות. בש׳ הלשון זזה טיפה אחורה, והשפתיים עגולות קדימה, כמו נשיקה.',
+          'בס׳ קצה הלשון ממש מאחורי השיניים והשפתיים מחייכות. בש׳ הקצה זז קצת אחורה, והשפתיים עגולות קדימה.',
           'ס׳: קצה הלשון צמוד לשיניים, שפתיים בחיוך. ש׳: הקצה נסוג מעט, שפתיים מעוגלות קדימה.'],
-        say: 'הלשון קצת אחורה, והשפתיים עגולות קדימה.' },
+        say: 'הלשון זזה טיפה אחורה, והשפתיים עגולות קדימה, כמו נשיקה.' },
       almost: { pics: () => [[GUIDE.front('round', 'lips')], [GUIDE.side('sh', 'lips', NOL)]],
-        text: ['עוד קצת שפתיים עגולות קדימה, כמו נשיקה.', 'עוד קצת עיגול של השפתיים קדימה.', 'עוד מעט עיגול שפתיים קדימה.'],
-        say: 'עוד קצת שפתיים עגולות קדימה.' },
+        text: ['כמעט! רק עוד קצת שפתיים עגולות קדימה, כמו נשיקה.', 'כמעט. עוד קצת עיגול של השפתיים קדימה.', 'כמעט. עוד מעט עיגול שפתיים קדימה.'],
+        say: 'רק עוד קצת שפתיים עגולות, קדימה.' },
       sh_short: { pics: () => [[GUIDE.side('sh', 'air')]],
-        text: ['נושפים ארוך, כמו כשמשקיטים תינוק: שששש.', 'האוויר יוצא ארוך ורך: שששש.', 'זרם אוויר ארוך ויציב.'],
-        say: 'נושפים אוויר ארוך, כמו כשמשקיטים תינוק.' },
+        text: ['השריקה הייתה קצרה. נושפים ארוך, כמו כשמשקיטים תינוק: שששש...', 'השריקה קצרה. נושפים ארוך ורך: שששש.', 'השריקה קצרה. זרם ארוך ויציב.'],
+        say: 'נושפים ארוך, כמו כשמשקיטים תינוק.' },
       missing: { pics: () => [[GUIDE.side('sh', 'air')]],
-        text: ['נושפים אוויר באמצע הלשון, החוצה בין השיניים.', 'האוויר עובר באמצע הלשון ויוצא בין השיניים.', 'זרם אוויר במרכז הלשון, אל השיניים.'],
+        text: ['לא שמענו שריקה. נושפים אוויר באמצע הלשון, החוצה בין השיניים.', 'לא נשמעה שריקה. האוויר עובר באמצע הלשון ויוצא בין השיניים.', 'לא נשמעה שריקה. זרם אוויר במרכז הלשון, אל השיניים.'],
         say: 'נושפים אוויר באמצע הלשון, החוצה בין השיניים.' }
     },
     ts: {
-      ts_as_s: { pics: () => [[GUIDE.side('s', 'air', NOL), 'no', 'ס'], [GUIDE.side('tsClose', 'touch', NOL), 'yes', 'צ']],
-        text: ['בס׳ האוויר זורם כל הזמן. בצ׳ הלשון קודם נוגעת למעלה ועוצרת את האוויר, ורק אז משחררים.',
-          'ס׳: האוויר זורם כל הזמן. צ׳: קודם קצה הלשון נוגע בבליטה ועוצר את האוויר, ורק אז משחררים.',
+      ts_as_s: { pics: () => [[GUIDE.side('s', 'air', NOL), 'no', 'ס׳'], [GUIDE.side('tsClose', 'touch', NOL), 'yes', 'צ׳']],
+        text: ['בס׳ האוויר זורם בלי הפסקה. בצ׳ הלשון קודם נוגעת בגבעה ועוצרת את האוויר, ורק אז משחררים.',
+          'בס׳ האוויר זורם כל הזמן. בצ׳ קצה הלשון קודם נוגע בבליטה ועוצר את האוויר, ורק אז משחררים.',
           'ס׳: זרימה רציפה. צ׳: קודם סגירה מלאה על הבליטה, ואז שחרור מהיר.'],
-        say: 'קודם הלשון נוגעת למעלה ועוצרת את האוויר, ורק אז משחררים.' },
+        say: 'קודם הלשון נוגעת למעלה ועוצרת את האוויר, ורק אחר כך משחררים.' },
       ts_as_t: { pics: () => [[GUIDE.side('tsOpen', 'release')]],
-        text: ['אחרי הנגיעה משחררים שריקה קצרה: טסס.', 'אחרי הנגיעה משחררים מעט, והאוויר יוצא בשריקה קצרה: טסס.', 'אחרי הסגירה: שחרור מועט ושריקה קצרה.'],
-        say: 'אחרי הנגיעה, משחררים שריקה קצרה.' },
-      ts_as_sh: { pics: () => [[GUIDE.front('round'), 'no', 'רך מדי'], [GUIDE.front('smile'), 'yes', 'צ']],
-        text: ['בצ׳ חיוך קטן, לא שפתיים עגולות. הלשון למעלה מאחורי השיניים.', 'בצ׳ השפתיים בחיוך קל, לא מעוגלות, וקצה הלשון מאחורי השיניים העליונות.', 'צ׳ בלי עיגול שפתיים: חיוך קל, קצה לשון מאחורי השיניים.'],
-        say: 'חיוך קטן, לא שפתיים עגולות.' },
+        text: ['יצא ט׳. אחרי שהלשון נוגעת, משחררים גם קצת אוויר: טסס!', 'יצא ט׳. אחרי הנגיעה משחררים קצת, והאוויר יוצא בשריקה קצרה: טסס.', 'יצא ט׳. אחרי הסגירה: שחרור מועט ושריקה קצרה.'],
+        say: 'אחרי שהלשון נוגעת, משחררים גם שריקה קטנה.' },
+      ts_as_sh: { pics: () => [[GUIDE.front('round'), 'no', 'רך מדי'], [GUIDE.front('smile'), 'yes', 'צ׳']],
+        text: ['יצא רך מדי, כמו בצ׳יפס. בצ׳ מחייכים, ולא עושים שפתיים עגולות.', 'יצאה צ׳ רכה. בצ׳ השפתיים מחייכות קצת ולא מתעגלות, וקצה הלשון מאחורי השיניים העליונות.', 'צ׳ רכה: בלי עיגול שפתיים. חיוך קל, קצה לשון מאחורי השיניים.'],
+        say: 'בשביל הצליל החד, מחייכים חיוך קטן, בלי שפתיים עגולות.' },
       almost: { pics: () => [[GUIDE.side('tsClose', 'touch', NOL), '1'], [GUIDE.side('tsOpen', 'release', NOL), '2']],
-        text: ['נוגעים למעלה ומשחררים מהר.', 'נגיעה בבליטה ושחרור מהיר.', 'סגירה ושחרור מהיר.'],
+        text: ['כמעט! נוגעים בגבעה, ומשחררים מהר.', 'כמעט. נגיעה בבליטה ושחרור מהיר.', 'כמעט. סגירה ושחרור מהיר.'],
         say: 'נוגעים למעלה, ומשחררים מהר.' },
       missing: { pics: () => [[GUIDE.side('tsClose', 'touch', NOL), '1'], [GUIDE.side('tsOpen', 'release', NOL), '2']],
-        text: ['נוגעים למעלה ומשחררים מהר, חזק וברור.', 'נגיעה בבליטה ושחרור מהיר, ברור.', 'סגירה ושחרור מהיר, ברור.'],
-        say: 'נוגעים למעלה, ומשחררים מהר.' }
+        text: ['לא שמענו את הצליל. נוגעים בגבעה ומשחררים מהר, חזק וברור.', 'לא נשמע הצליל. נגיעה בבליטה ושחרור מהיר, ברור.', 'לא נשמע הצליל. סגירה ושחרור מהיר, ברור.'],
+        say: 'נוגעים למעלה, ומשחררים מהר, חזק וברור.' }
     }
   };
   const fixFor = (L, verdict) => FIX[L][verdict] || FIX[L].missing;
@@ -5669,7 +6345,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     present({ kind: 'almost', icon: 'bulb', title: G(ti(T.teach.offerT)), msg: G(ti(T.teach.offerM)), teachOffer: true });
     $('#pParrot').innerHTML = parrotNow('idle');
     hush();
-    TTS.say('המילה הזאת קשה. בואו נלמד אותה לאט.').then(() => {
+    TTS.say(G('המילה הזאת לא פשוטה, וזה בסדר גמור. {בוא|בואי|בואו} נלמד אותה ביחד, לאט לאט.')).then(() => {
       if (!teachNow(tok) || Pr.teach.step !== 0 || Pr.busy) return;
       flowAfter($('#btnTeach'), 2200, () => { if (teachNow(tok) && Pr.teach.step === 0 && !$('#fb').hidden && !Pr.busy) teachStart(); });
     });
@@ -5714,7 +6390,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     const t = Pr.teach, tok = t.tok, st = HOW[t.L][t.pic], last = t.pic === HOW[t.L].length - 1;
     hush();
     const v = Voice.tok, spoke = TTS.can();
-    if (spoke) await TTS.say(st.say);
+    if (spoke) await TTS.say(G(st.say));
     if (!teachNow(tok) || Voice.tok !== v) return;
     if (st.sound) { await playSound(t.L); if (!teachNow(tok)) return; }
     // without a voice there is more to read, so each picture stays longer
@@ -5731,10 +6407,10 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     hush();
     const v = Voice.tok;
     if (t.step === STEP.SOUND) {
-      if (lead && TTS.can()) await TTS.say(lead);
+      if (lead && TTS.can()) await TTS.say(G(lead));
       if (!teachNow(tok) || Voice.tok !== v || Pr.busy) return;
       await playSound(t.L);
-    } else await sayWord(w, TTS.can() ? lead : null, true);
+    } else await sayWord(w, TTS.can() && lead ? G(lead) : null, true);
     if (!teachNow(tok) || Pr.busy) return;
     flowListen(w, ti([400, 600, 800]));
   }
@@ -5772,8 +6448,10 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     $('#tcPager').hidden = !pics;
     if (pics) {
       const all = HOW[L], st = all[t.pic], note = st.note && ti(st.note);
+      const words = `<p class="gd-step"><b class="num">${t.pic + 1}/${all.length}</b> ${ti(st.name)}</p><p class="gd-text">${G(ti(st.text))}</p>`;
+      // for the little ones שוצי tells each step, in a speech bubble
       $('#tcBody').innerHTML = `<p class="tc-title">איך עושים ${lab}</p>` + picsHtml(st.pics(), 'big') +
-        `<p class="gd-step"><b class="num">${t.pic + 1}/${all.length}</b> ${st.name}</p><p class="gd-text">${G(ti(st.text))}</p>` +
+        (young() ? `<div class="gd-talk"><div class="gd-parrot" aria-hidden="true">${parrotNow('happy')}</div><div class="bubble gd-bubble">${words}</div></div>` : words) +
         (note ? `<p class="gd-note">${note}</p>` : '');
       $('#tcDots').innerHTML = all.map((x, i) => `<i class="${i === t.pic ? 'now' : i < t.pic ? 'seen' : ''}"></i>`).join('');
       $('#tcPrev').disabled = t.pic === 0;
@@ -5824,7 +6502,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
         t.ok1 = true;
         teachStatus('ok', ti(T.teach.cue1[t.L].ok));
         sfx('ok'); $('#pParrot').innerHTML = parrotNow('happy');
-        hush(); TTS.say('איזה יופי!');
+        hush(); TTS.say(pick(['איזה יופי!', 'בדיוק ככה!', 'יש! זה הצליל!']));
         teachGo(1800);
         return;
       }
@@ -5834,7 +6512,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
       if (t.tries >= STEP_TRIES) {
         // two tries at the sound are enough: on to the word, whatever happened
         teachStatus('try', cue + ' ' + ti(T.teach.on1), fixFor(t.L, v));
-        hush(); TTS.say('לא נורא, ממשיכים.');
+        hush(); TTS.say('לא נורא, את זה מאמנים עוד. ממשיכים.');
         teachGo(3600);
         return;
       }
@@ -5867,7 +6545,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     ws[4] = 0; ws[6] = (ws[6] || 0) + 1; ws[5] = ok ? 0 : dayNum() + REST_DAYS;
     t.step = STEP.DONE; t.tok = ++Teach.tok;
     r.taught = true;
-    if (ok) { r.ok = true; S.stats.totalOk = (S.stats.totalOk || 0) + 1; }
+    if (ok) { r.ok = true; S.stats.totalOk = (S.stats.totalOk || 0) + 1; daily().ok++; }
     save();
     liveStop();
     $('#scr-practice').classList.remove('guide-on');
@@ -5879,12 +6557,12 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
       const extras = young() ? [`<span class="pill gold">${star(true)} <bdi dir="ltr">+1</bdi></span>`] : [];
       present({ kind: 'ok', title: G(ti(T.teach.wonT)), msg: G(ti(T.teach.wonM)), extras, teachEnd: true });
       celebrate(true);
-      hush(); TTS.say('איזה יופי! למדנו מילה קשה!');
+      hush(); TTS.say('איזה יופי! למדנו מילה חדשה!');
       $('#pParrot').innerHTML = parrotNow('happy');
       flowNext(3000);
     } else {
       present({ kind: 'almost', icon: 'heart', title: G(ti(T.teach.restT)), msg: G(ti(T.teach.restM)), teachEnd: true });
-      hush(); TTS.say('כל הכבוד על המאמץ! נמשיך הלאה.');
+      hush(); TTS.say('כל הכבוד על המאמץ! נחזור למילה הזאת בעוד כמה ימים.');
       flowNext(3400);
     }
   }
@@ -5947,6 +6625,8 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     const passed = ratio >= 0.6;
     const p = prog(Pr.id);
     S.progress[Pr.id] = { stars: Math.max(p.stars || 0, stars), passed: p.passed || passed, plays: (p.plays || 0) + 1, pct: Math.max(p.pct || 0, pct) };
+    daily().rounds++;
+    markActive();
     save();
     const first = Pr.results.filter(r => r.first).length;
     const top = $('#rParrot');
@@ -6097,7 +6777,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
       $('#isScene').innerHTML = PICS.island(new Set(all.map(x => x.id)), { name: islandSign(), fresh: Isl.fresh });
       $('#isBar').style.width = '100%';
       $('#isCount').innerHTML = `<bdi>${all.length}/${all.length}</bdi>`;
-      $('#isGrid').innerHTML = ''; $('#isBuyBar').hidden = true; $('#scr-island').classList.remove('bar-open');
+      $('#isGrid').innerHTML = ''; $('#isBuyBar').hidden = true; $('#scr-island').classList.remove('bar-open'); document.body.classList.remove('tabs-away');
       $('#isSay').textContent = Isl.say || 'האי הושלם. אפשר ללחוץ על כל דבר באי ולשמוע איך קוראים לו.';
       return;
     }
@@ -6131,6 +6811,9 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
       buy.textContent = sel.price <= c ? `להוסיף ${place().to}` : `חסרים עוד ${sel.price - c}`;
     }
     $('#scr-island').classList.toggle('bar-open', !!sel);
+    // the buy bar takes the place of the tabs while something is picked
+    if (current === 'scr-island') renderTabbar('island');
+    document.body.classList.toggle('tabs-away', !!sel);
     if (focusId) { const b = $(`#isGrid .item[data-id="${focusId}"]`); if (b) b.focus({ preventScroll: true }); }
   }
   function islSelect(id) {
@@ -6175,8 +6858,977 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
   $('#isBack').addEventListener('click', () => {
     hush();
     if (Isl.from === 'scr-result') { show('scr-result'); return; }
+    if (Isl.from === 'scr-games') { openGames(); return; }
     renderMap(); show('scr-map');
   });
+
+  // ---------------------------------------------------------------- the tabs at the bottom
+  function renderTabbar(tab) {
+    const bar = $('#tabbar');
+    bar.hidden = !tab;
+    document.body.classList.toggle('tabs-on', !!tab);
+    if (!tab) return;
+    $$('#tabbar .nav-btn').forEach(b => {
+      const on = b.dataset.tab === tab;
+      b.classList.toggle('on', on);
+      if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    });
+    $('#nvPractice').innerHTML = GART.ICONS.practice;
+    $('#nvGames').innerHTML = GART.ICONS.games;
+    $('#nvIsland').innerHTML = forestNow() ? GART.ICONS.forest : GART.ICONS.island;
+    $('#nvIslandLbl').textContent = forestNow() ? 'היער' : 'האי';
+    $('#nvGamesLbl').textContent = ti(['משחקים', 'משחקים', 'אתגרים']);
+    tabDots();
+  }
+  // a dot on a tab: the chest of the day is ready (or the games were never opened); something new fits on the island
+  function tabDots() {
+    $('#nvGamesDot').hidden = !(chestReady() || !S.gamesSeen);
+    const nx = nextItem();
+    $('#nvIslandDot').hidden = !(nx && nx.price <= (S.wallet.coins || 0));
+  }
+  $('#tabbar').addEventListener('click', e => {
+    const b = e.target.closest('.nav-btn');
+    if (!b) return;
+    const t = b.dataset.tab;
+    if (TABS[current] === t) { window.scrollTo({ top: 0, behavior: reduceMotion() ? 'auto' : 'smooth' }); return; }
+    if (t === 'practice') { renderMap(); show('scr-map'); }
+    else if (t === 'games') openGames();
+    else openIsland(current);
+  });
+
+  // ---------------------------------------------------------------- every day: three missions, a chest, and days in a row
+  const CHEST = 10, GAME_COINS = 30;   // the chest of the day; the most coins the games give in one day
+  function daily() {
+    const d = dayNum();
+    if (!S.daily || S.daily.day !== d) S.daily = { day: d, rounds: 0, ok: 0, played: {}, claimed: false, coins: 0 };
+    if (!S.daily.played) S.daily.played = {};
+    return S.daily;
+  }
+  // a round or a game today: the streak of days goes on (or starts again)
+  function markActive() {
+    const d = dayNum(), k = S.streak || (S.streak = { day: -1, n: 0, best: 0 });
+    if (k.day === d) return;
+    k.n = k.day === d - 1 ? (k.n || 0) + 1 : 1;
+    k.day = d; k.best = Math.max(k.best || 0, k.n);
+  }
+  const streakNow = () => { const k = S.streak || {}; return k.day >= dayNum() - 1 ? k.n || 0 : 0; };
+  const questGame = () => GAME_IDS[dayNum() % GAME_IDS.length];
+  function quests() {
+    const q = daily(), gid = questGame(), n = ti([5, 8, 10]);
+    return [
+      { id: 'round', text: ti(['סיבוב אחד', 'רצועה אחת', 'סבב אחד']), have: Math.min(1, q.rounds), need: 1 },
+      { id: 'game', text: gameName(gid), have: q.played[gid] ? 1 : 0, need: 1, game: gid },
+      { id: 'ok', text: `${n} מילים`, have: Math.min(n, q.ok), need: n }
+    ];
+  }
+  const questsDone = () => quests().every(x => x.have >= x.need);
+  const chestReady = () => questsDone() && !daily().claimed;
+
+  // ---------------------------------------------------------------- the games page
+  const GAME_IDS = ['train', 'bubbles', 'sort', 'memory'];
+  const GAME_T = {
+    train: { name: ['רכבת הש׳', 'רכבת הש׳', 'קו הש׳'], desc: ['שששש ארוך, והרכבת נוסעת', 'ש׳ ארוכה ונקייה מניעה את הרכבת', 'החזקה יציבה של ש׳'] },
+    bubbles: { name: ['בועות הצ׳', 'בועות הצ׳', 'ספרינט הצ׳'], desc: ['כל צ׳ מפוצצת בועה', 'צ׳ חדה אחת לכל בועה', 'צ׳ חדות, מהר ככל האפשר'] },
+    sort: { name: ['ש׳ או צ׳?', 'איפה הצליל?', 'אוזן חדה'], desc: ['מקשיבים ובוחרים', 'איזה צליל יש במילה, ואיפה', 'דקה של שמיעה: הצליל ומקומו'] },
+    memory: { name: ['זיכרון מדבר', 'זיכרון מדבר', 'זיכרון מילים'], desc: ['מוצאים זוג ואומרים את המילה', 'מוצאים זוג, ואומרים את המילה', 'זוגות, וכל מילה בקול'] }
+  };
+  const gameName = id => ti(GAME_T[id].name);
+  const gStat = id => { const g = S.games || (S.games = {}); return g[id] || (g[id] = { plays: 0, stars: 0 }); };
+  const secs = ms => (ms / 1000).toFixed(1);
+  // the personal best of a game, as [number, unit]
+  function recParts(id) {
+    const s = gStat(id);
+    if (id === 'train') return s.bestHold != null ? [secs(s.bestHold), 'שניות'] : null;
+    if (id === 'bubbles') return s.bestTime != null ? [secs(s.bestTime), 'שניות'] : null;
+    if (id === 'sort') return teen() ? (s.bestSprint != null ? [String(s.bestSprint), 'נכונות'] : null) : (s.bestPct != null ? [s.bestPct + '%', ''] : null);
+    const v = s['bestMoves' + Mem.pairs()];
+    return v != null ? [String(v), 'מהלכים'] : null;
+  }
+  function openGames() {
+    hush();
+    if (!S.gamesSeen) { S.gamesSeen = true; save(); }
+    renderGames();
+    show('scr-games');
+    if (young() && TTS.can() && !Gm.greeted) { Gm.greeted = true; setTimeout(() => { if (current === 'scr-games') TTS.say(G('מה {בא לך|בא לך|בא לכם} לשחק היום?')); }, 450); }
+  }
+  function renderGames() {
+    applySkin();
+    $('#gaParrot').innerHTML = young() ? parrotNow('happy') : teen() ? teenBadge() : studioBadge();
+    $('#gaTitle').textContent = ti(['משחקים', 'משחקים', 'אתגרים']);
+    $('#gaSub').textContent = G(ti(['{בחר|בחרי|בחרו} משחק!', 'משחקים עם ש׳ וצ׳. כל משחק מוסיף מטבעות.', 'אתגרים קצרים לש׳ ולצ׳.']));
+    const sk = streakNow(), chip = $('#gaStreak');
+    chip.hidden = !sk;
+    chip.innerHTML = `${GART.ICONS.flame}<span class="num">${sk}</span>${young() ? '' : `<small>${sk === 1 ? 'יום' : 'ימים'}</small>`}`;
+    chip.setAttribute('aria-label', `${sk} ${sk === 1 ? 'יום' : 'ימים'} ברצף`);
+    chip.title = `${sk} ${sk === 1 ? 'יום' : 'ימים'} ברצף`;
+    renderCoinChip($('#gaCoins'), true);
+    renderQuests();
+    const qg = questGame(), d = daily();
+    $('#gaGrid').innerHTML = GAME_IDS.map(id => {
+      const s = gStat(id), rec = recParts(id);
+      let meta;
+      if (teen()) meta = rec ? `<span>שיא</span><b>${rec[0]}</b><span>${rec[1]}</span>` : `<span>${G('עוד לא {שיחקת|שיחקת|שיחקתם}')}</span>`;
+      else meta = [1, 2, 3].map(i => star(i <= (s.stars || 0))).join('') + (!young() && rec ? `<span style="margin-inline-start:8px">שיא: ${rec[0]} ${rec[1]}</span>` : '');
+      const tag = qg === id && !d.played[id] ? `<span class="gc-tag quest">${ti(['משימת היום', 'משימת היום', 'אתגר היום'])}</span>` : !s.plays ? '<span class="gc-tag">חדש</span>' : '';
+      return `<li><button type="button" class="game-card" data-game="${id}">${tag}<span class="gc-art">${GART.cardArt(id, skin())}</span>` +
+        `<span class="gc-body"><span class="gc-name">${gameName(id)}</span><span class="gc-desc">${ti(GAME_T[id].desc)}</span><span class="gc-meta">${meta}</span></span></button></li>`;
+    }).join('');
+  }
+  function renderQuests() {
+    const qs = quests(), done = qs.filter(x => x.have >= x.need).length, d = daily();
+    $('#gaQTitle').textContent = ti(['משימות היום', 'משימות היום', 'היעדים להיום']);
+    $('#gaQCount').innerHTML = `<bdi>${done}/${qs.length}</bdi>`;
+    // three tiles: the practice round, today's game, the words said right; a tap takes you there
+    const ico = { round: GART.ICONS.practice, game: GART.ICONS.games, ok: ICON.check };
+    const lab = { round: 'תרגול', game: ti(['משחק היום', 'משחק היום', 'אתגר היום']), ok: 'מילים נכונות' };
+    $('#gaQList').innerHTML = qs.map(q => {
+      const ok = q.have >= q.need;
+      return `<li><button type="button" class="q-item${ok ? ' done' : ''}" data-q="${q.id}"${q.game ? ` data-game="${q.game}"` : ''}>` +
+        `<span class="q-mark">${ok ? (young() ? star(true) : ICON.check) : ico[q.id]}</span><span class="q-lab">${lab[q.id]}</span><span class="q-text">${q.text}</span>` +
+        `<span class="q-bar"><i style="width:${(100 * q.have / q.need).toFixed(0)}%"></i></span><span class="q-prog num"><bdi>${q.have}/${q.need}</bdi></span></button></li>`;
+    }).join('');
+    const ready = done === qs.length && !d.claimed, row = $('#gaChestRow');
+    row.classList.toggle('ready', ready);
+    row.classList.toggle('open', !!d.claimed);
+    $('#gaChestPic').innerHTML = PICS.get('treasure');
+    $('#gaChestText').innerHTML = d.claimed ? ti(['התיבה נפתחה! מחר יש משימות חדשות.', 'התיבה של היום נפתחה. מחר: משימות חדשות.', 'כל היעדים של היום הושלמו.'])
+      : ready ? G(ti(['{סיימת|סיימת|סיימתם} הכל! התיבה מחכה.', 'כל המשימות הושלמו. אפשר לפתוח את התיבה!', 'כל היעדים הושלמו.']))
+        : `${ti(['כל המשימות ביחד פותחות תיבה עם', 'שלוש המשימות פותחות תיבה עם', 'שלושת היעדים שווים'])} <bdi>${CHEST}</bdi> מטבעות.`;
+    const b = $('#gaChest');
+    b.hidden = !ready;
+    b.innerHTML = coinSvg() + `<span>${ti(['לפתוח!', 'לפתוח את התיבה', 'לקבל'])}</span>`;
+    tabDots();
+  }
+  $('#gaChest').addEventListener('click', () => {
+    const d = daily();
+    if (d.claimed || !questsDone()) return;
+    d.claimed = true;
+    S.wallet.coins = (S.wallet.coins || 0) + CHEST; S.wallet.earned = (S.wallet.earned || 0) + CHEST;
+    save();
+    renderQuests();
+    const chip = $('#gaCoins');
+    renderCoinChip(chip, true);
+    chip.classList.remove('bump'); void chip.offsetWidth; chip.classList.add('bump');
+    confetti(1.4); sfx('coin'); setTimeout(() => sfx('streak'), 180);
+    hush(); TTS.say('איזה יופי! התיבה נפתחה!');
+  });
+  $('#gaGrid').addEventListener('click', e => { const b = e.target.closest('.game-card'); if (b) startGame(b.dataset.game); });
+  $('#gaQList').addEventListener('click', e => {
+    const b = e.target.closest('.q-item');
+    if (!b) return;
+    if (b.dataset.game) startGame(b.dataset.game);
+    else { renderMap(); show('scr-map'); }
+  });
+  $('#gaCoins').addEventListener('click', () => openIsland('scr-games'));
+
+  // ---------------------------------------------------------------- one game: the frame every game shares
+  // Gm.tok changes whenever a game starts, stops or ends, so a timer or a promise from before can tell it is too late.
+  const Gm = { id: null, tok: 0, phase: '', raf: 0, timer: 0, tick: 0, greeted: false, cfg: {} };
+  const GAMES = {};
+  function startGame(id) {
+    gameStop();
+    Gm.id = id; Gm.phase = 'intro';
+    applySkin();
+    $('#scr-game').dataset.game = id;
+    $('#gmBack').innerHTML = ICON.back;
+    $('#gmTitle').textContent = gameName(id);
+    gScore('');
+    $('#gmEnd').hidden = true; $('#gmEnd').innerHTML = '';
+    $('#gmStage').hidden = false; $('#gmCtl').hidden = false;
+    $('#gmStage').className = 'g-stage';
+    $('#scr-game').classList.add('intro');
+    Gm.mood = '';
+    gSay('');
+    show('scr-game');
+    GAMES[id].intro();
+  }
+  function gameStop() {
+    Gm.tok++;
+    Gm.phase = '';
+    cancelAnimationFrame(Gm.raf); Gm.raf = 0;
+    clearTimeout(Gm.timer); clearInterval(Gm.tick); Gm.timer = 0; Gm.tick = 0;
+    if (TakeCtl.current) TakeCtl.current.cancel();
+    setMic(false);
+  }
+  // the screen went away in the middle (the phone locked, another app): the game waits
+  function gameHold() {
+    if (current !== 'scr-game' || Gm.phase !== 'play') return;
+    if (Gm.id === 'train' && Gm.tr && Gm.tr.on) trainHold(Gm.tok, 'idle');
+    if (Gm.id === 'bubbles' && Gm.bb && !Gm.bb.paused) bubHold(Gm.tok, true);
+  }
+  $('#gmBack').addEventListener('click', () => { gameStop(); hush(); openGames(); });
+  // what the game says now; for the little ones שוצי says it, in a speech bubble, with a face to match
+  function gSay(text, cls) {
+    const el = $('#gmSay');
+    $('#gmTalk').hidden = !text;
+    el.textContent = text || '';
+    el.className = 'g-say' + (cls ? ' ' + cls : '');
+    if (!text) return;
+    void el.offsetWidth; el.classList.add('pop');
+    if (young()) {
+      const mood = cls === 'good' ? 'happy' : cls === 'warn' ? 'think' : $('#gmMic.on') ? 'listen' : 'idle';
+      if (Gm.mood !== mood) { Gm.mood = mood; $('#gmParrot').innerHTML = parrotNow(mood); }
+    }
+  }
+  function gScore(html) { const el = $('#gmScore'); el.hidden = !html; el.innerHTML = html || ''; }
+  function setMic(on) {
+    const m = $('#gmMic');
+    if (!m) return;
+    m.classList.toggle('on', !!on);
+    m.querySelector('span').textContent = on ? ti(['שוצי מקשיב…', 'מקשיב…', 'מקשיב']) : ti(['המיקרופון מחכה', 'המיקרופון מחכה', 'בהמתנה']);
+  }
+  function gLevel(rms) { const l = $('#gmLevel'); if (l) l.style.width = (clamp((20 * Math.log10(rms + 1e-9) + 60) / 55, 0, 1) * 100).toFixed(0) + '%'; }
+  const micRow = () => `<span class="g-mic" id="gmMic"><i></i><span></span></span>`;
+  function pauseBtn(paused) {
+    const b = $('#gmPause');
+    if (b) b.innerHTML = paused ? `${GART.ICONS.play}<span>${ti(['להמשיך', 'להמשיך', 'להמשיך'])}</span>` : `${GART.ICONS.pause}<span>הפסקה</span>`;
+  }
+  // before a game: the picture, what to do, and the start button (the little ones also hear it)
+  function gIntro(art, rules, opt) {
+    opt = opt || {};
+    $('#gmStage').innerHTML = art;
+    $('#gmStage').classList.toggle('metro', !!opt.metro);
+    const how = opt.sound ? `<div class="g-how">${opt.sound === 'sh' ? GUIDE.side('sh', 'air', { labels: false }) : GUIDE.side('tsOpen', 'release', { labels: false })}<p>${G(ti(T.teach.cueSound[opt.sound]))}</p></div>` : '';
+    const words = rules.map(p => `<p>${p}</p>`).join('') + how;
+    $('#gmCtl').innerHTML = (young() ? `<div class="g-rules g-intro-talk"><div class="g-parrot" aria-hidden="true">${parrotNow('happy')}</div><div class="bubble">${words}${opt.extra || ''}</div></div>`
+      : `<div class="g-rules panel">${words}${opt.extra || ''}</div>`) +
+      `<div class="g-row"><button class="btn primary g-go" id="gmGo" type="button">${ti(['מתחילים!', 'להתחיל', 'להתחיל'])}</button>` +
+      (opt.sound ? `<button class="btn" id="gmHearSnd" type="button">${ICON.speaker}<span>${ti(['לשמוע', `לשמוע ${opt.sound === 'sh' ? 'ש׳' : 'צ׳'}`, 'הצליל'])}</span></button>` : '') + '</div>';
+    $('#gmGo').addEventListener('click', () => { hush(); $('#scr-game').classList.remove('intro'); GAMES[Gm.id].play(); });
+    if (opt.sound) $('#gmHearSnd').addEventListener('click', () => { hush(); playSound(opt.sound); });
+    if (opt.say && young() && TTS.can()) {
+      const tok = Gm.tok;
+      setTimeout(() => {
+        if (Gm.tok !== tok || Gm.phase !== 'intro') return;
+        TTS.say(G(opt.say)).then(() => { if (Gm.tok === tok && Gm.phase === 'intro' && opt.sound) playSound(opt.sound); });
+      }, 350);
+    }
+  }
+
+  // ---------------------------------------------------------------- the ש train: a long, clean ש moves it, a ס stops it
+  // The live listener (the meter's) says where the hiss lands, many times a second. A ש drives at full speed, a sound
+  // in between crawls, a ס or silence brakes. The stars go by the longest ש without a break.
+  const TRAIN_DEST = ['שמש', 'שלג', 'שקד', 'שושנה', 'שלום', 'שחר', 'שמיים', 'שועלים'];
+  const TRAIN_CARGO = ['cocoa', 'clock', 'snail', 'fox', 'chocolate', 'bunny', 'snowman', 'garlic'];
+  const METRO_STOPS = ['שוק', 'שקמה', 'שדרה'];
+  const TRAIN_X = [268, 96];   // where the front of the train starts and stops
+  const TRAIN_SAY = {
+    none: ['מחכה לשששש…', 'מחכה לש׳ ארוכה…', 'ממתין לש׳'],
+    sh: ['יופי! הרכבת נוסעת!', 'ש׳ נקייה. הרכבת נוסעת!', 'ש׳ יציבה'],
+    mid: ['כמעט! עוד קצת שפתיים עגולות.', 'כמעט ש׳: עוד עיגול של השפתיים.', 'קרוב: עיגול שפתיים, לשון מעט לאחור.'],
+    s: ['סססס? זה נחש! שפתיים עגולות קדימה: שששש', 'יצא ס׳, והרכבת עצרה. שפתיים עגולות, לשון טיפה אחורה.', 'ס׳: עצירה. שפתיים מעוגלות, לשון מעט לאחור.']
+  };
+  const Train = {
+    need: () => Gm.cfg.trainNeed || ti([3200, 4500, 6000]),   // ms of a clean ש at full speed, from the start to the station
+    art(trip) {
+      if (teen()) return GART.metroScene({ stops: ['יציאה'].concat(METRO_STOPS, [trip.dest]) });
+      return GART.trainScene({ night: skin() === 'older', dest: trip.dest, cargo: trip.cargo, x: TRAIN_X[0], snakeX: TRAIN_X[0] - 42 });
+    },
+    intro() {
+      const k = (gStat('train').plays || 0) % TRAIN_DEST.length, t = Gm.trip = { dest: TRAIN_DEST[k], cargo: TRAIN_CARGO[k] };
+      gIntro(Train.art(t), ti([
+        [`שוצי נוסע ברכבת לתחנת ${t.dest}. {תגיד|תגידי|תגידו} שששש ארוך, והרכבת נוסעת.`, 'אם יוצא סססס של נחש, הרכבת עוצרת.'],
+        [`ש׳ ארוכה ונקייה מניעה את הרכבת לתחנת ${t.dest}. ס׳ עוצרת אותה.`, 'אפשר לנשום באמצע. הכוכבים: לפי הש׳ הכי ארוכה בלי הפסקה.'],
+        [`ש׳ יציבה מקדמת אותך בקו עד תחנת ${t.dest}. ס׳ עוצרת.`, 'התוצאה: ההחזקה הרציפה הארוכה ביותר. השיא שלך נשמר.']
+      ]).map(G), { sound: 'sh', metro: teen(), say: 'שוצי נוסע ברכבת. {תגיד|תגידי|תגידו} את הצליל הזה, ארוך ארוך, והרכבת תיסע:' });
+    },
+    play() {
+      const tok = ++Gm.tok;
+      Gm.phase = 'play';
+      Gm.tr = { pos: 0, v: 0, ang: 0, hold: 0, best: 0, gap: 0, sMs: 0, shMs: 0, idle: 0, stops: 0, t0: 0, on: false, snake: false, z: '', zMs: 0, said: '', pd: null, loop: 0, num: 0, holds: [], tip: false };
+      const stage = $('#gmStage');
+      stage.innerHTML = Train.art(Gm.trip) + `<div class="g-board"><div class="g-live" id="gmLive"><b class="tb-sh">ש</b><span class="tb-rail"><i class="tb-dot" id="gmDot"></i></span><b class="tb-s">ס</b></div>` +
+        (teen() ? `<div class="g-holds"><div class="stat"><b id="gmHold">0.0</b><span>שניות עכשיו</span></div><div class="stat"><b id="gmBest">0.0</b><span>הכי ארוך</span></div><div class="stat"><b id="gmPct">0%</b><span>מהקו</span></div></div>` : '') + '</div>';
+      stage.classList.toggle('metro', teen());
+      $('#gmCtl').innerHTML = `<div id="gmTip"></div>${young() ? '' : '<div class="g-hist" id="gmHist" hidden></div>'}<div class="g-row">${micRow()}<button class="btn" id="gmPause" type="button"></button></div>`;
+      pauseBtn(false);
+      $('#gmPause').addEventListener('click', () => { const tr = Gm.tr; if (!tr || Gm.tok !== tok) return; if (tr.on) trainHold(tok); else trainListen(tok); });
+      setMic(false);
+      gSay(ti(['רגע, הרכבת מתכוננת…', 'מכינים את המיקרופון…', 'מכין מיקרופון…']));
+      trainListen(tok);
+    }
+  };
+  GAMES.train = Train;
+  async function trainListen(tok) {
+    const tr = Gm.tr, my = ++tr.loop;
+    pauseBtn(false);
+    try { await Mic.open(); } catch (e) { if (Gm.tok === tok) { micError(e); trainHold(tok, 'mic'); } return; }
+    if (Gm.tok !== tok || tr.loop !== my) return;
+    if (Mic.blocks.length < 8) await sleep(350);
+    if (Gm.tok !== tok || tr.loop !== my) return;
+    const cfg = cfgNow(), N = Mic.sr >= 32000 ? 2048 : 1024, live = SZ.liveState();
+    tr.on = true; tr.idle = 0; tr.last = performance.now(); tr.said = ''; tr.z = ''; tr.zMs = 0;
+    if (!tr.t0) tr.t0 = tr.last;
+    setMic(true); trainSay('none');
+    const loop = () => {
+      if (Gm.tok !== tok || tr.loop !== my || !tr.on) return;
+      if (!Mic.stream) { trainHold(tok, 'idle'); return; }   // the phone took the microphone
+      const now = performance.now(), dt = Math.min(80, now - tr.last);
+      tr.last = now;
+      let zone = 'none', p = null;
+      // the app's own voice must not drive the train
+      if (Mic.total >= N && now >= quietFrom()) {
+        const f = SZ.liveFeatures(Mic.latest(N), Mic.sr, cfg, live);
+        if (f.active && f.smooth != null) { p = f.smooth; zone = p > 0.6 ? 'sh' : p < 0.4 ? 's' : 'mid'; }
+      }
+      trainStep(tr, zone, p, dt);
+      if (tr.pos >= 1) { trainArrive(tok); return; }
+      if (tr.idle > 20000) { trainHold(tok, 'idle'); return; }
+      Gm.raf = requestAnimationFrame(loop);
+    };
+    loop();
+  }
+  function trainStep(tr, zone, p, dt) {
+    const target = zone === 'sh' ? 1 : zone === 'mid' ? 0.35 : 0;
+    tr.v += (target - tr.v) * (target > tr.v ? 0.12 : 0.2);
+    if (tr.v < 0.004) tr.v = 0;
+    tr.pos = Math.min(1, tr.pos + tr.v * dt / Train.need());
+    tr.ang -= tr.v * dt * 0.55;
+    // the longest ש without a break (a breath of a quarter second does not break it, a ס does)
+    if (zone === 'sh') { tr.hold += dt; tr.gap = 0; tr.best = Math.max(tr.best, tr.hold); tr.shMs += dt; tr.sMs = 0; }
+    else {
+      tr.gap += dt;
+      if (zone === 's' || tr.gap > 260) { if (tr.hold >= 250) trainHist(tr.hold); tr.hold = 0; }
+      tr.shMs = 0; if (zone === 's') tr.sMs += dt;
+    }
+    tr.idle = zone === 'none' ? tr.idle + dt : 0;
+    // the snake comes out after a moment of ס, and goes back with a ש (or after a breath)
+    if (!tr.snake && tr.sMs > 260) { tr.snake = true; tr.stops++; trainTip(true); }
+    else if (tr.snake && (tr.shMs > 300 || tr.idle > 1800)) tr.snake = false;
+    if (tr.tip && tr.shMs > 1800) trainTip(false);
+    // the words under the picture follow the sound, without flickering
+    const key = tr.snake ? 's' : zone;
+    if (key !== tr.z) { tr.z = key; tr.zMs = 0; } else tr.zMs += dt;
+    if (tr.zMs > 220 && tr.said !== key) trainSay(key);
+    trainDraw(tr, zone, p);
+  }
+  // each ש held on its own, as a bar; the line is the three-star length
+  function trainHist(ms) {
+    const tr = Gm.tr, el = $('#gmHist');
+    tr.holds.push(ms);
+    if (!el) return;
+    const goal = ti([2000, 2500, 3000]), list = tr.holds.slice(-14), top = Math.max(goal * 1.25, ...list);
+    el.hidden = false;
+    el.innerHTML = `<p class="g-hist-cap">${ti(['', 'הש׳ שלך, אחת אחרי השנייה', 'ההחזקות שלך'])}</p><div class="g-bars"><i class="g-goal" style="bottom:${(100 * goal / top).toFixed(1)}%"><span>${star(true)}${star(true)}${star(true)}</span></i>` +
+      list.map(v => `<b class="${v >= goal ? 'top' : ''}" style="height:${Math.max(4, 100 * v / top).toFixed(1)}%"><span>${secs(v)}</span></b>`).join('') + '</div>';
+  }
+  // a ס: the picture of a ס next to a ש, until a good long ש
+  function trainTip(on) {
+    const tr = Gm.tr, el = $('#gmTip');
+    if (!tr || !el || tr.tip === on) return;
+    tr.tip = on;
+    el.innerHTML = on ? `<div class="g-tip two">${picsHtml(FIX.sh.sh_as_s.pics(), 'small')}<p>${G(ti(FIX.sh.sh_as_s.text))}</p></div>` : '';
+  }
+  function trainSay(key) {
+    const tr = Gm.tr;
+    if (tr) tr.said = key;
+    gSay(G(ti(TRAIN_SAY[key])), key === 'sh' ? 'good' : key === 's' ? 'warn' : '');
+  }
+  function trainDraw(tr, zone, p) {
+    const sv = $('#gmStage > svg');
+    if (!sv) return;
+    if (teen()) {
+      const x = 334 - 308 * tr.pos;
+      sv.querySelector('.g-marker').setAttribute('transform', `translate(${x.toFixed(1)} 0)`);
+      sv.querySelector('.g-line').setAttribute('stroke-dashoffset', (1 - tr.pos).toFixed(4));
+      const stops = sv.querySelectorAll('.g-stop'), n = stops.length - 1;
+      stops.forEach(c => { c.style.fill = tr.pos >= +c.dataset.i / n - 0.002 ? 'var(--sh)' : '#fff'; });
+    } else {
+      const x = TRAIN_X[0] - (TRAIN_X[0] - TRAIN_X[1]) * tr.pos;
+      sv.querySelector('.g-train').setAttribute('transform', `translate(${x.toFixed(1)} 0)`);
+      sv.querySelector('.g-snake').setAttribute('transform', `translate(${(x - 42).toFixed(1)} 0)`);
+      sv.style.setProperty('--a', tr.ang.toFixed(1) + 'deg');
+      sv.classList.toggle('snake', tr.snake);
+    }
+    sv.classList.toggle('moving', tr.v > 0.06);
+    const live = $('#gmLive'), dot = $('#gmDot');
+    if (live) {
+      live.dataset.zone = zone === 'none' ? '' : zone;
+      dot.classList.toggle('on', zone !== 'none');
+      if (p != null) { tr.pd = tr.pd == null ? p : tr.pd + (p - tr.pd) * 0.3; dot.style.setProperty('--p', tr.pd.toFixed(3)); }
+    }
+    // numbers, a few times a second
+    const now = performance.now();
+    if (now - tr.num > 120) {
+      tr.num = now;
+      if (teen()) {
+        $('#gmHold').textContent = secs(tr.hold); $('#gmBest').textContent = secs(tr.best); $('#gmPct').textContent = Math.round(tr.pos * 100) + '%';
+      } else if (!young()) gScore(`<span>הכי ארוך</span> <bdi>${secs(tr.best)}</bdi> <span>שניות</span>`);
+    }
+  }
+  // stop and wait: a tap on "pause", a long silence, or no microphone
+  function trainHold(tok, why) {
+    const tr = Gm.tr;
+    if (!tr || Gm.tok !== tok) return;
+    tr.on = false; tr.loop++; tr.v = 0;
+    cancelAnimationFrame(Gm.raf);
+    const sv = $('#gmStage > svg');
+    if (sv) sv.classList.remove('moving');
+    setMic(false);
+    pauseBtn(true);
+    const dot = $('#gmDot'); if (dot) dot.classList.remove('on');
+    gSay(why === 'mic' ? ti(['צריך מיקרופון כדי לנסוע.', 'בלי מיקרופון הרכבת לא זזה.', 'נדרש מיקרופון.'])
+      : why === 'idle' ? G(ti(['הרכבת מחכה. {לחץ|לחצי|לחצו} "להמשיך" כשמוכנים.', 'הרכבת מחכה. "להמשיך" כשמוכנים.', 'בהמתנה. "להמשיך" כשמוכנים.'])) : ti(['הפסקה', 'הפסקה', 'הפסקה']));
+  }
+  function trainArrive(tok) {
+    const tr = Gm.tr, t = Gm.trip;
+    tr.on = false; tr.loop++;
+    if (tr.hold >= 250) trainHist(tr.hold);
+    trainTip(false);
+    cancelAnimationFrame(Gm.raf);
+    setMic(false);
+    Gm.phase = 'over';
+    const sv = $('#gmStage > svg');
+    if (sv) { sv.classList.remove('moving', 'snake'); sv.classList.add('arrived'); }
+    $('#gmPause').disabled = true;
+    const dot = $('#gmDot'); if (dot) dot.classList.remove('on');
+    $('#gmLive').dataset.zone = '';
+    gSay(ti([`הגענו לתחנת ${t.dest}!`, `הגענו לתחנת ${t.dest}!`, `תחנת ${t.dest}: הגעת.`]), 'good');
+    confetti(1.3); sfx('streak');
+    hush(); TTS.say(`הגענו לתחנת ${t.dest}! איזה יופי!`);
+    const time = performance.now() - tr.t0, th = ti([[1200, 2000], [1500, 2500], [2000, 3000]]);
+    const stars = tr.best >= th[1] ? 3 : tr.best >= th[0] ? 2 : 1;
+    const stats = [[ti(['הש׳ הכי ארוכה', 'הש׳ הכי ארוכה', 'ההחזקה הארוכה']), `${secs(tr.best)} שניות`], [ti(['זמן הנסיעה', 'זמן הנסיעה', 'זמן כולל']), `${secs(time)} שניות`]];
+    if (tr.stops) stats.push([ti(['פעמים שהנחש עצר', 'עצירות בגלל ס׳', 'עצירות (ס׳)']), String(tr.stops)]);
+    const next = stars < 3 ? G(ti([`לכוכב הבא: שששש של ${secs(th[stars - 1])} שניות בלי הפסקה.`, `לכוכב הבא: ש׳ של ${secs(th[stars - 1])} שניות בלי הפסקה.`, `היעד הבא: החזקה של ${secs(th[stars - 1])} שניות.`])) : '';
+    Gm.timer = setTimeout(() => { if (Gm.tok === tok) gameEnd({ done: true, stars, rec: { key: 'bestHold', val: Math.round(tr.best) }, stats, next, hero: [secs(tr.best), 'שניות ש׳'] }); }, 2300);
+  }
+
+  // ---------------------------------------------------------------- the צ bubbles: one short, sharp צ pops one bubble
+  // Each try is a short take judged like the sound-alone step of a lesson. A miss says what to change; three misses
+  // in a row bring the picture of the movement and the model sound.
+  const BUB_SAY = {
+    ready: ['צ! קצר וחד.', 'צ׳ חדה אחת לכל בועה.', 'צ׳ חדה אחת לכל מטרה.'],
+    ok: [['בום!', 'פוף!', 'יש!', 'בדיוק!'], ['נקי!', 'בול!', 'יש!', 'חד!'], ['חד.', 'נקי.', 'מדויק.']],
+    ts_as_s: ['ארוך מדי, יצא ס׳. קצר: צ!', 'יצא ס׳: {התחל|התחילי|התחילו} חד, כמו ט׳.', 'ס׳: חסרה פתיחה חדה.'],
+    ts_as_t: ['שמעתי ט׳. אחריה קצת אוויר: טסס!', 'יצא ט׳: אחרי הסגירה, שריקה קצרה.', 'ט׳: חסרה שריקה.'],
+    ts_as_sh: ['רך מדי. חיוך קטן, ו... צ!', 'רך מדי: חיוך קל, בלי שפתיים עגולות.', 'רך מדי: בלי עיגול שפתיים.'],
+    almost: ['כמעט! עוד יותר חד.', 'כמעט. חד וקצר יותר.', 'כמעט. פתיחה חדה יותר.'],
+    missing: ['לא שמעתי צ׳. עוד פעם!', 'לא נשמעה צ׳. עוד פעם.', 'לא זוהתה צ׳.'],
+    quiet: ['קצת יותר חזק!', 'חזק יותר, קרוב למיקרופון.', 'חזק יותר.'],
+    silent: ['{תגיד|תגידי|תגידו} צ!', 'מחכה לצ׳…', 'ממתין לצ׳']
+  };
+  const BUB_TARGET = [{ letter: 'ts', pos: 'start', rel: 0.3, index: 0, alone: true }];
+  const Bub = {
+    n: () => Gm.cfg.bubN || ti([6, 8, 10]),
+    intro() {
+      const n = Bub.n();
+      gIntro(bubField(n), ti([
+        ['כל צ׳ מפוצצת בועה! קצר וחד, כמו ציוץ של ציפור: צ!', 'צ׳ אחת, בועה אחת.'],
+        ['כל צ׳ חדה וקצרה מפוצצת בועה. ס׳ ארוכה לא מפוצצת.', 'כמה שפחות טעויות, יותר כוכבים.'],
+        [`${n} צ׳ חדות, מהר ככל האפשר. השעון מתחיל בצ׳ הראשונה.`, 'כל צ׳ נבדקת: פתיחה חדה ושריקה קצרה.']
+      ]).map(G), { sound: 'ts', say: 'כל צליל קצר וחד מפוצץ בועה. {תקשיב|תקשיבי|תקשיבו}:' });
+    },
+    play() {
+      const tok = ++Gm.tok;
+      Gm.phase = 'play';
+      const n = Bub.n();
+      Gm.bb = { n, pops: 0, tries: 0, miss: 0, silent: 0, t0: 0, t1: 0, paused: false, replay: false, quiet: 0, loop: 0 };
+      $('#gmStage').innerHTML = bubField(n);
+      bubNext();
+      $('#gmCtl').innerHTML = `<div id="gmTip"></div><div class="g-tries" id="gmTries" aria-hidden="true"></div><div class="g-row">${micRow()}<span class="g-level"><i id="gmLevel"></i></span></div>` +
+        `<div class="g-row"><button class="btn" id="gmPause" type="button"></button><button class="btn" id="gmHearSnd" type="button">${ICON.speaker}<span>${ti(['לשמוע', 'לשמוע צ׳', 'הצליל'])}</span></button></div>`;
+      pauseBtn(false);
+      $('#gmPause').addEventListener('click', () => { const bb = Gm.bb; if (!bb || Gm.tok !== tok) return; if (bb.paused) { bb.paused = false; bb.silent = 0; bubLoop(tok); } else bubHold(tok); });
+      // the model sound must not pop a bubble: the take that is listening starts again after it
+      $('#gmHearSnd').addEventListener('click', () => {
+        const bb = Gm.bb;
+        hush();
+        if (bb) { bb.quiet = performance.now() + 900; if (TakeCtl.current && !bb.paused) { bb.replay = true; TakeCtl.current.cancel(); } }
+        playSound('ts');
+      });
+      bubScore();
+      setMic(false);
+      gSay(ti(['רגע…', 'מכינים את המיקרופון…', 'מכין מיקרופון…']));
+      bubLoop(tok);
+    }
+  };
+  GAMES.bubbles = Bub;
+  function bubField(n) {
+    const kind = teen() ? 'teen' : skin() === 'older' ? 'older' : 'young', cols = n <= 9 ? 3 : 4;
+    const rnd = i => { const v = Math.sin(i * 12.9898) * 43758.5453; return v - Math.floor(v); };   // a fixed jitter for each bubble
+    return `<div class="g-field" style="--cols:${cols}">` + Array.from({ length: n }, (_, i) =>
+      `<span class="g-bub" data-i="${i}" style="${kind === 'teen' ? '' : `--jx:${((rnd(i + 1) - 0.5) * 14).toFixed(0)}%;--jy:${((rnd(i + 7) - 0.5) * 16).toFixed(0)}%;`}--d:${(-rnd(i + 3) * 3).toFixed(2)}s">${GART.bubble(kind, i + 1)}</span>`).join('') + '</div>';
+  }
+  async function bubLoop(tok) {
+    const bb = Gm.bb, my = ++bb.loop;
+    pauseBtn(false);
+    try { await Mic.open(); } catch (e) { if (Gm.tok === tok) { micError(e); bubHold(tok, false, true); } return; }
+    if (Gm.tok !== tok || bb.loop !== my) return;
+    if (Mic.blocks.length < 8) await sleep(350);
+    if (bb.tries === 0 && bb.pops === 0) gSay(ti(BUB_SAY.ready));
+    while (Gm.tok === tok && bb.loop === my && !bb.paused && bb.pops < bb.n) {
+      const preMs = await preRoll(150, Math.max(quietFrom(), bb.quiet));
+      if (Gm.tok !== tok || bb.loop !== my || bb.paused) return;
+      if (isTalking() || performance.now() < bb.quiet) continue;   // a sound started meanwhile: wait it out
+      setMic(true);
+      const take = await recordTake({ preMs, waitMs: 8000, maxMs: 1600, tailMs: 280, onLevel: st => gLevel(st.rms) });
+      gLevel(0);
+      if (Gm.tok !== tok || bb.loop !== my) return;
+      if (take.aborted) { if (bb.replay && !bb.paused) { bb.replay = false; continue; } return; }
+      if (!take.begun) {
+        if (++bb.silent >= 3) { bubHold(tok, true); return; }
+        gSay(G(ti(BUB_SAY.silent)));
+        continue;
+      }
+      bb.silent = 0;
+      let res;
+      try { res = SZ.analyzeTake(take.x, take.sr, BUB_TARGET, cfgNow()); } catch (err) { console.error(err); continue; }
+      if (res.quality === 'nospeech' || res.quality === 'quiet') { gSay(ti(BUB_SAY[res.quality === 'quiet' ? 'quiet' : 'missing']), 'warn'); continue; }
+      if (!bb.t0) bb.t0 = performance.now() - 1000 * take.x.length / take.sr;   // the clock starts with the first צ
+      bb.tries++;
+      const v = res.targets[0].verdict;
+      const dots = $('#gmTries');
+      if (dots) { dots.insertAdjacentHTML('beforeend', `<i class="${v === 'ok' ? 'ok' : 'miss'}"></i>`); while (dots.children.length > 20) dots.firstElementChild.remove(); }
+      if (v === 'ok') { bubPop(); bb.miss = 0; const t = $('#gmTip'); if (t && t.innerHTML) t.innerHTML = ''; }
+      else {
+        bubWob(v);
+        if (++bb.miss >= 3) { bb.miss = 0; await bubTip(tok); if (Gm.tok !== tok || bb.loop !== my) return; }
+      }
+      bb.quiet = performance.now() + 380;   // the pop's own sound stays out of the next take
+      bubScore();
+      if (bb.pops >= bb.n) { bubDone(tok, true); return; }
+      if (bb.tries >= bb.n * 2 + 4) { bubDone(tok, false); return; }
+    }
+  }
+  const bubAt = i => $(`#gmStage .g-bub[data-i="${i}"]`);
+  function bubNext() { const bb = Gm.bb; $$('#gmStage .g-bub').forEach(e => e.classList.toggle('next', +e.dataset.i === bb.pops)); }
+  function bubPop() {
+    const bb = Gm.bb, el = bubAt(bb.pops);
+    bb.pops++;
+    if (el) {
+      el.classList.remove('next', 'wob');
+      if (teen()) el.innerHTML = '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" style="fill:var(--ok)"/><path d="M29 52 L44 66 L72 35" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      else {
+        el.classList.add('popped');
+        for (let k = 0; k < 8; k++) {
+          const d = document.createElement('i'), a = k / 8 * 6.283 + Math.random() * 0.4, r = 34 + Math.random() * 20;
+          d.className = 'drop';
+          d.style.setProperty('--dx', (Math.cos(a) * r).toFixed(0) + 'px'); d.style.setProperty('--dy', (Math.sin(a) * r).toFixed(0) + 'px');
+          el.appendChild(d);
+        }
+        if (young()) { const b = document.createElement('b'); b.className = 'boom'; b.textContent = 'צ!'; el.appendChild(b); }
+        setTimeout(() => { el.classList.add('gone'); el.querySelectorAll('.drop, .boom').forEach(x => x.remove()); }, 700);
+      }
+    }
+    sfx('pop');
+    gSay(pick(ti(BUB_SAY.ok)), 'good');
+    bubNext();
+  }
+  function bubWob(v) {
+    const el = bubAt(Gm.bb.pops);
+    if (el) { el.classList.remove('wob'); void el.offsetWidth; el.classList.add('wob'); }
+    gSay(G(ti(BUB_SAY[v] || BUB_SAY.missing)), 'warn');
+    sfx('no');
+  }
+  // three misses in a row: the picture of the movement, and the model sound
+  async function bubTip(tok) {
+    const tip = $('#gmTip');
+    if (tip) tip.innerHTML = `<div class="g-tip">${GUIDE.side('tsOpen', 'release', { labels: false })}<p>${G(ti(T.teach.cueSound.ts))}</p></div>`;
+    hush();
+    if (TTS.can()) await TTS.say(G('כמעט. {תקשיב|תקשיבי|תקשיבו}, קצר וחד:'));
+    if (Gm.tok !== tok) return;
+    await playSound('ts');
+  }
+  function bubScore() {
+    const bb = Gm.bb;
+    if (teen()) {
+      clearInterval(Gm.tick);
+      const show = () => gScore(`${GART.ICONS.timer}<bdi>${secs(bb.t0 ? (bb.t1 || performance.now()) - bb.t0 : 0)}</bdi><span class="g-sep"></span><bdi>${bb.pops}/${bb.n}</bdi>`);
+      show();
+      if (bb.t0 && !bb.t1) Gm.tick = setInterval(show, 100);
+    } else gScore(`<bdi>${bb.pops}/${bb.n}</bdi>`);
+  }
+  function bubHold(tok, idle, nomic) {
+    const bb = Gm.bb;
+    if (!bb || Gm.tok !== tok) return;
+    bb.paused = true; bb.replay = false; bb.loop++;
+    if (TakeCtl.current) TakeCtl.current.cancel();
+    setMic(false); gLevel(0);
+    pauseBtn(true);
+    gSay(nomic ? ti(['צריך מיקרופון כדי לפוצץ בועות.', 'בלי מיקרופון הבועות לא מתפוצצות.', 'נדרש מיקרופון.'])
+      : idle ? G(ti(['הבועות מחכות. {לחץ|לחצי|לחצו} "להמשיך" כשמוכנים.', 'הבועות מחכות. "להמשיך" כשמוכנים.', 'בהמתנה. "להמשיך" כשמוכנים.'])) : ti(['הפסקה', 'הפסקה', 'הפסקה']));
+  }
+  function bubDone(tok, all) {
+    const bb = Gm.bb;
+    bb.t1 = performance.now(); bb.loop++;
+    clearInterval(Gm.tick);
+    Gm.phase = 'over';
+    setMic(false);
+    bubScore();
+    $('#gmPause').disabled = true; $('#gmHearSnd').disabled = true;
+    const acc = bb.tries ? bb.pops / bb.tries : 0;
+    const stars = all ? (acc >= 0.8 ? 3 : acc >= 0.55 ? 2 : 1) : (bb.pops >= bb.n / 2 ? 1 : 0);
+    const time = bb.t0 ? bb.t1 - bb.t0 : 0;
+    if (all) { confetti(1.3); sfx('streak'); hush(); TTS.say(ti(['איזה יופי! כל הבועות התפוצצו!', 'איזה יופי! כל הבועות התפוצצו!', 'איזה יופי!'])); }
+    gSay(all ? ti(['כל הבועות התפוצצו!', 'כל הבועות התפוצצו!', 'כל המטרות.']) : ti(['כמעט! עוד סיבוב?', 'כמעט! עוד סיבוב?', 'עוד ניסיון?']), all ? 'good' : '');
+    const stats = [[ti(['בועות', 'בועות', 'מטרות']), `${bb.pops}/${bb.n}`], [ti(['צ׳ נכונות', 'צ׳ נכונות מתוך הניסיונות', 'דיוק']), teen() ? `${Math.round(acc * 100)}%` : `${bb.pops} מתוך ${bb.tries}`]];
+    if (all && !young()) stats.push(['זמן', `${secs(time)} שניות`]);
+    Gm.timer = setTimeout(() => {
+      const next = !all ? ti(['צ׳ קצרה וחדה מפוצצת בועה. עוד סיבוב?', 'צ׳ קצרה וחדה מפוצצת בועה. עוד סיבוב?', 'פתיחה חדה ושריקה קצרה. עוד ניסיון?'])
+        : stars < 3 ? ti(['לשלושה כוכבים: כמעט בלי טעויות.', 'לשלושה כוכבים: כמעט בלי טעויות.', 'היעד הבא: דיוק של 80% ומעלה.']) : '';
+      if (Gm.tok === tok) gameEnd({ done: all, stars, rec: all && time ? { key: 'bestTime', val: Math.round(time), lo: true } : null, stats, next, hero: all ? [secs(time), 'שניות'] : [`${bb.pops}/${bb.n}`, 'מטרות'] });
+    }, all ? 1600 : 700);
+  }
+
+  // ---------------------------------------------------------------- which sound is in the word? (listening)
+  // The voice says a word. Up to 6: ש or צ (the drawings of the hush and of the bird). From 7: which sound and where
+  // in the word. From 12: a minute against the clock. The word stays hidden until the answer (written, with its sound
+  // hidden, when the device has no Hebrew voice).
+  const SORT_OK = [['כן!', 'נכון!', 'איזה יופי!', 'בדיוק!'], ['נכון!', 'בול!', 'מדויק!'], ['נכון', 'בול', 'מדויק']];
+  const Sort = {
+    secs: () => Gm.cfg.sortSecs || 60,
+    intro() {
+      gIntro(GART.cardArt('sort', skin()), ti([
+        ['שוצי אומר מילה. מה שומעים בה: שששש, כמו הילד שאומר שקט, או צ, כמו הציפור?'],
+        ['שוצי אומר מילה, ו{אתה בוחר|את בוחרת|אתם בוחרים}: איזה צליל יש בה, ש׳ או צ׳, ואיפה הוא: בהתחלה, באמצע או בסוף.', 'המילה לא כתובה, רק נשמעת. אפשר לשמוע אותה שוב.'],
+        [`${Sort.secs()} שניות. בכל מילה: איזה צליל יש בה ואיפה הוא.`, 'המילה רק נשמעת. כל תשובה מלאה ונכונה היא נקודה.']
+      ]).map(G), { say: 'שוצי אומר מילה. {תקשיב|תקשיבי|תקשיבו} טוב, ו{לחץ|לחצי|לחצו} על הציור של הצליל: הילד שאומר שקט, או הציפור.' });
+      $('#gmStage').classList.add('sort-art');
+    },
+    play() {
+      const tok = ++Gm.tok;
+      Gm.phase = 'play';
+      const sprint = teen(), n = sprint ? 60 : ti([8, 10, 10]);
+      Gm.so = { items: sortItems(n), i: -1, pts: 0, right: 0, half: 0, combo: 0, bestCombo: 0, done: 0, t0: 0, over: false };
+      $('#gmStage').className = 'g-stage';
+      $('#gmStage').innerHTML = '<div class="so-card" id="soCard"></div>';
+      $('#gmCtl').innerHTML = sortButtons();
+      $$('#gmCtl [data-l]').forEach(b => b.addEventListener('click', () => sortAnswer(b.dataset.l, b.dataset.p, b)));
+      gSay('');
+      sortNext(tok);
+    }
+  };
+  GAMES.sort = Sort;
+  // half ש half צ, from all three places, from the easier start of each bank
+  function sortItems(n) {
+    const g = WORDS[group()], voice = S.settings.speak && TTS.can();
+    const usable = w => (young() ? !!w.pic : (voice || Models.has(w.w) || !!w.pic)) && !/ /.test(w.w);
+    const per = Math.ceil(n / 6) + 2, out = [];
+    for (const id of ['sh-start', 'sh-mid', 'sh-end', 'ts-start', 'ts-mid', 'ts-end']) {
+      const L = id.slice(0, 2), pos = id.slice(3);
+      shuffle(g[id].slice(0, 90).filter(usable)).slice(0, per).forEach(w => out.push({ w, L, pos }));
+    }
+    // spread them so the same sound does not come many times in a row
+    return shuffle(out).slice(0, n);
+  }
+  function sortButtons() {
+    if (young()) {
+      return `<div class="so-two"><button class="so-btn sh" type="button" data-l="sh" aria-label="ש׳"><span class="so-ico">${PICS.get('shh')}</span><b>ש</b></button>` +
+        `<button class="so-btn ts" type="button" data-l="ts" aria-label="צ׳"><span class="so-ico">${PICS.get('bird')}</span><b>צ</b></button></div>`;
+    }
+    return '<div class="so-grid">' + ['sh', 'ts'].map(L => `<span class="so-rowlab ${L === 'sh' ? 'L-sh' : 'L-ts'}" aria-hidden="true">${L === 'sh' ? 'ש' : 'צ'}</span>` +
+      ['start', 'mid', 'end'].map(p => `<button class="so-pos" type="button" data-l="${L}" data-p="${p}" aria-label="${L === 'sh' ? 'ש׳' : 'צ׳'} ${POS_WORD[p]}">${posmap([{ letter: L, pos: p }], true)}${teen() ? '' : `<span>${POS_WORD[p]}</span>`}</button>`).join('')).join('') + '</div>';
+  }
+  // the word written with its ש or צ hidden (only when there is no voice to say it)
+  function maskWord(w) {
+    return Array.from(w.w).map(ch => (ch === 'ש' || ch === 'צ' || ch === 'ץ' ? '<span class="gap"></span>' : ch.replace(/&/g, '&amp;').replace(/</g, '&lt;'))).join('');
+  }
+  async function sortNext(tok) {
+    const so = Gm.so;
+    if (Gm.tok !== tok) return;
+    so.i++;
+    if (so.over || so.i >= so.items.length) { sortDone(tok); return; }
+    const it = so.items[so.i], w = it.w, voice = canSayWord(w);
+    so.answered = false;
+    const face = young() || (!teen() && w.pic) ? `<div class="so-pic">${w.pic ? PICS.get(w.pic) : `<span class="sticker">${w.e || ''}</span>`}</div>` : `<div class="so-ear">${GART.ICONS.ear}</div>`;
+    const card = $('#soCard');
+    card.className = 'so-card';
+    card.innerHTML = face + `<p class="so-word${voice ? '' : ' masked'}" id="soWord">${voice || young() ? '' : maskWord(w)}</p>` +
+      (voice ? `<button class="icon-btn small so-hear" id="soHear" type="button" aria-label="לשמוע שוב">${ICON.speaker}</button>` : '') +
+      (teen() ? '' : `<span class="so-prog num"><bdi>${so.i + 1}/${so.items.length}</bdi></span>`);
+    if (voice) $('#soHear').addEventListener('click', () => sayWord(w, null, true));
+    $$('#gmCtl [data-l]').forEach(b => { b.disabled = false; b.classList.remove('right', 'wrong'); });
+    if (teen() && !so.t0) {
+      so.t0 = performance.now();
+      const showT = () => {
+        const left = Math.max(0, Sort.secs() * 1000 - (performance.now() - so.t0));
+        gScore(`${GART.ICONS.timer}<bdi>${Math.ceil(left / 1000)}</bdi><span class="g-sep"></span>${ICON.check}<bdi>${so.right}</bdi>`);
+        if (left <= 0 && !so.over) { so.over = true; clearInterval(Gm.tick); if (!so.answered) sortDone(Gm.tok); }
+      };
+      showT(); Gm.tick = setInterval(showT, 200);
+    } else if (!teen()) gScore(`${star(true)}<bdi>${so.right}</bdi>`);
+    gSay(young() ? '' : ti(['', 'איזה צליל, ואיפה הוא?', 'איזה צליל, ואיפה?']));
+    await sleep(280);
+    if (Gm.tok !== tok || so.answered) return;
+    if (voice) sayWord(w);
+  }
+  function sortAnswer(L, p, btn) {
+    const so = Gm.so;
+    if (!so || so.answered || Gm.phase !== 'play' || so.over) return;
+    so.answered = true;
+    const tok = Gm.tok, it = so.items[so.i], okL = L === it.L, full = okL && (young() || p === it.pos);
+    so.done++;
+    if (full) { so.pts++; so.right++; so.combo++; so.bestCombo = Math.max(so.bestCombo, so.combo); }
+    else { so.combo = 0; if (okL) { so.pts += 0.5; so.half++; } }
+    $$('#gmCtl [data-l]').forEach(b => { b.disabled = true; });
+    btn.classList.add(full ? 'right' : 'wrong');
+    if (!full) { const r = $(`#gmCtl [data-l="${it.L}"]${young() ? '' : `[data-p="${it.pos}"]`}`); if (r) r.classList.add('right'); }
+    $('#soWord').classList.remove('masked');
+    $('#soWord').innerHTML = wordHtml(it.w);
+    const card = $('#soCard');
+    card.classList.remove('yes', 'no'); void card.offsetWidth; card.classList.add(full ? 'yes' : 'no');
+    const lab = `${it.L === 'sh' ? 'ש׳' : 'צ׳'} ${POS_WORD[it.pos]}`;
+    if (full) gSay(pick(ti(SORT_OK)) + (teen() && so.combo >= 3 ? ` רצף ${so.combo}` : ''), 'good');
+    else if (okL) gSay(ti(['', `הצליל נכון! הוא ${POS_WORD[it.pos]}.`, `הצליל נכון, המקום לא: ${lab}.`]), 'warn');
+    else gSay(young() ? G('לא נורא! {תקשיב|תקשיבי|תקשיבו} שוב:') : `במילה הזאת יש ${lab}.`, 'warn');
+    sfx(full ? 'ok' : 'no');
+    if (!teen()) gScore(`${star(true)}<bdi>${so.right}</bdi>`);
+    const next = () => { if (Gm.tok === tok) sortNext(tok); };
+    if (full) Gm.timer = setTimeout(next, teen() ? 650 : 1100);
+    else if (canSayWord(it.w)) { hush(); sayWord(it.w, null, true).then(() => { if (Gm.tok === tok) Gm.timer = setTimeout(next, 650); }); }
+    else Gm.timer = setTimeout(next, 2200);
+  }
+  function sortDone(tok) {
+    const so = Gm.so;
+    if (Gm.tok !== tok || Gm.phase !== 'play') return;
+    clearInterval(Gm.tick);
+    Gm.phase = 'over';
+    $$('#gmCtl [data-l]').forEach(b => { b.disabled = true; });
+    let r;
+    if (teen()) {
+      const sc = so.right;
+      r = { done: so.done > 0, stars: sc >= 14 ? 3 : sc >= 9 ? 2 : sc >= 1 ? 1 : 0, rec: so.done ? { key: 'bestSprint', val: sc } : null,
+        stats: [['תשובות נכונות', String(sc)], ['מילים', String(so.done)], ['הרצף הכי ארוך', String(so.bestCombo)]], hero: [String(sc), 'נכונות'] };
+      if (r.stars < 3) r.next = `היעד הבא: ${sc >= 9 ? 14 : 9} נכונות בדקה.`;
+    } else {
+      const pct = Math.round(100 * so.pts / so.items.length);
+      r = { done: true, stars: pct >= 90 ? 3 : pct >= 70 ? 2 : 1, rec: { key: 'bestPct', val: pct },
+        stats: young() ? [['נכונות', `${so.right}/${so.items.length}`]] : [['נכון לגמרי', `${so.right}/${so.items.length}`], ['רק הצליל נכון', String(so.half)], ['ציון', `${pct}%`]] };
+      if (r.stars < 3) r.next = `לשלושה כוכבים: ${Math.ceil(0.9 * so.items.length)} ${young() ? 'נכונות' : 'תשובות מלאות'} מתוך ${so.items.length}.`;
+    }
+    sfx(r.stars >= 2 ? 'win' : 'ok');
+    gSay(teen() ? 'הזמן נגמר.' : ti(['זהו!', 'סיימנו!', '']), 'good');
+    Gm.timer = setTimeout(() => { if (Gm.tok === tok) gameEnd(r); }, 900);
+  }
+
+  // ---------------------------------------------------------------- the talking memory: find a pair, then say its word
+  const Mem = {
+    pairs: () => Gm.cfg.memPairs || ti([6, 8, 8]),
+    intro() {
+      const st = gStat('memory'), deck = memDeck(Mem.pairs());
+      Gm.deck = deck;
+      gIntro(memGrid(deck.cards, true), ti([
+        ['{הפוך|הפכי|הפכו} שני קלפים. כשיש זוג, {אמור|אמרי|אמרו} את המילה בקול!'],
+        ['{מצא|מצאי|מצאו} זוגות: ציור והמילה שלו. בכל זוג {אמור|אמרי|אמרו} את המילה, ושוצי בודק.', 'מילה שנאמרה נכון שווה מטבע.'],
+        ['זוגות של ציור ומילה. בכל זוג: המילה בקול, עם אותה בדיקה של התרגול.', 'פחות מהלכים, יותר כוכבים.']
+      ]).map(G), {
+        extra: `<label class="switch"><input type="checkbox" id="gmSpeak"${st.speak !== false ? ' checked' : ''}> <span>${ti(['לומר כל מילה בקול', 'לומר כל מילה בקול', 'לומר כל מילה בקול'])}</span></label>`,
+        say: 'הופכים שני קלפים. כשיש זוג, אומרים את המילה בקול!'
+      });
+      $('#gmSpeak').addEventListener('change', e => { gStat('memory').speak = e.target.checked; save(); });
+    },
+    play() {
+      const tok = ++Gm.tok;
+      Gm.phase = 'play';
+      const deck = Gm.deck || memDeck(Mem.pairs());
+      Gm.deck = null;
+      Gm.me = { P: deck.words.length, cards: deck.cards, open: [], matched: 0, moves: 0, said: 0, saidOk: 0, lock: false, speak: gStat('memory').speak !== false };
+      // the microphone opens now, inside the tap (phones only start sound and the microphone from a tap)
+      if (Gm.me.speak) Mic.open().catch(e => { if (Gm.tok === tok && Gm.me) { Gm.me.speak = false; micError(e); } });
+      $('#gmStage').innerHTML = memGrid(deck.cards);
+      $('#gmStage').querySelector('.me-grid').addEventListener('click', e => { const c = e.target.closest('.me-card'); if (c) memFlip(+c.dataset.i); });
+      $('#gmCtl').innerHTML = `<div class="me-say" id="meSay"><p>${G(ti(['{הפוך|הפכי|הפכו} שני קלפים.', '{הפוך|הפכי|הפכו} שני קלפים ו{מצא|מצאי|מצאו} זוג.', 'שני קלפים בכל מהלך.']))}</p></div>` +
+        (young() ? '' : '<p class="me-moves num" id="meMoves"></p>');
+      memMoves();
+      gSay('');
+    }
+  };
+  GAMES.memory = Mem;
+  // pairs of words with drawings, half ש half צ, each drawing once
+  function memDeck(P) {
+    const g = WORDS[group()], seen = new Set();
+    const take = (ids, k) => {
+      const out = [];
+      for (const w of shuffle(ids.flatMap(id => g[id].slice(0, 100)).filter(w => w.pic && !/ /.test(w.w) && w.w.length <= 7))) {
+        if (out.length >= k) break;
+        if (seen.has(w.pic)) continue;
+        seen.add(w.pic); out.push(w);
+      }
+      return out;
+    };
+    const words = shuffle(take(['sh-start', 'sh-mid', 'sh-end'], Math.ceil(P / 2)).concat(take(['ts-start', 'ts-mid', 'ts-end'], Math.floor(P / 2))));
+    const cards = [];
+    words.forEach((w, k) => { cards.push({ k, w, face: 'pic' }); cards.push({ k, w, face: young() ? 'pic' : 'word' }); });
+    return { words, cards: shuffle(cards) };
+  }
+  function memGrid(cards, still) {
+    return `<div class="me-grid${still ? ' still' : ''}" style="--cols:4">` + cards.map((c, i) => {
+      const face = c.face === 'pic' ? PICS.get(c.w.pic) : `<span class="me-word">${wordHtml(c.w)}</span>`;
+      return `<button class="me-card" type="button" data-i="${i}" aria-label="קלף ${i + 1}"${still ? ' disabled' : ''}><span class="me-back" aria-hidden="true">${teen() ? '<i class="me-mark"></i>' : '?'}</span><span class="me-face">${face}</span></button>`;
+    }).join('') + '</div>';
+  }
+  function memDraw(i) {
+    const c = Gm.me.cards[i], el = $(`#gmStage .me-card[data-i="${i}"]`);
+    if (!el) return;
+    el.classList.toggle('up', !!(c.up || c.done));
+    el.classList.toggle('done', !!c.done);
+    el.classList.toggle('said', !!c.said);
+    el.setAttribute('aria-label', c.up || c.done ? c.w.w : `קלף ${i + 1}`);
+  }
+  function memMoves() {
+    const me = Gm.me;
+    gScore(`<span>זוגות</span> <bdi>${me.matched}/${me.P}</bdi>`);
+    const m = $('#meMoves');
+    if (m) m.textContent = me.moves ? `${me.moves} ${me.moves === 1 ? 'מהלך' : 'מהלכים'}` : '';
+  }
+  function memFlip(i) {
+    const me = Gm.me;
+    if (!me || me.lock || Gm.phase !== 'play') return;
+    const c = me.cards[i];
+    if (!c || c.up || c.done) return;
+    c.up = true; memDraw(i);
+    me.open.push(i);
+    if (me.open.length < 2) return;
+    me.moves++;
+    const [a, b] = me.open, tok = Gm.tok;
+    me.open = []; me.lock = true;
+    memMoves();
+    if (me.cards[a].k === me.cards[b].k) Gm.timer = setTimeout(() => memMatch(a, b, tok), 420);
+    else {
+      Gm.timer = setTimeout(() => {
+        if (Gm.tok !== tok) return;
+        [a, b].forEach(j => { me.cards[j].up = false; memDraw(j); });
+        me.lock = false;
+      }, 1150);
+    }
+  }
+  async function memMatch(a, b, tok) {
+    if (Gm.tok !== tok) return;
+    const me = Gm.me, w = me.cards[a].w;
+    [a, b].forEach(j => { me.cards[j].done = true; memDraw(j); });
+    me.matched++;
+    memMoves();
+    sfx('ok');
+    if (me.speak) await memSay(w, [a, b], tok);
+    else { const box = $('#meSay'); box.className = 'me-say'; box.innerHTML = `<span class="me-word">${wordHtml(w)}</span><p>${ti(['זוג!', 'זוג!', 'זוג.'])}</p>`; if (canSayWord(w)) { hush(); await sayWord(w); } }
+    if (Gm.tok !== tok) return;
+    me.lock = false;
+    if (me.matched >= me.P) memDone(tok);
+  }
+  // the word of the pair: the voice says it, the microphone listens once, and the same check as the practice answers
+  async function memSay(w, pair, tok) {
+    const me = Gm.me, box = $('#meSay');
+    box.className = 'me-say';
+    box.innerHTML = `<span class="me-word">${wordHtml(w)}</span><p>${G(ti(['{אמור|אמרי|אמרו} את המילה!', '{אמור|אמרי|אמרו} את המילה', 'המילה בקול']))}</p>${micRow()}`;
+    setMic(false);
+    const p = box.querySelector('p');
+    hush();
+    if (canSayWord(w)) await sayWord(w);
+    if (Gm.tok !== tok) return;
+    try { await Mic.open(); } catch (e) { me.speak = false; micError(e); return; }
+    if (Gm.tok !== tok) return;
+    if (Mic.blocks.length < 8) await sleep(350);
+    const preMs = await preRoll(300, quietFrom());
+    if (Gm.tok !== tok) return;
+    setMic(true);
+    const take = await recordTake({ preMs, waitMs: 5000, maxMs: 3600, tailMs: 650 });
+    setMic(false);
+    if (Gm.tok !== tok || take.aborted) return;
+    const mic = $('#gmMic'); if (mic) mic.remove();
+    if (!take.begun) { p.textContent = ti(['ממשיכים!', 'ממשיכים.', 'ממשיכים.']); await sleep(500); return; }
+    let res;
+    try { res = SZ.analyzeTake(take.x, take.sr, targetsOf(w.w), cfgNow()); } catch (err) { console.error(err); return; }
+    if (res.quality === 'nospeech' || res.quality === 'quiet') { p.textContent = ti(T[res.quality].t); await sleep(700); return; }
+    const ok = res.targets.length > 0 && res.targets.every(t => t.verdict === 'ok');
+    logAttempt(w, res, null, 'משחק זיכרון', '');
+    me.said++;
+    if (ok) {
+      me.saidOk++;
+      daily().ok++;
+      save();
+      pair.forEach(j => { me.cards[j].said = true; memDraw(j); });
+      box.classList.add('ok');
+      p.innerHTML = `${G(pick(ti(T.praise)))} <b class="num"><bdi dir="ltr">+1</bdi></b>`;
+      sfx('coin');
+      hush(); TTS.say('איזה יופי!');
+      await sleep(1200);
+    } else {
+      const bad = res.targets.find(t => t.verdict !== 'ok');
+      p.textContent = ti((T.v[bad.letter][bad.verdict] || T.v[bad.letter].missing).t);
+      sfx('no');
+      hush();
+      if (canSayWord(w)) await sayWord(w, G(pick(ti(T.teach.lead.miss))), true);
+      await sleep(450);
+    }
+  }
+  function memDone(tok) {
+    const me = Gm.me;
+    Gm.phase = 'over';
+    const P = me.P, m = me.moves, stars = m <= Math.round(P * 1.7) ? 3 : m <= Math.round(P * 2.6) ? 2 : 1;
+    confetti(1.2); sfx('streak');
+    hush(); TTS.say('איזה יופי! כל הזוגות נמצאו!');
+    gSay(ti(['כל הזוגות נמצאו!', 'כל הזוגות נמצאו!', 'כל הזוגות.']), 'good');
+    const stats = [['מהלכים', String(m)], ['זוגות', `${P}/${P}`]];
+    if (me.said) stats.push([ti(['מילים שנאמרו נכון', 'מילים שנאמרו נכון', 'מילים נכונות בקול']), `${me.saidOk}/${me.said}`]);
+    Gm.timer = setTimeout(() => {
+      if (Gm.tok === tok) gameEnd({ done: true, stars, rec: { key: 'bestMoves' + P, val: m, lo: true }, stats, hero: [String(m), 'מהלכים'],
+        next: stars < 3 ? `לשלושה כוכבים: ${Math.round(P * 1.7)} מהלכים או פחות.` : '',
+        bonus: me.saidOk ? [ti(['מילים שנאמרו נכון', 'מילים שנאמרו נכון', 'מילים נכונות']), Math.min(5, me.saidOk)] : null });
+    }, 1500);
+  }
+
+  // ---------------------------------------------------------------- the end of a game: stars, a personal best, coins
+  function gameEnd(r) {
+    const id = Gm.id;
+    Gm.tok++;
+    cancelAnimationFrame(Gm.raf); clearInterval(Gm.tick); clearTimeout(Gm.timer);
+    if (TakeCtl.current) TakeCtl.current.cancel();
+    Gm.phase = 'end';
+    const s = gStat(id), d = daily();
+    const quest = questGame() === id && !d.played[id];
+    d.played[id] = 1;
+    s.plays = (s.plays || 0) + 1;
+    if (r.stars) s.stars = Math.max(s.stars || 0, r.stars);
+    let record = false, had = null;
+    if (r.rec && r.rec.val != null) {
+      had = s[r.rec.key];
+      record = had != null && (r.rec.lo ? r.rec.val < had : r.rec.val > had);
+      if (had == null || record) s[r.rec.key] = r.rec.val;
+    }
+    markActive();
+    // the games fill the jar too, up to a daily amount, so the practice stays the main way to build the island
+    const lines = [];
+    if (r.done) lines.push([ti(['סיום המשחק', 'סיום המשחק', 'סיום האתגר']), 2]);
+    if (r.stars) lines.push([['', 'כוכב אחד', 'שני כוכבים', 'שלושה כוכבים'][r.stars], r.stars]);
+    if (record) lines.push(['שיא חדש', 2]);
+    if (r.bonus) lines.push(r.bonus);
+    const want = lines.reduce((a, l) => a + l[1], 0), room = Math.max(0, GAME_COINS - (d.coins || 0)), gain = Math.min(want, room);
+    d.coins = (d.coins || 0) + gain;
+    S.wallet.coins = (S.wallet.coins || 0) + gain; S.wallet.earned = (S.wallet.earned || 0) + gain;
+    save();
+    gameEndRender(r, { gain, lines, capped: gain < want, record, had, quest });
+  }
+  function gameEndRender(r, c) {
+    const id = Gm.id, end = $('#gmEnd');
+    $('#gmStage').hidden = true; $('#gmCtl').hidden = true; $('#gmTalk').hidden = true;
+    gScore('');
+    let hero;
+    if (teen()) hero = `<div class="bigscore">${ringSvg(r.done ? 'var(--ok)' : 'var(--warn)')}<b>${(r.hero || ['', ''])[0]}</b><small>${(r.hero || ['', ''])[1]}</small></div>`;
+    else if (young()) hero = `<div class="mascot">${parrotNow(r.done ? 'happy' : 'idle')}</div>`;
+    else hero = `<div class="mascot">${recordDisc(r.stars)}</div>`;
+    const title = !r.done ? ti(['כמעט!', 'כמעט!', 'כמעט'])
+      : c.record ? ti(['שיא חדש!', 'שיא חדש!', 'שיא אישי חדש'])
+        : r.stars >= 3 ? ti(['מושלם!', 'מושלם!', 'מצוין']) : ti(['כל הכבוד!', 'כל הכבוד!', 'הושלם']);
+    const rec = recParts(id);
+    const recLine = c.record ? `<li class="rec"><span>${ti(['שיא חדש!', 'שיא חדש!', 'שיא אישי חדש'])}</span><b>${rec ? rec.join(' ') : ''}</b></li>`
+      : rec && c.had != null ? `<li><span>השיא ${ti(['שלך', 'שלך', 'שלך'])}</span><b>${rec.join(' ')}</b></li>` : '';
+    const capNote = c.capped ? `<br>${ti(['היום כבר נאספו כל מטבעות המשחקים. מחר יש עוד!', 'מטבעות המשחקים של היום נאספו. מחר יש עוד.', 'הגעת למכסת המטבעות היומית של המשחקים.'])}` : '';
+    end.innerHTML = hero + `<p class="h1 g-end-title">${title}</p>` +
+      (teen() ? '' : `<div class="stars big">${[1, 2, 3].map(i => star(i <= r.stars)).join('')}</div>`) +
+      (r.next ? `<p class="g-next">${r.next}</p>` : '') +
+      `<ul class="g-end-stats">${r.stats.map(([k, v]) => `<li><span>${k}</span><b>${v}</b></li>`).join('')}${recLine}</ul>` +
+      `<div class="g-coins">${coinSvg()}<b class="num"><bdi dir="ltr">+${c.gain}</bdi></b><span>${c.lines.map(l => `${l[0]} <bdi dir="ltr">+${l[1]}</bdi>`).join('<br>')}${capNote}</span></div>` +
+      (c.quest ? `<p class="g-quest">${ICON.check}<span>${ti(['משימת היום הושלמה!', 'משימת היום הושלמה!', 'אתגר היום הושלם'])}</span></p>` : '') +
+      `<div class="actions"><button class="btn primary" id="gmAgain" type="button">${ti(['עוד פעם!', 'עוד פעם', 'עוד ניסיון'])}</button><button class="btn" id="gmMore" type="button">${ti(['למשחקים', 'לכל המשחקים', 'לכל האתגרים'])}</button></div>`;
+    end.hidden = false;
+    $$('#gmEnd .stars svg').forEach((s, i) => { s.classList.add('pop'); s.style.animationDelay = (0.15 + i * 0.18) + 's'; });
+    if (teen()) { const arc = end.querySelector('.ring-arc'), C = 2 * Math.PI * 26; requestAnimationFrame(() => requestAnimationFrame(() => { if (arc) arc.style.strokeDashoffset = (C * (1 - r.stars / 3)).toFixed(2); })); }
+    if (c.gain) setTimeout(() => { if (current === 'scr-game' && Gm.phase === 'end') { sfx('coin'); const b = end.querySelector('.g-coins b'); if (b) { b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); } } }, 500);
+    $('#gmAgain').addEventListener('click', () => startGame(id));
+    $('#gmMore').addEventListener('click', () => { hush(); openGames(); });
+    window.scrollTo(0, 0);
+  }
 
   // hear your own recording
   function stopPlayback() { if (Pr.playing) { try { Pr.playing.stop(); } catch (e) { /* ignore */ } Pr.playing = null; } }
@@ -6200,13 +7852,13 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
   }
 
   // ---------------------------------------------------------------- log
-  // mode: '' for a regular try, 'צליל לבד' / 'מילה לאט' for the two steps of a lesson
-  function logAttempt(w, res, adult, mode) {
+  // mode: '' for a regular try, 'צליל לבד' / 'מילה לאט' for the two steps of a lesson, 'משחק זיכרון' for a word said in the memory game
+  function logAttempt(w, res, adult, mode, station) {
     const at = new Date().toISOString();
     for (const t of res.targets) {
       const s = t.seg;
       S.log.push({
-        at, child: S.profile.name || '', age: S.profile.age, station: Pr.id, word: w.w, letter: t.letter === 'sh' ? 'ש' : 'צ', pos: mode === 'צליל לבד' ? '' : t.pos, mode: mode || '',
+        at, child: S.profile.name || '', age: S.profile.age, station: station != null ? station : Pr.id, word: w.w, letter: t.letter === 'sh' ? 'ש' : 'צ', pos: mode === 'צליל לבד' ? '' : t.pos, mode: mode || '',
         verdict: t.verdict, adult: adult == null ? '' : adult, score: Math.round((t.q || 0) * 100), cog: s ? Math.round(s.cog) : '', si: s ? +s.si.toFixed(1) : '',
         rise: s ? Math.round(s.rise) : '', dur: s ? Math.round(s.dur) : '', closure: s ? (s.closure == null ? '' : s.closure ? 1 : 0) : '',
         snr: s ? Math.round(s.snr) : '', sens: sensNow()
@@ -6400,7 +8052,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
       : ti(['<b class="L-ts">צ׳</b> היא ט׳ וס׳ ביחד, קצר וחד. ככה עושים אותה:', '<b class="L-ts">צ׳</b> היא ט׳ וס׳ בתנועה אחת. ככה עושים אותה, שלב אחרי שלב:', '<b class="L-ts">צ׳</b>: סגירה ושחרור מהיר. שלב אחרי שלב:']);
     $('#tSteps').innerHTML = HOW[L].map((st, i) => {
       const note = st.note && ti(st.note);
-      return `<li class="panel how-step"><p class="gd-step"><b class="num">${i + 1}</b> ${st.name}</p>${picsHtml(st.pics())}` +
+      return `<li class="panel how-step"><p class="gd-step"><b class="num">${i + 1}</b> ${ti(st.name)}</p>${picsHtml(st.pics())}` +
         `<p class="gd-text">${G(ti(st.text))}</p>${note ? `<p class="gd-note">${note}</p>` : ''}</li>`;
     }).join('');
     // the most common mistake, side by side with the right way
@@ -6437,6 +8089,11 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     $('#paTeach').checked = S.settings.teach !== false;
     $('#paResetMsg').textContent = '';
     renderBankInfo();
+    // games: how often each was played, and the days in a row
+    const played = GAME_IDS.map(id => [gameName(id), gStat(id).plays || 0]).filter(x => x[1]);
+    const sk = streakNow(), best = (S.streak && S.streak.best) || 0;
+    $('#paGames').textContent = (played.length ? `שוחקו עד עכשיו: ${played.map(([n, k]) => `${n} (${k})`).join(', ')}. ` : 'עוד לא שוחקו משחקים. ') +
+      (sk ? `רצף של ${sk} ${sk === 1 ? 'יום' : 'ימים'} עם תרגול או משחק${best > sk ? `, והשיא: ${best}` : ''}.` : '');
     if (TTS.reload) TTS.reload(); else updateVoiceNote();
     renderModelCount();
     renderCalib();
@@ -6563,6 +8220,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
     if (!resetArmed) { resetArmed = true; e.target.textContent = 'ללחוץ שוב לאישור'; setTimeout(() => { resetArmed = false; e.target.textContent = 'איפוס ההתקדמות'; }, 3500); return; }
     S.progress = {}; S.stats = { bestStreak: 0, totalOk: 0 }; S.words = {}; S.rounds = {};
     S.wallet = { coins: 0, earned: 0, day: -1 }; S.island = { owned: [], stage: 1, done: 0 }; S.briefDay = {};
+    S.games = {}; S.daily = { day: -1, rounds: 0, ok: 0, played: {}, claimed: false, coins: 0 }; S.streak = { day: -1, n: 0, best: 0 }; S.gamesSeen = false;
     save(); resetArmed = false; e.target.textContent = 'איפוס ההתקדמות';
     $('#paResetMsg').textContent = 'ההתקדמות אופסה.';
   });
@@ -6681,7 +8339,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
 
   // ---------------------------------------------------------------- lifecycle
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { meterStop(); if (TakeCtl.current) TakeCtl.current.cancel(); Mic.close(); hush(); }
+    if (document.hidden) { meterStop(); gameHold(); if (TakeCtl.current) TakeCtl.current.cancel(); Mic.close(); hush(); }
   });
 
   // a preview inside another app cannot use the microphone: say so up front
@@ -6752,7 +8410,7 @@ if (typeof module !== 'undefined') module.exports = GUIDE;
   init();
 
   // test hook: lets an automated check drive the app (no effect for users)
-  window.__shutsi = { S, Mic, startStation, beginPractice, show, renderMap, Models, Voice, TTS, Pr, Flow, showIdx: i => { Pr.idx = i; showWord(false); }, pickRound, sayText, briefScript, openIsland, finishStation, showIntro, stuck, wordStat, dayNum, openParents };
+  window.__shutsi = { S, Mic, startStation, beginPractice, show, renderMap, Models, Voice, TTS, Pr, Flow, showIdx: i => { Pr.idx = i; showWord(false); }, pickRound, sayText, briefScript, openIsland, finishStation, showIntro, stuck, wordStat, dayNum, openParents, openGames, startGame, Gm, daily, quests, gStat, markActive, streakNow, gameEnd };
 })();
 
 </script>
